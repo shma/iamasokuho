@@ -1,0 +1,727 @@
+<html lang="ja-jp" dir="ltr" xmlns:og="http://ogp.me/ns/#">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="IAMASOKUHO">
+    <meta name="keywords" content="iamasokuho, iama速報, IAMAS, 情報科学芸術大学院大学">
+    <title>【IAMAS正直Q&A】入試ってどんな感じなの？</title>
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="/assets/images/logo_top.gif">
+    <link rel="shortcut icon" href="favicon.ico" type="image/vnd.microsoft.icon">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.11.0/css/uikit.almost-flat.min.css" rel="stylesheet">
+    <link href="/assets/css/jquery.fullPage.css" rel="stylesheet">
+    <link href="/assets/css/style.css" rel="stylesheet">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.11.0/js/uikit.min.js"></script>
+    <script src="/assets/js/three.min.js"></script>
+    <script src="/assets/js/iamasokuho.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.fullPage.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.typist.js"></script>
+    <style>
+        body { margin: 0;}
+        canvas { width: 100%; height: 100% }
+    </style>
+</head>
+<body>
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v2.3&appId=884387134914356";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+    <script>
+        if ((navigator.userAgent.indexOf('iPhone') > 0 && navigator.userAgent.indexOf('iPad') == -1) || navigator.userAgent.indexOf('iPod') > 0 || navigator.userAgent.indexOf('Android') > 0) {
+            url = 'http://iamasokuho.gifu.jp/s_day_eighteen.html';
+            location.href = url;
+        }
+
+        $('head').append(
+                '<style type="text/css">body {display:none;}</style>'
+        );
+        $(document).ready(function() {
+            
+    
+            var camera, scene, renderer;
+            var mesh;
+            var mesh_masuo;
+            var objects = [];
+
+            // Particles
+            var group;
+            var container;
+            var particlesData = [];
+            var positions, colors;
+            var pointCloud;
+            var particlePositions;
+            var linesMesh;
+
+            var maxParticleCount = 1000;
+            var particleCount = 400;
+            if (window.innerWidth < 600) {
+                particleCount = 100;
+            } 
+
+            var r = 900;
+            var rHalf = r / 2;
+
+            var effectController = {
+                showDots: true,
+                showLines: true,
+                minDistance: 200,
+                limitConnections: false,
+                maxConnections: 100,
+                particleCount: 400
+            }
+
+    
+            init();
+            animate();
+
+            var zoom = 1000;
+            function zoom() {
+                for (var i = 0; i < 50; i++) {
+                    setTimeout(function(){
+                        camera.position.z = zoom - 5;
+                        zoom = zoom - 5; 
+                    },1000);
+                }
+            }
+
+            function init() {
+                container = document.getElementById( 'container' );
+
+                renderer = new THREE.WebGLRenderer({antialias: true});
+                renderer.setPixelRatio( window.devicePixelRatio );
+                renderer.setSize( window.innerWidth, window.innerHeight );
+                document.body.appendChild( renderer.domElement );
+    
+                camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 1, 1000 );
+                camera.position.z = 800;
+    
+                scene = new THREE.Scene();
+
+                group = new THREE.Group();
+                scene.add( group );
+
+                var segments = maxParticleCount * maxParticleCount;
+
+                positions = new Float32Array( segments * 3 );
+                colors = new Float32Array( segments * 3);
+            
+                var pMaterial = new THREE.PointCloudMaterial( {
+                    color: 0xFFFFF,
+                    size: 3,
+                    blending: THREE.AdditiveBlending,
+                    transparent: true,
+                    sizeAttenuation: false
+                } );
+
+                particles = new THREE.BufferGeometry();
+                particlePositions = new Float32Array( maxParticleCount * 3 );
+
+                for ( var i = 0; i < maxParticleCount; i++ ) {
+                    var x = Math.random() * r - r / 2;
+                    var y = Math.random() * r - r / 2;
+                    var z = Math.random() * r - r / 2;
+            
+                    particlePositions[i * 3]     = x;
+                    particlePositions[i * 3 + 1] = y;
+                    particlePositions[i * 3 + 2] = z;
+
+                    // add it to the geometry
+                    particlesData.push( {
+                        velocity: new THREE.Vector3( -1 + Math.random() * 2, -1 + Math.random() * 2, -1 + Math.random() * 2),
+                        numConnections: 0
+                    });
+                }
+
+                particles.drawcalls.push( {
+                    start: 0,
+                    count: particleCount,
+                    index: 0
+                });
+
+                particles.addAttribute( 'position', new THREE.DynamicBufferAttribute( particlePositions, 3));
+
+                // create the particle system
+                pointCloud = new THREE.PointCloud( particles, pMaterial);
+                pointCloud.visible = true;
+                group.add(pointCloud);
+        
+                var pGeometry = new THREE.BufferGeometry();
+                pGeometry.addAttribute( 'position', new THREE.DynamicBufferAttribute( positions, 3));
+                pGeometry.addAttribute( 'color', new THREE.DynamicBufferAttribute(colors, 3));
+
+                pGeometry.computeBoundingSphere();
+
+                pGeometry.drawcalls.push( {
+                    start: 0,
+                    count: 0,
+                    index: 0
+                } );
+
+                var pMaterial = new THREE.LineBasicMaterial( {
+                    vertexColors: THREE.VertexColors,
+                    blending: THREE.AdditiveBlending,
+                    transparent: true
+                });
+
+                linesMesh = new THREE.Line( pGeometry, pMaterial, THREE.LinePieces );
+                group.add( linesMesh );
+
+                renderer.setPixelRatio(window.devicePixelRatio);
+                renderer.setSize(window.innerWidth, window.innerHeight);
+
+                renderer.gammaInput = true;
+                renderer.gammaOutput = true;
+                renderer.setClearColor( new THREE.Color(0x000000) );
+
+                container.appendChild(renderer.domElement);
+
+                var geometry = new THREE.BoxGeometry( 70, 70, 70 );
+    
+                var texture = THREE.ImageUtils.loadTexture( 'assets/images/iako.png' );
+                texture.anisotropy = renderer.getMaxAnisotropy();
+    
+                var material = new THREE.MeshBasicMaterial( { map: texture } );
+    
+                mesh = new THREE.Mesh( geometry, material );
+                mesh.position.x = -300;
+                mesh.position.y += 150;
+                scene.add( mesh );
+    
+                // masuo
+                var texture_masuo = THREE.ImageUtils.loadTexture( 'assets/images/new_masuo.png' );
+                texture_masuo.anisotropy = renderer.getMaxAnisotropy();
+    
+                var material_masuo = new THREE.MeshBasicMaterial( { map: texture_masuo } );
+    
+                mesh_masuo = new THREE.Mesh( geometry, material_masuo );
+                mesh_masuo.position.x = 300;
+                mesh_masuo.position.y += 150;
+                scene.add( mesh_masuo ); 
+                objects.push( mesh );
+                objects.push( mesh_masuo );
+    
+    
+                window.addEventListener( 'resize', onWindowResize, false );
+                $('#fullpage').fullpage({
+                    sectionsColor: [],
+                    afterLoad: function(anchorLink, index){
+                        console.log(index);
+                        if(index==1||index==4||index==6||index==8||index==10||index==12||index==15||index==17||index==19||index==22||index==24||index==26||index==29||index==31||index==33||index==35||index==39||index==42) {
+                                mesh_masuo.position.y += 15;
+                                setTimeout(function(){
+                                    mesh_masuo.position.y -= 15;
+                                },100);
+                        }
+                        if(index==3||index==5||index==9||index==11||index==13||index==16||index==18||index==21||index==23||index==25||index==28||index==30||index==32||index==34||index==36||index==38||index==41) {
+                            mesh.position.y += 15;
+                            setTimeout(function(){
+                                mesh.position.y -= 15;
+                            },100);
+                        }
+                    }
+                });
+                $('body').fadeIn("slow");
+            }
+    
+            function onWindowResize() {
+    
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+    
+                renderer.setSize( window.innerWidth, window.innerHeight );
+    
+            }
+    
+            function animate() {
+                var vertexpos = 0;
+                var colorpos = 0;
+                var numConnected = 0;
+
+                for ( var i = 0; i < particleCount; i++ )
+                    particlesData[ i ].numConnections = 0;
+
+                for ( var i = 0; i < particleCount; i++ ) {
+
+                    // get the particle
+                    var particleData = particlesData[i];
+
+                    particlePositions[ i * 3     ] += particleData.velocity.x;
+                    particlePositions[ i * 3 + 1 ] += particleData.velocity.y;
+                    particlePositions[ i * 3 + 2 ] += particleData.velocity.z;
+
+                    if ( particlePositions[ i * 3 + 1 ] < -rHalf || particlePositions[ i * 3 + 1 ] > rHalf )
+                        particleData.velocity.y = -particleData.velocity.y;
+
+                    if ( particlePositions[ i * 3 ] < -rHalf || particlePositions[ i * 3 ] > rHalf )
+                        particleData.velocity.x = -particleData.velocity.x;
+
+                    if ( particlePositions[ i * 3 + 2 ] < -rHalf || particlePositions[ i * 3 + 2 ] > rHalf )
+                        particleData.velocity.z = -particleData.velocity.z;
+
+                    if ( effectController.limitConnections && particleData.numConnections >= effectController.maxConnections )
+                        continue;
+
+                    // Check collision
+                    for ( var j = i + 1; j < particleCount; j++ ) {
+
+                        var particleDataB = particlesData[ j ];
+                        if ( effectController.limitConnections && particleDataB.numConnections >= effectController.maxConnections )
+                            continue;
+
+                        var dx = particlePositions[ i * 3     ] - particlePositions[ j * 3     ];
+                        var dy = particlePositions[ i * 3 + 1 ] - particlePositions[ j * 3 + 1 ];
+                        var dz = particlePositions[ i * 3 + 2 ] - particlePositions[ j * 3 + 2 ];
+                        var dist = Math.sqrt( dx * dx + dy * dy + dz * dz );
+
+                        if ( dist < effectController.minDistance ) {
+
+                            particleData.numConnections++;
+                            particleDataB.numConnections++;
+
+                            var alpha = 1.0 - dist / effectController.minDistance;
+
+                            positions[ vertexpos++ ] = particlePositions[ i * 3     ];
+                            positions[ vertexpos++ ] = particlePositions[ i * 3 + 1 ];
+                            positions[ vertexpos++ ] = particlePositions[ i * 3 + 2 ];
+
+                            positions[ vertexpos++ ] = particlePositions[ j * 3     ];
+                            positions[ vertexpos++ ] = particlePositions[ j * 3 + 1 ];
+                            positions[ vertexpos++ ] = particlePositions[ j * 3 + 2 ];
+
+                            colors[ colorpos++ ] = alpha;
+                            colors[ colorpos++ ] = alpha;
+                            colors[ colorpos++ ] = alpha;
+
+                            colors[ colorpos++ ] = alpha;
+                            colors[ colorpos++ ] = alpha;
+                            colors[ colorpos++ ] = alpha;
+
+                            numConnected++;
+                        }
+                    }
+                }
+
+
+                linesMesh.geometry.drawcalls[ 0 ].count = numConnected * 2;
+                linesMesh.geometry.attributes.position.needsUpdate = true;
+                linesMesh.geometry.attributes.color.needsUpdate = true;
+
+                pointCloud.geometry.attributes.position.needsUpdate = true;
+
+                requestAnimationFrame( animate );
+    
+    
+                mesh.rotation.x += 0.005;
+                mesh.rotation.y += 0.01;
+    
+                mesh_masuo.rotation.x += 0.005;
+                mesh_masuo.rotation.y += 0.01;
+    
+                renderer.render( scene, camera );
+            }
+
+            mesh.callback = function() { 
+                window.open("https://twitter.com/IAMAS_girl");
+            }
+            mesh_masuo.callback = function() { 
+                window.open("https://twitter.com/IAMAS_boy");
+            }
+            var raycaster = new THREE.Raycaster();
+            var mouse = new THREE.Vector2();
+            
+            document.addEventListener( 'mousedown', onDocumentMouseDown, false );
+            function onDocumentMouseDown( event ) {
+            
+                event.preventDefault();
+            
+                mouse.x = ( event.clientX / renderer.domElement.clientWidth ) * 2 - 1;
+                mouse.y = - ( event.clientY / renderer.domElement.clientHeight ) * 2 + 1;
+            
+                raycaster.setFromCamera( mouse, camera );
+            
+                var intersects = raycaster.intersectObjects( objects ); 
+            
+                if ( intersects.length > 0 ) {
+                    intersects[0].object.callback();
+                }
+            
+            }
+
+
+        });
+    </script>
+    <div id="container"></div>
+    <div class="i-head">
+        <a href="/" class="i-logo-less">
+            <img src="/assets/images/logo_2.gif" width="150">
+        </a>
+        <div class="social_btn uk-hidden-small" style="float:right;">
+            <div class="twitter">
+                <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://iamasokuho.gifu.jp" data-text="IAMASokuho" data-via="iamasokuho">Tweet</a>
+                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+            </div>
+            <div class="facebook">
+                <div class="fb-like" data-href="http://iamasokuho.gifu.jp/" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+            </div>
+        </div>
+    </div>
+    <div id="fullpage">
+        <div class="section">
+            <p class="i-p">
+今日も質問が来ているよ！
+
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p">
+イアマスネーム：<br><br>
+ディープドリーム（隠語でない）さん（22歳・男性）<br><br>
+
+IAMASの入試ってどんな感じなんですか？<br><br>
+あんま想像つかなくて困ってます！<br><br>
+教えてください！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+隠語のDeepdreamってどんな夢なのかしらね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+相当ディープなラーニングなんだろうな…<br><br>
+それはそうとして、入試だ！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<span class="b">入試は募集要項が、IAMAS公式サイトから、<br><br>
+過去問とともにダウンロードできるわ！</span><br><br>
+<a href="http://www.iamas.ac.jp/admission#admissions">
+http://www.iamas.ac.jp/admission#admissions
+</a>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+ここに掲載する情報は、<br><br>
+<span class="b">2015年度入学者までの情報を元にしているので、<br><br>
+今後変更される可能性は十分にあります！</span><br><br>
+そして噂話が多いので、<span class="b">一切真偽は保証しません！</span><br><br>
+参考レベルでご覧ください！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+◇入試の期間について
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<span class="b">推薦入試と、2回の一般入試</span>があって、<br><br>
+今年の推薦入試はもう終わってしまったけど、<br><br>
+一般入試は要項が掲載されているね！
+
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p">
+<span class="b">わたしは前期の入試</span>だったわ。<br><br>
+先生に薦められてOPENHOUSEに来て、<br><br>
+そのまま受けた感じかな。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+ぼくは前期の時点では、<br><br>
+受けようと思ってなかったけれど、<br><br>
+仕事の都合などもあって、<br><br>
+<span class="b">後期の入試を受けて合格</span>したよ。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<span class="b">後期のほうが、少しだけ倍率が高い、</span><br><br>
+という噂もあるわね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+あー、それは聞いたことあるな。<br><br>
+でも<span class="b">前期で落ちても、後期で受かる、</span><br><br>
+ってこともあるみたいだね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+早くから受けるつもりなら、<br><br>
+<span class="b">前期から受けるに越したことはない</span>わね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+◇入試の内容について（筆記）
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+入試は、書類を提出した後は、<br><br>
+<span class="b">推薦入試は面接のみ、<br><br>
+一般入試は筆記と面接、</span><br><br>
+になっているね。
+
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p">
+<span class="b">筆記の過去問は、上記のIAMAS公式サイトから、<br><br>
+要項と一緒にダウンロードできるわ！</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+過去問を見てもらえばわかると思うけど、<br><br>
+<span class="b">内容は毎回かなり異なる</span>よね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+そうね。毎回問題を作る先生が変わる、<br><br>
+という噂もあるわね。<br><br>
+<span class="b">でも2つの大問があって、<br><br>
+大問【１】が芸術寄り、大問【２】が工学寄り、<br><br>
+という傾向は見える</span>わね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+ああ、それはあるかも！<br><br>
+ぼくも入試はたまたま趣味で読んだ本が、<br><br>
+大問【２】にドンピシャで、<br><br>
+うまくいった感じだったなあ。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+◇入試の内容について（面接）
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+要項にもあるけど、<span class="b">出願時点で、<br><br>
+自分の活動内容を提出する形式と、<br><br>
+ポートフォリオを提出する形式、<br><br>
+好きな方を選べるのよね！</span><br><br>
+この提出物を元に面接で話すのよね。
+            </p>
+
+        </div>
+        <div class="section">
+            <p class="i-p">
+そうそう！これが一番情報がなくて、<br><br>
+一番知りたいことかもしれないね…<br><br>
+ぼくもこれはすごく苦労したなあ。<br><br>
+でも結局、<span class="b">提出した資料を説明しながら、<br><br>
+自己PRする、</span>っていう普通の面接だよね。
+
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p">
+そうそう。これも要項にあるけど、<br><br>
+<span class="b">５分でプレゼンして、１０分質疑応答、</span><br><br>
+だったわね。<br><br>
+<span class="b">面接の先生が結構多くて、</span><br><br>
+質疑応答、怖かったなあ…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+いま考えると、<br><br>
+あのとき面接してくださった先生は、<br><br>
+<span class="b">ぼくたち個々人のやりたいことに、<br><br>
+どこかで関連している先生</span>ばかりだったね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+あ、たしかにそうだったわ…<br><br>
+結構専門的なことを、<br><br>
+詳しい先生に突っ込まれたりもしたわね。<br><br>
+すごく当たり前かもしれないけど。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+準備できることとしたら、<br><br>
+強いて言えば、<span class="b">自分自身の経験／作品を、<br><br>
+そして自分の思いを、改めて見つめ直して、<br><br>
+誰にでも説明できるようにする、</span><br><br>
+ってくらいかなあ。あたりまえだよね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+◇ベストを尽くす
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+そうねえ…<br><br>
+逆に自分の考えが、<br><br>
+人にちゃんと説明できるなら、<br><br>
+<span class="b">あとは当日ベストをつくす、くらいね。<br><br>
+それがすごく難しいんだけど…。</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+これも要項に載ってるけど、<br><br>
+<span class="b">面接では英語の質問があって、</span><br><br>
+人によって質問は全然違うみたいだけど、<br><br>
+<span class="b">ぼくは中学英語レベルの問いかけを、<br><br>
+緊張しすぎて全然答えられなかったなあ…。</span>
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p">
+<span class="b">わたしは結構難しい問いかけだったわ…</span><br><br>
+昔ちょっと英語やってたから、<br><br>
+あんまり分からないながらなんとか答えたら、<br><br>
+どんどん難しい会話になっちゃって、<br><br>
+全然答えられなかった…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+あと社会人の人は、<br><br>
+試験日が土曜日とはいえ、<br><br>
+<span class="b">「入試を受けに大垣に来る」ってことが、<br><br>
+なかなか難しかったりするから、</span><br><br>
+その調整もなんとか頑張る必要があるね…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+やっぱ仕事しながらだと大変なのね…。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+そうだね…ぼくは忙しい時期だったから、<br><br>
+金曜日なんとか仕事を他の人にお願いして、<br><br>
+終電で大垣まできて、夜中にホテルついて、<br><br>
+<span class="b">それから面接用のプレゼン資料を、<br><br>
+朝方まで作る有様</span>だったよ。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+よくそれで受かったわね…。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<span class="b">ホント、社会人のみなさまは、<br><br>
+IAMASへの道が本当に険しいと思うけど、</span><br><br>
+ピンときてるなら多分間違ってないので、<br><br>
+なんとかしてIAMASへの道を、<br><br>
+こじ開けてきてください！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+もしここに載ってないことが知りたかったら、<br><br>
+<span class="b">OPENHOUSEでわたしたちに聞いて下さい！</span><br><br>
+
+ということで結論！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p b">
+結論：<br><br>
+IAMAS入試は、普段から勉強を重ねて、<br><br>
+自分をちゃんと説明できるようにして、<br><br>
+当日実力を実力通り発揮できれば、<br><br>
+たぶん誰かがちゃんと見ていてくれます。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+ということで引き続き、<br><br>
+質問のほうもお待ちしております！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+IAMASにいる人に聞きたいこととかがあれば、<br><br>
+ぼくたちが代わりに聞きにいきまーす！
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p">
+<span style="font-weight:bold;">イアマ速報 facebookページ</span>はこちら！<br><br>
+<a href="https://www.facebook.com/iamasokuho">
+https://www.facebook.com/iamasokuho<br><br>
+</a>
+いいね！しなさいよ！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<span style="font-weight:bold;">イアマ速報のTwitter</span>はこちらです！<br><br>
+<a href="https://twitter.com/IAMASokuho">
+https://twitter.com/IAMASokuho<br><br>
+</a>
+いろんな情報拾っていきまーす！
+<br><br><br>
+<a href="http://iamasokuho.gifu.jp/day_seventeen.html" style="font-size:12px;">
+<< 前の記事へ
+</a>
+&nbsp;&nbsp;&nbsp;
+<a href="http://iamasokuho.gifu.jp/archive.html" style="font-size:12px;">
+記事一覧へ
+</a>
+
+                <div class="social_btn_bottom">
+                    <div class="twitter">
+                        <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://iamasokuho.gifu.jp/day_eighteen.html">Tweet</a>
+                        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+                    </div>
+                    <div class="facebook">
+                        <div class="fb-like" data-href="http://iamasokuho.gifu.jp/day_eighteen.html" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+                    </div>
+                    <div class="hateb">
+                        <a href="http://b.hatena.ne.jp/entry/iamasokuho.gifu.jp/day_eighteen.html" class="hatena-bookmark-button" data-hatena-bookmark-title="【IAMAS正直Q&A】入試ってどんな感じなの？" data-hatena-bookmark-layout="standard-balloon" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリ>ーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a>
+                    </div>
+                    <script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+                </div>
+            </p>
+        </div>
+    </div>
+</body>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-64484802-1', 'auto');
+  ga('send', 'pageview');
+</script>
+</html>

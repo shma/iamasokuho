@@ -1,0 +1,1129 @@
+<html lang="ja-jp" dir="ltr" xmlns:og="http://ogp.me/ns/#">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="IAMASOKUHO">
+    <meta name="keywords" content="iamasokuho, iama速報, IAMAS, 情報科学芸術大学院大学">
+    <title>【IAMASの人々】区切りのない「日常」を生きる！松井茂先生</title>
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="/assets/images/logo_top.gif">
+    <link rel="shortcut icon" href="favicon.ico" type="image/vnd.microsoft.icon">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.11.0/css/uikit.almost-flat.min.css" rel="stylesheet">
+    <link href="/assets/css/jquery.fullPage.css" rel="stylesheet">
+    <link href="/assets/css/style.css" rel="stylesheet">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.11.0/js/uikit.min.js"></script>
+    <script src="/assets/js/three.min.js"></script>
+    <script src="/assets/js/iamasokuho.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.fullPage.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.typist.js"></script>
+    <style>
+        body { margin: 0;}
+        canvas { width: 100%; height: 100% }
+    </style>
+</head>
+<body>
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v2.3&appId=884387134914356";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+    <script>
+        if ((navigator.userAgent.indexOf('iPhone') > 0 && navigator.userAgent.indexOf('iPad') == -1) || navigator.userAgent.indexOf('iPod') > 0 || navigator.userAgent.indexOf('Android') > 0) {
+            url = 'http://iamasokuho.gifu.jp/s_day_22.html';
+            location.href = url;
+        }
+
+        $('head').append(
+                '<style type="text/css">body {display:none;}</style>'
+        );
+        $(document).ready(function() {
+            
+    
+            var camera, scene, renderer;
+            var mesh;
+            var mesh_masuo;
+            var objects = [];
+
+            // Particles
+            var group;
+            var container;
+            var particlesData = [];
+            var positions, colors;
+            var pointCloud;
+            var particlePositions;
+            var linesMesh;
+
+            var maxParticleCount = 1000;
+            var particleCount = 400;
+            if (window.innerWidth < 600) {
+                particleCount = 100;
+            } 
+
+            var r = 900;
+            var rHalf = r / 2;
+
+            var effectController = {
+                showDots: true,
+                showLines: true,
+                minDistance: 200,
+                limitConnections: false,
+                maxConnections: 100,
+                particleCount: 400
+            }
+
+    
+            init();
+            animate();
+
+            var zoom = 1000;
+            function zoom() {
+                for (var i = 0; i < 50; i++) {
+                    setTimeout(function(){
+                        camera.position.z = zoom - 5;
+                        zoom = zoom - 5; 
+                    },1000);
+                }
+            }
+
+            function init() {
+                container = document.getElementById( 'container' );
+
+                renderer = new THREE.WebGLRenderer({antialias: true});
+                renderer.setPixelRatio( window.devicePixelRatio );
+                renderer.setSize( window.innerWidth, window.innerHeight );
+                document.body.appendChild( renderer.domElement );
+    
+                camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 1, 1000 );
+                camera.position.z = 800;
+    
+                scene = new THREE.Scene();
+
+                group = new THREE.Group();
+                scene.add( group );
+
+                var segments = maxParticleCount * maxParticleCount;
+
+                positions = new Float32Array( segments * 3 );
+                colors = new Float32Array( segments * 3);
+            
+                var pMaterial = new THREE.PointCloudMaterial( {
+                    color: 0xFFFFF,
+                    size: 3,
+                    blending: THREE.AdditiveBlending,
+                    transparent: true,
+                    sizeAttenuation: false
+                } );
+
+                particles = new THREE.BufferGeometry();
+                particlePositions = new Float32Array( maxParticleCount * 3 );
+
+                for ( var i = 0; i < maxParticleCount; i++ ) {
+                    var x = Math.random() * r - r / 2;
+                    var y = Math.random() * r - r / 2;
+                    var z = Math.random() * r - r / 2;
+            
+                    particlePositions[i * 3]     = x;
+                    particlePositions[i * 3 + 1] = y;
+                    particlePositions[i * 3 + 2] = z;
+
+                    // add it to the geometry
+                    particlesData.push( {
+                        velocity: new THREE.Vector3( -1 + Math.random() * 2, -1 + Math.random() * 2, -1 + Math.random() * 2),
+                        numConnections: 0
+                    });
+                }
+
+                particles.drawcalls.push( {
+                    start: 0,
+                    count: particleCount,
+                    index: 0
+                });
+
+                particles.addAttribute( 'position', new THREE.DynamicBufferAttribute( particlePositions, 3));
+
+                // create the particle system
+                pointCloud = new THREE.PointCloud( particles, pMaterial);
+                pointCloud.visible = true;
+                group.add(pointCloud);
+        
+                var pGeometry = new THREE.BufferGeometry();
+                pGeometry.addAttribute( 'position', new THREE.DynamicBufferAttribute( positions, 3));
+                pGeometry.addAttribute( 'color', new THREE.DynamicBufferAttribute(colors, 3));
+
+                pGeometry.computeBoundingSphere();
+
+                pGeometry.drawcalls.push( {
+                    start: 0,
+                    count: 0,
+                    index: 0
+                } );
+
+                var pMaterial = new THREE.LineBasicMaterial( {
+                    vertexColors: THREE.VertexColors,
+                    blending: THREE.AdditiveBlending,
+                    transparent: true
+                });
+
+                linesMesh = new THREE.Line( pGeometry, pMaterial, THREE.LinePieces );
+                group.add( linesMesh );
+
+                renderer.setPixelRatio(window.devicePixelRatio);
+                renderer.setSize(window.innerWidth, window.innerHeight);
+
+                renderer.gammaInput = true;
+                renderer.gammaOutput = true;
+                renderer.setClearColor( new THREE.Color(0x000000) );
+
+                container.appendChild(renderer.domElement);
+
+                var geometry = new THREE.BoxGeometry( 70, 70, 70 );
+    
+                var texture = THREE.ImageUtils.loadTexture( 'assets/images/iako.png' );
+                texture.anisotropy = renderer.getMaxAnisotropy();
+    
+                var material = new THREE.MeshBasicMaterial( { map: texture } );
+    
+                mesh = new THREE.Mesh( geometry, material );
+                mesh.position.x = -300;
+                mesh.position.y += 150;
+                scene.add( mesh );
+    
+                // masuo
+                var texture_masuo = THREE.ImageUtils.loadTexture( 'assets/images/new_masuo.png' );
+                texture_masuo.anisotropy = renderer.getMaxAnisotropy();
+    
+                var material_masuo = new THREE.MeshBasicMaterial( { map: texture_masuo } );
+    
+                mesh_masuo = new THREE.Mesh( geometry, material_masuo );
+                mesh_masuo.position.x = 300;
+                mesh_masuo.position.y += 150;
+                scene.add( mesh_masuo ); 
+                objects.push( mesh );
+                objects.push( mesh_masuo );
+    
+    
+                window.addEventListener( 'resize', onWindowResize, false );
+                $('#fullpage').fullpage({
+                    sectionsColor: [],
+                    afterLoad: function(anchorLink, index){
+                        console.log(index);
+                        if(index==1||index==4||index==7||index==11||index==15||index==18||index==22||index==26||index==31||index==35||index==42||index==44||index==48||index==52||index==55||index==58||index==61||index==65||index==69||index==73||index==77||index==80||index==82||index==84||index==87) {
+                                mesh_masuo.position.y += 15;
+                                setTimeout(function(){
+                                    mesh_masuo.position.y -= 15;
+                                },100);
+                        }
+
+                        if(index==3||index==5||index==9||index==13||index==16||index==20||index==24||index==28||index==33||index==37||index==40||index==43||index==46||index==50||index==53||index==57||index==59||index==63||index==67||index==71||index==74||index==78||index==81||index==83||index==86) {
+                            mesh.position.y += 15;
+                            setTimeout(function(){
+                                mesh.position.y -= 15;
+                            },100);
+                        }
+                    }
+                });
+                $('body').fadeIn("slow");
+            }
+    
+            function onWindowResize() {
+    
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+    
+                renderer.setSize( window.innerWidth, window.innerHeight );
+    
+            }
+    
+            function animate() {
+                var vertexpos = 0;
+                var colorpos = 0;
+                var numConnected = 0;
+
+                for ( var i = 0; i < particleCount; i++ )
+                    particlesData[ i ].numConnections = 0;
+
+                for ( var i = 0; i < particleCount; i++ ) {
+
+                    // get the particle
+                    var particleData = particlesData[i];
+
+                    particlePositions[ i * 3     ] += particleData.velocity.x;
+                    particlePositions[ i * 3 + 1 ] += particleData.velocity.y;
+                    particlePositions[ i * 3 + 2 ] += particleData.velocity.z;
+
+                    if ( particlePositions[ i * 3 + 1 ] < -rHalf || particlePositions[ i * 3 + 1 ] > rHalf )
+                        particleData.velocity.y = -particleData.velocity.y;
+
+                    if ( particlePositions[ i * 3 ] < -rHalf || particlePositions[ i * 3 ] > rHalf )
+                        particleData.velocity.x = -particleData.velocity.x;
+
+                    if ( particlePositions[ i * 3 + 2 ] < -rHalf || particlePositions[ i * 3 + 2 ] > rHalf )
+                        particleData.velocity.z = -particleData.velocity.z;
+
+                    if ( effectController.limitConnections && particleData.numConnections >= effectController.maxConnections )
+                        continue;
+
+                    // Check collision
+                    for ( var j = i + 1; j < particleCount; j++ ) {
+
+                        var particleDataB = particlesData[ j ];
+                        if ( effectController.limitConnections && particleDataB.numConnections >= effectController.maxConnections )
+                            continue;
+
+                        var dx = particlePositions[ i * 3     ] - particlePositions[ j * 3     ];
+                        var dy = particlePositions[ i * 3 + 1 ] - particlePositions[ j * 3 + 1 ];
+                        var dz = particlePositions[ i * 3 + 2 ] - particlePositions[ j * 3 + 2 ];
+                        var dist = Math.sqrt( dx * dx + dy * dy + dz * dz );
+
+                        if ( dist < effectController.minDistance ) {
+
+                            particleData.numConnections++;
+                            particleDataB.numConnections++;
+
+                            var alpha = 1.0 - dist / effectController.minDistance;
+
+                            positions[ vertexpos++ ] = particlePositions[ i * 3     ];
+                            positions[ vertexpos++ ] = particlePositions[ i * 3 + 1 ];
+                            positions[ vertexpos++ ] = particlePositions[ i * 3 + 2 ];
+
+                            positions[ vertexpos++ ] = particlePositions[ j * 3     ];
+                            positions[ vertexpos++ ] = particlePositions[ j * 3 + 1 ];
+                            positions[ vertexpos++ ] = particlePositions[ j * 3 + 2 ];
+
+                            colors[ colorpos++ ] = alpha;
+                            colors[ colorpos++ ] = alpha;
+                            colors[ colorpos++ ] = alpha;
+
+                            colors[ colorpos++ ] = alpha;
+                            colors[ colorpos++ ] = alpha;
+                            colors[ colorpos++ ] = alpha;
+
+                            numConnected++;
+                        }
+                    }
+                }
+
+
+                linesMesh.geometry.drawcalls[ 0 ].count = numConnected * 2;
+                linesMesh.geometry.attributes.position.needsUpdate = true;
+                linesMesh.geometry.attributes.color.needsUpdate = true;
+
+                pointCloud.geometry.attributes.position.needsUpdate = true;
+
+                requestAnimationFrame( animate );
+    
+    
+                mesh.rotation.x += 0.005;
+                mesh.rotation.y += 0.01;
+    
+                mesh_masuo.rotation.x += 0.005;
+                mesh_masuo.rotation.y += 0.01;
+    
+                renderer.render( scene, camera );
+            }
+
+            mesh.callback = function() { 
+                window.open("https://twitter.com/IAMAS_girl");
+            }
+            mesh_masuo.callback = function() { 
+                window.open("https://twitter.com/IAMAS_boy");
+            }
+            var raycaster = new THREE.Raycaster();
+            var mouse = new THREE.Vector2();
+            
+            document.addEventListener( 'mousedown', onDocumentMouseDown, false );
+            function onDocumentMouseDown( event ) {
+            
+                event.preventDefault();
+            
+                mouse.x = ( event.clientX / renderer.domElement.clientWidth ) * 2 - 1;
+                mouse.y = - ( event.clientY / renderer.domElement.clientHeight ) * 2 + 1;
+            
+                raycaster.setFromCamera( mouse, camera );
+            
+                var intersects = raycaster.intersectObjects( objects ); 
+            
+                if ( intersects.length > 0 ) {
+                    intersects[0].object.callback();
+                }
+            
+            }
+
+
+        });
+    </script>
+    <div id="container"></div>
+    <div class="i-head">
+        <a href="/" class="i-logo-less">
+            <img src="/assets/images/logo_2.gif" width="150">
+        </a>
+        <div class="social_btn uk-hidden-small" style="float:right;">
+            <div class="twitter">
+                <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://iamasokuho.gifu.jp" data-text="IAMASokuho" data-via="iamasokuho">Tweet</a>
+                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+            </div>
+            <div class="facebook">
+                <div class="fb-like" data-href="http://iamasokuho.gifu.jp/" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+            </div>
+        </div>
+    </div>
+    <div id="fullpage">
+        <div class="section">
+            <p class="i-p">
+今日はこの先生にお話しを聞きにきたよ！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/22-1.jpg" width=300 /><br><br>
+松井茂先生
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+松井先生ね！<br><br>
+<span class="b">松井先生は今年からIAMAS教員</span>だから、<br><br>
+私たちと近い目線の話が聞けるかも！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+それはたしかにそうかも！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+（こんこんこん、がちゃ）<br><br>
+松井先生、こんにちはー。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/22-2.jpeg" width=300><br><br>
+あぁ、どうぞ。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+お邪魔します！<br><br>
+わ、本がめっちゃいっぱいある！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/22-3.jpg" width=300><br><br>
+あぁ、それは、<br><br>
+実家にあった本とか全部持ってきたんだけど、<br><br>
+こないだ持ってきたばっかりで、<br><br>
+全然整理できてないな（笑）
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+今日はよろしくお願いします！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/matsui.jpg" width=100><br><br>
+ぼくは昌廣先生みたいに面白くないよ（笑）
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+昌廣先生は強すぎます（笑）<br><br>
+<br>
+
+
+<a href="http://iamasokuho.gifu.jp/day_fourteen.html">
+【IAMASの人々】図書「艦長」！小林昌廣先生<br>
+http://iamasokuho.gifu.jp/day_fourteen.html
+</a>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/22-4.jpg" width=300><br><br>
+<span class="b">松井 茂　まつい・しげる</span><br><br>
+IAMAS准教授。詩人、編集者、研究者。<br><br>
+詩人として、Ⅰ、Ⅱ、Ⅲの記号だけで表現される<br><br>
+「純粋詩(Pure Poem)」をはじめとする作品を制作。<br><br>
+研究者として、テレビを中心として、<br><br>
+現代芸術の表現動向に着目し、研究を行っている。<br><br>
+<a href="http://www.iamas.ac.jp/people#post-13007">
+http://www.iamas.ac.jp/people#post-13007
+</a>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+松井先生、IAMASに来てどうですか？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/matsui.jpg" width=100><br><br>
+おぉ〜…そうねぇ…<br><br>
+君たちはどうなの？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+ぼくらですか！？<br><br>
+うーん、でも会社にいた時よりずっと、<br><br>
+<span class="b">人の話をちゃんと聞いてくれる人ばかり、</span><br><br>
+ということに驚いてますね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+それはわたしも思います！<br><br>
+<span class="b">専門が全然違う先生でも、<br><br>
+考えを尊重してくれる</span>というか、<br><br>
+「専門」って区切りを意識しないというか。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/matsui.jpg" width=100><br><br>
+あぁ〜…なるほどね。<br><br>
+「専門」みたいな区切りを意識しない、<br><br>
+っていう話だと、<span class="b">IAMASはいい意味で、<br><br>
+自分で自分のやることを定義しなきゃいけない、</span><br><br>
+みたいなところあるよね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+あー、それは分かる気がします！<br><br>
+入学式の日の夜のWelcome Party(※1)でも、<br><br>
+「どんなことやってる人なんですか？」<br><br>
+って聞いたり聞かれたりだったなあ。<br><br>
+<br>
+<span style="font-size:10px;">
+※1 Welcome Party：入学式の日の夜、IAMASにて、M2主催でM1を歓迎するパーティーが開かれる。先生方も多数お越しになる。
+</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/matsui.jpg" width=100><br><br>
+教員の側もそれはあるかもしれない。<br><br>
+<span class="b">「自分は何をやっている人だ」<br><br>
+ってことを表明してかないと、<br><br>
+教員間でも話が進まなかったりもする</span>から、<br><br>
+自分にも試練な感じで楽しいよ（笑）
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+松井先生は、<br><br>
+どういう経緯でIAMASにいらしたんですか？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/matsui.jpg" width=100><br><br>
+どういう経緯…そうだなぁ。<br><br>
+僕は大学は文学部で、作家活動自体は、<br><br>
+大学生の時からやっていたんだけど、<br><br>
+<span class="b">大学卒業して出版社で編集の仕事をしながら、<br><br>
+作家活動も続けてた</span>感じだったかな。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+文筆活動をしながら、近い業界で働くって、<br><br>
+結構大変じゃないですか？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/matsui.jpg" width=100><br><br>
+そう、結構大変だったよ（笑）<br><br>
+そのうちに、<br><br>
+仕事で出会った藤幡正樹さん(※2)に、<br><br>
+「うちきなよ」って呼ばれて、<br><br>
+東京藝大に行くことになって。<br><br>
+<br>
+<span style="font-size:10px;">
+※2 藤幡正樹：メディアアーティスト。東京藝術大学教授。1980年代初頭からコンピュータを使った作品を制作し、90年代にはインタラクティブな作品を制作。1996年、アルス・エレクトロニカにてグランプリを受賞。日本のメディアアートの第一人者とも言われる。
+</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+そこから研究になるんですね…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/matsui.jpg" width=100><br><br>
+うん、まあ、場所は変わっても、<br><br>
+編集の仕事もしてたんだけどね。<br><br>
+編集とか、作家活動とか、研究とかで、<br><br>
+IAMASの先生と関わることもあって、<br><br>
+気づいたらIAMASに来てた（笑）
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+IAMASでは、<br><br>
+どういう活動や研究をしていくんですか？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/matsui.jpg" width=100><br><br>
+今までとやることが変わるわけでは、<br><br>
+ないんだけどね（笑）<br><br>
+<span class="b">今まで通りの作家活動はしながら、<br><br>
+テレビを中心としたメディア表現の研究、<br><br></span>
+かなぁ。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+先生の詩って、<br><br>
+かなり特殊な形式ですよね…。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/22-6.jpg" width=300><br><br>
+純粋詩：2015年7月7日〜7月11日<br><br>
+<a href="http://www008.upp.so-net.ne.jp/methodpoem/no1003.html">
+http://www008.upp.so-net.ne.jp/methodpoem/no1003.html
+</a>
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/matsui.jpg" width=100><br><br>
+そうだね…<br><br>
+<span class="b">
+現代的において意義がある作品、って考えたら、<br><br>
+心のひだひだを言葉で表す詩、というより、<br><br>
+日常のプロトコル(※3)のようなもののほうが、<br><br>
+詩になるんじゃないか、</span>と思ってる。<br><br>
+<br>
+<span style="font-size:10px;">
+※3 プロトコル：「儀礼」の意。またコンピュータ用語として、コンピュータ通信における取り決めのこと。
+</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+そういう考えがあるんですね…。<br><br>
+先生はテレビの研究もされてますけど、<br><br>
+そういう「日常の一部」みたいな部分が、<br><br>
+関係してるんですか？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/matsui.jpg" width=100><br><br>
+それはあるね…。<br><br>
+僕は、日常と過剰な非日常性、<br><br>
+という対比にはあまり興味がなくて、<br><br>
+アートじゃないものとアートを、<br><br>
+対立的にではなく、<br><br>
+連続的に考えてみる立場を考えてるかな。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+どこまでがアートで、<br><br>
+どこからがアートじゃないとか、<br><br>
+わたしもたまに考えますけど、<br><br>
+わからないですよね…。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/matsui.jpg" width=100><br><br>
+そうだね、そういうレッテルを貼りたくない、<br><br>
+という感じかな…。<br><br>
+あとテレビは、制作から放送まで、<br><br>
+関わる人数が多いから、<br><br>
+表現として結構特殊な気がする。<br><br>
+大体作っている人は会社員だし、<br><br>
+いろいろ気になるところがあるね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+アート、といえば、<br><br>
+個人だったり少人数での制作が、<br><br>
+イメージされやすいですよね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/matsui.jpg" width=100><br><br>
+そうそう。批評や研究の対象になったのは、<br><br>
+作家と作品だけ、だったわけ。<br><br>
+組織のあり方が表現に関わっているケースを、<br><br>
+もっと考えないと、<br><br>
+メディアや技術の意味を見落とすよね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<span class="b">たしかに最近、個人よりも、<br><br>
+集団として注目されるアーティスト</span>が、<br><br>
+なんとなく多いような気がしますね…。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/matsui.jpg" width=100><br><br>
+たとえば僕がやってた編集の仕事とか、<br><br>
+いま研究しているテレビは、<br><br>
+組織があって初めて可能になる表現で、<br><br>
+ひとつの表現の背後に関わっている人が、<br><br>
+たくさんいるわけ。
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/matsui.jpg" width=100><br><br>
+テレビや出版と同じように、最近だと、<br><br>
+PerfumeとRhizomatiks(※5)みたいなケースって、<br><br>
+多くの会社が複合的に関わって、<br><br>
+ひとつの形をつくるわけじゃない？<br><br>
+<br>
+<span style="font-size:10px;">
+※5 Rhizomatiks：ウェブデザイン、インタラクティブデザインなどを行う会社。Perfumeの舞台演出、Web制作など、デジタルクリエイティブ全般を担当している。共同創業者の真鍋大度氏をはじめ、IAMAS卒業生も複数人所属している。
+</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+たしかに、そう言われてみるとそうですね…。<br><br>
+それぞれの分野で得意技を持った集団が、<br><br>
+連動してひとつの形をつくるのって、<br><br>
+テレビとかと近いのかも。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/matsui.jpg" width=100><br><br>
+そうそう。<br><br>
+だからタレントや特定の個人の表現というよりも、<br><br>
+<span style="bold">組織的というか、社会的な表現</span>だと思う。<br><br>
+そういう領域を考えることが大事なんじゃないかな。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+なるほど…<br><br>
+ぼくもそういう考え方をしたことはなかったですね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+じゃあ次は、<br><br>
+IAMASのことについても聞かせてください！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+松井先生が思う、<br><br>
+<span class="b">IAMASのおもしろいところ</span>ってなんですか？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/matsui.jpg" width=100><br><br>
+うーん、なんだろうなぁ…<br><br>
+<span class="b">普通の大学だと、自分と関係ない分野の人、<br><br>
+たとえば映像の人とプログラマーの人が、<br><br>
+君たちみたいに一緒に何かすることはないよね。</span><br><br>
+この学校はそういう設計なんだろうね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+たしかに…<br><br>
+私ももっとWebのことやってみたい、とか、<br><br>
+ものづくりやってみたいとか思ってたけど、<br><br>
+<span class="b">この学校だとWebできる人ももの作れる人も、<br><br>
+普通に同じ部屋にいるものね。</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/matsui.jpg" width=100><br><br>
+そうそう。僕から見れば、<br><br>
+自分が専門家じゃない感じになる、<br><br>
+ってことが面白い。<br><br>
+ヘタしたら学生の方が詳しい、ってこととか、<br><br>
+そういうことが起こる学校だよね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+なるほど。学生も学生で、<br><br>
+この間まで企業の第一線でやってた人とか、<br><br>
+先生より年上の人とかも居ますもんね！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/matsui.jpg" width=100><br><br>
+そうそう。<span class="b">そういうところに足せる、<br><br>
+自分の専門ってなんだろう、ってことを、<br><br>
+教員の側からも考える環境が面白いかな。<br><br></span>
+来たばっかりでこんな知ったようなこと、<br><br>
+言っていいのかわかんないけど（笑）
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+先生方からみると、<br><br>
+そういう視点もあるんですね…。
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/matsui.jpg" width=100><br><br>
+あとは、教員が学生と話す機会は、<br><br>
+他の大学より多いと思うよ。<br><br>
+みんな忙しそうだけど、独特な感じだね。<br><br>
+いまM2がやってる4者面談(※4)とかね。<br><br>
+教員は学生にかなり時間を割いていると思う。<br><br>
+<br>
+<span style="font-size:10px;">
+※4 4者面談：M2の7月の中間発表後、学生1人と主査の先生1人、副査の先生2人の計4人で、今後の研究の方向について話す面談。
+</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+ありがたい環境だなあ…。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+先生は、<br><br>
+<span class="b">どういうことを求めてる人が、<br><br>
+IAMASに来たらいいと思いますか？</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/matsui.jpg" width=100><br><br>
+そうだなぁ…IAMASになにか、<br><br>
+<span class="b">答えを求めてるような人は、<br><br>
+来ないほうが良いと思う。</span><br><br>
+考えることを手伝うことはできるけど、<br><br>
+答えを与えることはできないだろうね…。<br><br>
+与えられる答えで満足なら、来る必要がない。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<span class="b">自分で考えて、<br><br>
+答えをつくっていく意志のある人、</span><br><br>
+という感じですかね…。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/matsui.jpg" width=100><br><br>
+そうだね…。たとえば、<br><br>
+ジャンルとしての「メディアアート」みたいな、<br><br>
+外から決められたレッテルに乗りたい人には、<br><br>
+実は、向いてないかもしれないね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+わたしが憎む、<br><br>
+<span class="b">「ファッションメディアアート女子」</span>ね…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+イア子ちゃん、物騒だなあ…<br><br>
+まあでもそういう人、<br><br>
+東京とかに結構いるけど。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+じゃあ、松井先生から見て、<br><br>
+<span class="b">IAMASでしかできないこと</span>って、<br><br>
+なんだと思いますか？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/matsui.jpg" width=100><br><br>
+う〜ん…なんていうか、<br><br>
+<span class="b">「IAMASで◯◯ができます！」みたいな、<br><br>
+口当たりのいいこと言えないなー、</span><br><br>
+そういう解答、イヤなんだよね（笑）<br><br>
+質問が悪い。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+すみません（笑）<br><br>
+なんて言ったらいいんだろう、<br><br>
+IAMASのいいところ、とか、<br><br>
+IAMAS独特のところ、というか…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/matsui.jpg" width=100><br><br>
+広告みたいにキャッチコピーでレッテルを貼るのは、<br><br>
+分かりやすくなるように思えるんだけど、<br><br>
+大学院みたいなアカデミズムにおいては、<br><br>
+現在進行形で、流動的にやっている感じが大事。<br><br>
+むしろわかりやすいことってダメだよ。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+現在進行形で、流動的な感じ…<br><br>
+まさにIAMASっていう感じですね…。<br><br>
+学生も常に入れ替わるし、<br><br>
+先生方のプロジェクトも、年が変わると、<br><br>
+どんどん変わっていきますよね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/matsui.jpg" width=100><br><br>
+僕はレッテルを貼るのも嫌だし、<br><br>
+貼られるのも嫌なタイプなんだけど、<br><br>
+外から勝手に決められなくていいところが、<br><br>
+この学校のいいところな気がするね…。<br><br>
+もちろん「IAMAS」が、<br><br>
+ブランド化しているところもあるし、<br><br>
+外からの先入観もあるだろうけどね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+確かに、自分のやることを、<br><br>
+自分で定義していく必要はありますけど、<br><br>
+「工学部出身だ」「プログラマーだ」<br><br>
+というような外からの型にはめられずに、<br><br>
+自分のやりたいことができていますね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/matsui.jpg" width=100><br><br>
+自分にとっても、周りにとってもだね。<br><br>
+IAMASは、私の専門はなんだ、<br><br>
+っていうレッテルにとらわれずに、<br><br>
+<span class="b">いろんな人と話しながら、<br><br>
+自由に思考を展開させられる場だよね。</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+でも、いろんなことやりすぎて、<br><br>
+専門がなんだかわからなくなっちゃう、<br><br>
+っていうこともありますよね…。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/matsui.jpg" width=100><br><br>
+<span class="b">専門がなんだかわかんない感じが、<br><br>
+IAMASっぽくていいんじゃないかな。</span><br><br>
+たとえばIAMASを出たからって、<br><br>
+「プログラミングができる人だ」<br><br>
+って思われるのも、うれしくないじゃん？<br><br>
+それだけじゃないっていうかね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+それはそうだなあ…<br><br>
+そこで<span class="b">「自分で自分を定義する」</span><br><br>
+ってことが大事なのかもしれませんね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/matsui.jpg" width=100><br><br>
+そうだね…<br><br>
+<span class="b">「特化した専門はないけど、自己がある」</span><br><br>
+ということかな。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+なるほど…<br><br>
+勉強になりました！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/matsui.jpg" width=100><br><br>
+なんか歯切れ悪くて、<br><br>
+使えない感じですみません（笑）
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+全然です！！<br><br>
+IAMASっぽさを感じました（笑）
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+あ、そういえば、<br><br>
+<span class="b">IAMASのPodcastが始まった</span>んですよね！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/matsui.jpg" width=100><br><br>
+そうそう。<span class="b">ちょうど今日からだね。</span><br><br>
+初回は城先生と僕が、<br><br>
+三輪先生にインタビューしてます。<br><br>
+ぜひ聞いてみてください。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/22-5.gif" width=300><br><br>
+ストリーミング・ラジオ「ヒアマス」<br><br>
+<a href="http://www.iamas.ac.jp/14685">
+http://www.iamas.ac.jp/14685
+</a>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+わ、気になる！聞いてみます！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+わたしも聞いてみます！<br><br>
+今日はありがとうございました！<br><br>
+またお話しさせてください！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/matsui.jpg" width=100><br><br>
+はい、またいつでも。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+いやー、すごく面白かったね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+そうね…<br><br>
+先生の制作物から、IAMASの話まで、<br><br>
+<span class="b">なんだか全部つながってる感じ</span>がしたわ。<br><br>
+このなんか腑に落ちる感じは、<br><br>
+どの先生と話してもだいたいそうよね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+確かにそうだね…。<br><br>
+松井先生もおっしゃっていたけれど、<br><br>
+<span class="b">誰が見てもわかりやすいような<br><br>
+「レッテル」を貼れないことこそが、<br><br>
+IAMASの良さなのかもしれないね。</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+ということで引き続き、<br><br>
+質問のほうもお待ちしております！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+IAMASにいる人に聞きたいこととかがあれば、<br><br>
+ぼくたちが代わりに聞きにいきまーす！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+イア子とマス男への質問やメッセージはこちらから！<br><br>
+<a href="http://goo.gl/forms/hlgdXfxMei">
+http://goo.gl/forms/hlgdXfxMei
+</a>
+            </p>
+        </div>
+
+
+        <div class="section">
+            <p class="i-p">
+<span style="font-weight:bold;">イアマ速報 facebookページ</span>はこちら！<br><br>
+<a href="https://www.facebook.com/iamasokuho">
+https://www.facebook.com/iamasokuho<br><br>
+</a>
+いいね！しなさいよ！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<span style="font-weight:bold;">イアマ速報のTwitter</span>はこちらです！<br><br>
+<a href="https://twitter.com/IAMASokuho">
+https://twitter.com/IAMASokuho<br><br>
+</a>
+いろんな情報拾っていきまーす！
+<br><br><br>
+<a href="http://iamasokuho.gifu.jp/day_21.html" style="font-size:12px;">
+<< 前の記事へ
+</a>
+&nbsp;&nbsp;&nbsp;
+<a href="http://iamasokuho.gifu.jp/archive.html" style="font-size:12px;">
+記事一覧へ
+</a>
+
+                <div class="social_btn_bottom">
+                    <div class="twitter">
+                        <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://iamasokuho.gifu.jp/day_22.html">Tweet</a>
+                        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+                    </div>
+                    <div class="facebook">
+                        <div class="fb-like" data-href="http://iamasokuho.gifu.jp/day_22.html" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+                    </div>
+                    <div class="hateb">
+                        <a href="http://b.hatena.ne.jp/entry/iamasokuho.gifu.jp/day_22.html" class="hatena-bookmark-button" data-hatena-bookmark-title="【IAMASの人々】区切りのない「日常」を生きる！松井茂先生" data-hatena-bookmark-layout="standard-balloon" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリ>ーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a>
+                    </div>
+                    <script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+                </div>
+            </p>
+        </div>
+    </div>
+</body>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-64484802-1', 'auto');
+  ga('send', 'pageview');
+</script>
+</html>

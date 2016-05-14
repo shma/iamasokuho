@@ -1,0 +1,782 @@
+<html lang="ja-jp" dir="ltr" xmlns:og="http://ogp.me/ns/#">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="IAMASOKUHO">
+    <meta name="keywords" content="iamasokuho, iama速報, IAMAS, 情報科学芸術大学院大学">
+    <title>【IAMASすてきな施設めぐり】IAMAS学生寮「RIST」 | IAMASokuho</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/vnd.microsoft.icon">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.11.0/css/uikit.almost-flat.min.css" rel="stylesheet">
+    <link href="/assets/css/jquery.fullPage.css" rel="stylesheet">
+    <link href="/assets/css/style.css" rel="stylesheet">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.11.0/js/uikit.min.js"></script>
+    <script src="/assets/js/three.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+    
+    <script type="text/javascript" src="assets/js/jquery.fullPage.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.typist.js"></script>
+    <style>
+        body {
+          /* 画像ファイルの指定 */
+          background-image: url(/assets/images/sp_back3.gif);
+
+          /* 画像を常に天地左右の中央に配置 */
+          background-position: center center;
+
+          /* 画像をタイル状に繰り返し表示しない */
+          background-repeat: no-repeat;
+
+          /* コンテンツの高さが画像の高さより大きい時、動かないように固定 */
+          background-attachment: fixed;
+
+          /* 表示するコンテナの大きさに基づいて、背景画像を調整 */
+          background-size: cover;
+
+          /* 背景画像が読み込まれる前に表示される背景のカラー */
+          background-color: #464646;
+        }
+    </style>
+</head>
+<body>
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v2.3&appId=884387134914356";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+    <script>
+        $('head').append(
+                '<style type="text/css">body {display:none;}</style>'
+        );
+        $(document).ready(function() {
+    
+            var camera, scene, renderer;
+            var mesh;
+            var mesh_masuo;
+            var objects = [];
+
+            // Particles
+            var group;
+            var container;
+            var particlesData = [];
+            var positions, colors;
+            var pointCloud;
+            var particlePositions;
+            var linesMesh;
+
+            var maxParticleCount = 1000;
+            var particleCount = 400;
+            if (window.innerWidth < 600) {
+                particleCount = 100;
+            } 
+
+            var r = 900;
+            var rHalf = r / 2;
+
+            var effectController = {
+                showDots: true,
+                showLines: true,
+                minDistance: 200,
+                limitConnections: false,
+                maxConnections: 100,
+                particleCount: 400
+            }
+
+    
+            init();
+            function init() {
+                $('body').fadeIn("slow");
+            }
+
+
+            $('#fullpage').fullpage({
+                sectionsColor: ['#000', '#000','#000','#000','#000'],
+                verticalCentered: false,
+                paddingTop: '6em',
+                afterLoad: function(anchorLink, index){
+                    if (index == 5 || index == 3) {
+                    }
+
+                    if (index == 2 || index == 4) {
+                    }
+                }
+            });
+        });
+    </script>
+    <div id="container"></div>
+    <div class="i-head">
+        <a href="/" class="i-logo-less">
+            <img src="/assets/images/logo_2.gif" width="150">
+        </a>
+        <div class="social_btn uk-hidden-small" style="float:right;">
+            <div class="twitter">
+                <a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
+                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+            </div>
+            <div class="facebook">
+                <div class="fb-like" data-href="http://iamasokuho.gifu.jp/day_four.html" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+            </div>
+        </div>
+    </div>
+    <div id="fullpage">
+        <div class="section">
+            <p class="i-p s-i-p" >
+<blockquote class="twitter-tweet" data-cards="hidden" lang="ja"><p lang="ja" dir="ltr">やばい…ぼくたちのマックスバリュが… <a href="http://t.co/l71qHTiy5n">pic.twitter.com/l71qHTiy5n</a></p>&mdash; マス男 (@IAMAS_boy) <a href="https://twitter.com/IAMAS_boy/status/617641210350403585">2015, 7月 5</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<blockquote class="twitter-tweet" lang="ja"><p lang="ja" dir="ltr"><a href="https://twitter.com/IAMAS_boy">@iamas_boy</a> 死活問題じゃない…</p>&mdash; イア子 (@IAMAS_girl) <a href="https://twitter.com/IAMAS_girl/status/617643250879311872">2015, 7月 5</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<blockquote class="twitter-tweet" lang="ja"><p lang="ja" dir="ltr"><a href="https://twitter.com/IAMAS_girl">@iamas_girl</a> バローはちょっと遠いんだよなあ… <a href="http://t.co/xhNnDbL4Uj">pic.twitter.com/xhNnDbL4Uj</a></p>&mdash; マス男 (@IAMAS_boy) <a href="https://twitter.com/IAMAS_boy/status/617645999473848320">2015, 7月 5</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<blockquote class="twitter-tweet" lang="ja"><p lang="ja" dir="ltr"><a href="https://twitter.com/IAMAS_boy">@iamas_boy</a> 改めて見るとマックスバリュは神立地ね…完全にライフラインじゃない…</p>&mdash; イア子 (@IAMAS_girl) <a href="https://twitter.com/IAMAS_girl/status/617646488982650880">2015, 7月 5</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<blockquote class="twitter-tweet" lang="ja"><p lang="ja" dir="ltr"><a href="https://twitter.com/IAMAS_girl">@iamas_girl</a> 24時間だしね…完全に不規則なIAMAS生の生活インフラだよ…ありがたみあるなあ</p>&mdash; マス男 (@IAMAS_boy) <a href="https://twitter.com/IAMAS_boy/status/617647186168287232">2015, 7月 5</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </p>
+        </div>
+        <div class="section">
+           <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+ということで、<br>
+今日はぼくたちの家、<br>
+<span class="b">IAMAS学生寮「RIST」</span>を紹介するよ！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/12-1.jpeg" width=200><br>
+情報科学芸術大学院大学 学生寮 「RIST」<br>
+<a href="http://www.iamas.ac.jp/facility#rist">http://www.iamas.ac.jp/facility#rist</a>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+マックスバリューー！！早く復活してーー！！<br>
+それはそうとして、RISTの話って、<br>
+IAMAS生のライフラインなのに、<br>
+なかなか情報がないのよねー。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+2015年現在、<span class="b">mixiとかにしか情報がない、</span><br>
+という噂さえあるよ。<br>
+IAMAS謎に包まれすぎだろ…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+そんなわけで、<br>
+今回はRISTを詳しく紹介しちゃいます！<br>
+で、誰に話を聞きましょうか？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+そういえば、<br>
+RISTには<span class="b">学生自治会がある</span>よね！<br>
+自治会長に話を聞いてみよう！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/12-2.jpg" width=200>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+あ、みきてゐさんいいところに！<br>
+いま大丈夫ですか？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/miki_t.jpg" width=50><br>
+あ、大丈夫だよー。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/12-3.jpeg" width=100><br>
+<span style="b">みきてゐさん a.k.a. miki_t</span><br>
+1992年生まれ、IAMAS修士2年。RIST自治会長。<br>
+テクノにハマり、大学時代からDJとして活動。<br>
+ドイツへテクノ留学を経てIAMASへ。<br>
+いま熱いテクノアーティストはBlawan。<br>
+いま熱い蛍光灯はNEC M2161B。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+みきてゐさん、RIST案内してください！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+案内してもらうほどでもなくね？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/miki_t.jpg" width=50><br>
+あ、いいよー。<br>
+そんな案内するものないけど（笑）<br>
+じゃあ、後でRISTでね。
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+ありがとうございます！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+（パワープレイだ…）
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+〜IAMASから自転車で10分〜
+            </p>
+
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/12-4.jpg" width=200>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+ついたぞ！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/12-5.jpg" width=200>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+これがあの女のハウスね…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+全然ぼくらの家だね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/miki_t.jpg" width=50><br>
+あ、イア子ちゃん、マスオくん。
+            </p>
+
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+みきてゐさん！<br>
+わざわざありがとうございます！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/miki_t.jpg" width=50><br>
+いいえー。<br>
+えーっと、何から案内したらいいかな…<br>
+ここに駐輪場があって、こっちがポストと掲示板。<br>
+で、中庭？が駐車場になってるよ。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/12-6.jpeg" width=200><br>
+駐輪場
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/12-7.jpg" width=200><br>
+ポストと掲示板
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/12-8.jpeg" width=200><br>
+駐車場
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+<span class="b">駐車場も駐輪場も、<br>
+申請すれば無料で使える</span>んですよね！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/miki_t.jpg" width=50><br>
+そうそうー。<br>
+だから<span class="b">車持ってる人は、<br>
+持ってきたほうが絶対便利</span>だね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+プロジェクトで遠くに行くときとか、<br>
+資材を買いにホームセンターに行くときとか、<br>
+車があるとすごく便利だものね！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/miki_t.jpg" width=50><br>
+そうそう。<br>
+じゃ、中に入ろうか。<br>
+<span class="b">入り口はオートロック</span>になってるよ
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+「寮」とはいうけど、<br>
+全部屋個室だし、それぞれトイレもシャワーもあるし、<br>
+<span class="b">いたって普通のマンション</span>なのよね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/12-11.jpg" width=200><br>
+廊下
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/miki_t.jpg" width=50><br>
+そうそう。<br>
+普通のマンションと違うとこといえば、<br>
+<span class="b">常駐の管理人さん（女性）がいることと、<br>
+談話室があること</span>くらいかなぁ。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/12-12.jpg" width=200><br>
+談話室
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+<span class="b">2階、3階、4階の談話室は、<br>
+学生が自由に使っていい</span>んですよね！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/miki_t.jpg" width=50><br>
+うん、ガスコンロは使っちゃいけないとか、<br>
+23時以降は使っちゃいけないとか、<br>
+うるさい音出しちゃいけないとか、<br>
+<span class="b">いろいろルールはあるけど、常識の範囲内で、<br>
+好きに使っていい</span>ことになってる。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+留学生の送別パーティーとか、<br>
+お店にいくほどでもない打ち上げとか、<br>
+ちょっとした集まりでよく使うわよね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+そうだね。談話室だけじゃなくて、<br>
+<span class="b">誰かの部屋でごはん会したり飲み会したり</span>も、<br>
+よくやるよね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/miki_t.jpg" width=50><br>
+あとはせっかくだし、<br>
+<span class="b">部屋がどんな感じか紹介</span>しとこうかー。<br>
+空き部屋の鍵借りてきた。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+そうですね！<br>
+合格してから寮の部屋の図面はもらったけど、<br>
+<span class="b">実際どんな感じか全然わかんなかったから、<br>
+写真で紹介しておいたらわかりやすい</span>ですね！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/miki_t.jpg" width=50><br>
+はい、ここがいま開いてる2階の部屋だよ。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/12-13.jpg" width=200><br>
+IAMASができてからあるから、築20年くらい？
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/12-14.jpg" width=200><br>
+地味に下駄箱大きいのは助かる
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/12-15.jpg" width=200><br>
+キッチンはバブルを感じるオール電化
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/12-16.jpg" width=200><br>
+洗濯機は室内、独立洗面台あり
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/12-17.jpg" width=200><br>
+まあまあ広いお風呂
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/12-18.jpg" width=200><br>
+トイレも独立。冬に助かる暖房便座
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/12-19.jpg" width=200><br>
+お部屋は約9畳！ひろい！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/12-20.jpg" width=200><br>
+ベランダあります。<br>
+中庭向きと外向きの部屋がある
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/12-21.jpg" width=200><br>
+オートロックと部屋のインターホン、<br>
+エアコンあり
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/12-22.jpg" width=200><br>
+ベッドと広い収納あり！<br>
+これが地味に大活躍
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+この写真だけで結構伝わると思うけど、<br>
+<span class="b">たぶん部屋の広さとか、<br>
+イマイチわかりにくい</span>よなあ…。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+そんなこともあろうかと、<br>
+<span class="b">比較対象</b>を用意してきたわ！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/12-23.jpg" width=200><br>
+<a href="http://amzn.to/1KCErPa">
+我が闘争（幻冬舎単行本） / 堀江貴文
+</a>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+（なぜホリエモン…？）
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/12-24.jpg" width=200>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+<span class="b">
+ほら！これでわかりやすい！
+</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+（かえってよく解らなくなったような…）
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/12-25.jpg" width=200><br>
+この広い収納だって、ほら！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/12-26.jpg" width=200><br>
+これでわかりやすい！<br>
+<span class="b">わあ！めちゃくちゃ広いじゃない！！</span><br>
+「我が闘争」なら1,000冊くらい行けそうね！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+（回し者か…？）
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/12-27.jpg" width=200><br>
+ベッドの上の収納にも、<br>
+<span class="b">「我が闘争」300冊くらいはいけそう</span>ね！
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+イア子ちゃん、もっとなんかさあ、<br>
+ピースフルなやつにしようよ…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/12-28.jpg" width=200><br>
+「恋空」とかのほうが良かった？<br>
+<a href="http://amzn.to/1KCFfU6">
+恋空 〜切ナイ恋物語〜
+</a>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+（振れ幅よ…）
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+みきてゐさん、<br>
+RISTの行事って何かあるんですか？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/miki_t.jpg" width=50><br>
+うーん、そんなにないけど、<br>
+強いて言えば<span class="b">自治会総会と、<br>
+RIST新歓</span>くらいかな？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/12-29.png" width=200><br>
+RIST新歓の様子。<br>
+M2がひとり1品持ち寄って料理をふるまう。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+なるほど！<br>
+これで月額22,800円(※1)、<br>
+かなり安いですよね…。<br>
+
+<span style="font-size:10px;">
+※1 別途共益費が年間35,000円。共益費の用途は自治会総会において決められる。<br>
+<a href="http://www.iamas.ac.jp/facility#rist">http://www.iamas.ac.jp/facility#rist</a>
+</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/miki_t.jpg" width=50><br>
+都会に比べればそうだよねー。<br>
+でも実際<span class="b">オール電化で電気代そこそこかかる</span>し、<br>
+<span class="b">このへんでみると特別安いわけでもない</span>みたい。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+あ、それは思いました！<br>
+電気代とか共益費も合わせると、<br>
+結局毎月トータル３万円くらいになるから、<br>
+RISTの外に住んでる同期と、<br>
+あんまりかかるお金は変わんないみたいですね…。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/miki_t.jpg" width=50><br>
+でも<span class="b">半分以上の人はRISTに住んでる</span>から、<br>
+プロジェクトとか、飲みに行くとか、<br>
+<span class="b">みんなでどっか行くときは、<br>
+だいたいRIST集合・解散になる</span>よね。<br>
+そのへんはRISTに住んでたほうが楽かも。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+それはそうかも！<br>
+<span class="b">自分のメリットを考えて決めるのが、<br>
+いちばん良さそう</span>ですねー。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+みきてゐさん、ありがとうございました！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/miki_t.jpg" width=50><br>
+いいえー。じゃあまたねー。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p s-i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+ということで、<br>
+引き続き、質問をお待ちしております！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p s-i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+IAMASにいる人に聞きたいこととかがあれば、<br>
+ぼくたちが代わりに聞きにいきまーす！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p ">
+イア子とマス男への質問やメッセージはこちらから！<br>
+<a href="http://goo.gl/forms/hlgdXfxMei">
+http://goo.gl/forms/hlgdXfxMei
+</a>
+            </p>
+        </div>
+        <div class="section">
+<img src="/assets/images/iako.png" width=50><br>
+            <p class="i-p s-i-p ">
+<span style="font-weight:bold;">イアマ速報 facebookページ</span>はこちら！<br>
+<a href="https://www.facebook.com/iamasokuho">
+https://www.facebook.com/iamasokuho<br>
+</a>
+いいね！しなさいよ！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p ">
+<img src="/assets/images/new_masuo.png" width=50><br>
+<span style="font-weight:bold;">イアマ速報のTwitter</span>はこちらです！<br>
+<a href="https://twitter.com/IAMASokuho">
+https://twitter.com/IAMASokuho<br>
+</a>
+いろんな情報拾っていきまーす！<br>
+
+<br>
+<a href="http://iamasokuho.gifu.jp/day_eleven.html" style="font-size:12px;">
+<< 前の記事へ
+</a>
+&nbsp;&nbsp;&nbsp;
+<a href="http://iamasokuho.gifu.jp/archive.html" style="font-size:12px;">
+記事一覧へ
+</a>
+
+            <div class="social_btn_bottom social_btn_bottom_sp uk-visible-small">
+                <div class="twitter">
+                    <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://iamasokuho.gifu.jp/day_twelve.html" data-via="iamasokuho">Tweet</a>
+                    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+                </div>
+                <div class="facebook">
+                    <div class="fb-like" data-href="http://iamasokuho.gifu.jp/day_twelve.html" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+                </div>
+                <div class="hateb">
+                    <a href="http://b.hatena.ne.jp/entry/iamasokuho.gifu.jp/day_twelve.html" class="hatena-bookmark-button" data-hatena-bookmark-title="【IAMASすてきな施設めぐり】IAMAS学生寮「RIST」| IAMASOKUHO" data-hatena-bookmark-layout="standard-balloon" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリ>ーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a>
+                    <script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+                </div>
+            </div>
+            </p>
+        </div>
+    </div>
+
+</body>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-64484802-1', 'auto');
+  ga('send', 'pageview');
+</script>
+</html>

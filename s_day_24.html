@@ -1,0 +1,672 @@
+<html lang="ja-jp" dir="ltr" xmlns:og="http://ogp.me/ns/#">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="IAMASOKUHO">
+    <meta name="keywords" content="iamasokuho, iama速報, IAMAS, 情報科学芸術大学院大学">
+    <title>【IAMASプロジェクト紹介】ライブ体験の拡張！NxPC Lab.</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/vnd.microsoft.icon">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.11.0/css/uikit.almost-flat.min.css" rel="stylesheet">
+    <link href="/assets/css/jquery.fullPage.css" rel="stylesheet">
+    <link href="/assets/css/style.css" rel="stylesheet">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.11.0/js/uikit.min.js"></script>
+    <script src="/assets/js/three.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+    
+    <script type="text/javascript" src="assets/js/jquery.fullPage.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.typist.js"></script>
+    <style>
+        body {
+          /* 画像ファイルの指定 */
+          background-image: url(/assets/images/sp_back3.gif);
+
+          /* 画像を常に天地左右の中央に配置 */
+          background-position: center center;
+
+          /* 画像をタイル状に繰り返し表示しない */
+          background-repeat: no-repeat;
+
+          /* コンテンツの高さが画像の高さより大きい時、動かないように固定 */
+          background-attachment: fixed;
+
+          /* 表示するコンテナの大きさに基づいて、背景画像を調整 */
+          background-size: cover;
+
+          /* 背景画像が読み込まれる前に表示される背景のカラー */
+          background-color: #464646;
+        }
+    </style>
+</head>
+<body>
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v2.3&appId=884387134914356";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+    <script>
+        $('head').append(
+                '<style type="text/css">body {display:none;}</style>'
+        );
+        $(document).ready(function() {
+    
+            var camera, scene, renderer;
+            var mesh;
+            var mesh_masuo;
+            var objects = [];
+
+            // Particles
+            var group;
+            var container;
+            var particlesData = [];
+            var positions, colors;
+            var pointCloud;
+            var particlePositions;
+            var linesMesh;
+
+            var maxParticleCount = 1000;
+            var particleCount = 400;
+            if (window.innerWidth < 600) {
+                particleCount = 100;
+            } 
+
+            var r = 900;
+            var rHalf = r / 2;
+
+            var effectController = {
+                showDots: true,
+                showLines: true,
+                minDistance: 200,
+                limitConnections: false,
+                maxConnections: 100,
+                particleCount: 400
+            }
+
+    
+            init();
+            function init() {
+                $('body').fadeIn("slow");
+            }
+
+
+            $('#fullpage').fullpage({
+                sectionsColor: [],
+                verticalCentered: false,
+                paddingTop: '6em',
+                afterLoad: function(anchorLink, index){
+                    if (index == 5 || index == 3) {
+                    }
+
+                    if (index == 2 || index == 4) {
+                    }
+                }
+            });
+        });
+    </script>
+    <div id="container"></div>
+    <div class="i-head">
+        <a href="/" class="i-logo-less">
+            <img src="/assets/images/logo_2.gif" width="150">
+        </a>
+        <div class="social_btn uk-hidden-small" style="float:right;">
+            <div class="twitter">
+                <a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
+                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+            </div>
+            <div class="facebook">
+                <div class="fb-like" data-href="http://iamasokuho.gifu.jp/day_four.html" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+            </div>
+        </div>
+    </div>
+    <div id="fullpage">
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+今日はこのプロジェクトを紹介するよ！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/24-1.png" width=150><br>
+<span class="b">NxPC Lab.</span><br>
+<a href="http://nxpclab.info/">http://nxpclab.info/</a>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+NxPC Lab.ね！<br>
+学生とか先生とかには、<br>
+<span class="b">「えぬえっくす」</span>と呼ばれているわよね。<br>
+何人かやってる人がいるわよね…
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+うん、ぼくもやってるよ。<br>
+でもNxPCについては、<br>
+彼の方が詳しいかなー…あ、いた！
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/24-2.jpg" width=300>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+あ、金髪！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/sano.jpg" width=50><br>
+金髪でわるいか！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/24-3.jpg" width=300><br>
+さのかずや<br>
+IAMAS修士1年。北海道のど田舎出身。<br>
+大阪大学工学部、広告代理店の営業を経て、<br>
+今年の春からIAMASへ。<br>
+ある日突然金髪になる。<br>
+よく無茶する。無茶振りもしがち。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+さのパイセン、NxPCの話聞かせてよ！
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/sano.jpg" width=50><br>
+マス男パイセンもNxメンバーじゃん！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+まあ、やっぱ金髪の方が、<br>
+キャラ的に立ちそうだし…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/sano.jpg" width=50><br>
+キャラ立ち論か…やむを得んな…
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+（適当かよ…）
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+さのパイセン、<span class="b">NxPC Lab.ってなんなの？</span>
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/sano.jpg" width=50><br>
+NxPC Lab.は、<br>
+<span class="b">「新次元多層メディア的クラブ体験研究室」</span><br>
+<span class="b">N</span>e<span class="b">x</span>t dimention <span class="b">P</span>lural media <span class="b">C</span>lub experience <span class="b">Lab</span>ratory
+の略らしいよ。<br>
+もう5年以上続いてるみたいだね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+そうなんだ…<br>
+参加してたけど知らなかったよ…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+よく思いつくわね…
+            </p>
+
+        </div>
+
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/sano.jpg" width=50><br>
+誰が考えたんだろうね。<br>
+活動内容は、<br>
+<span class="b">「クラブ・ライブ空間の音楽体験の拡張」</span><br>
+を目的として、DJイベントとか、<br>
+勉強会とか、いろいろやっているよ。
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p s-i-p">
+<iframe width="300" height="200" src="https://www.youtube.com/embed/u-DgPHMq6tU" frameborder="0" allowfullscreen></iframe>
+<br>
+<br>
+これは3年くらい前のまとめ映像だね。
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+NxPC Lab.は、<br>
+プロジェクトっていう扱いなんだっけ？
+            </p>
+        </div>
+        <div class="section">
+        <p class="i-p s-i-p">
+<img src="/assets/images/sano.jpg" width=50><br>
+たしか非公式プロジェクトっていう括りで、<br>
+プロジェクトとしての単位認定はされないよ。<br>
+<span class="b">どちらかというと、<br>
+学生の課外活動の感じが強いかも。</span><br>
+けっこう技術的なこともやるけど。
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+要するに、Perfumeみたいな？<br>
+
+ライゾマ(※1)みたいな？<br>
+チームラボ(※2)みたいな？<br>
+
+<span style="font-size:10px;">※1 Rhizomatiks：IAMAS卒業生複数人所属。 <a href="http://rhizomatiks.com">http://rhizomatiks.com</a><br>
+※2 teamLab：IAMAS卒業生複数人所属。 <a href="http://www.team-lab.com">http://www.team-lab.com</a></span>
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/sano.jpg" width=50><br>
+安直か！<br>
+<span class="b">でもIAMASの中では、<br>
+多少近いところはあるかも。</span><br>
+NxPCに携わっていた卒業生の方で、<br>
+そのあたりの関係者の方もいるしね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+NxPCメーリスでやりとりしてたら、<br>
+卒業生の方がかなり技術的なアドバイスを、<br>
+送って下さったりもしたよね。
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/sano.jpg" width=50><br>
+そうそう！あれはありがたかったな…<br>
+NxPCは、単なる音楽イベントじゃなくて、<br>
+<span class="b">照明機材やデバイスやアプリみたいな、<br>
+体験を拡張するための実験場として、<br>
+音楽イベントを実施している感じ</span>だね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+ただの楽しいDJイベントかと思ったら、<br>
+技術的なことを試す感じなのね
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/sano.jpg" width=50><br>
+DJしたりVJしたりだけじゃなくて、<br>
+自分たちで会場を交渉しにいったり、<br>
+フライヤーとかWebサイトつくったり、<br>
+<span style="b">プロジェクターや照明の配置とか制御とか、<br>
+トラス組んだりすることもあるよ。</span>
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p s-i-p">
+<iframe width="300" height="200" src="https://www.youtube.com/embed/mDefMFnfw_Y" frameborder="0" allowfullscreen></iframe>
+<br>
+こないだの新入生イベントも、<br>
+DJやVJはもちろん、<br>
+設営からPAとか照明制御とか撤去まで、<br>
+全部自分たちでやったよね。
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/sano.jpg" width=50><br>
+<span style="b">自分たちで全部やる感じが、<br>
+すごく面白いよね。</span><br>
+「流しそうめんDJやろう！」って言ったら、<br>
+保健所に確認に行くとか、水引っ張るとか、<br>
+<span style="b">普通やんないことをなんとか実現させる感じ。</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+でもそういうことやってるのって、<br>
+最近増えてきてない？<br>
+こないだネットのニュースで、<br>
+アイドルのライブを演出！<br>
+みたいなの見たわ。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/sano.jpg" width=50><br>
+あー、それはBAPA(※3)かもね。<br>
+<span style="b">今度「2020年のアイドルライブ」って、<br>
+テクノロジーを駆使した演出を、<br>
+たくさんのチームでつくるみたいだね。</span><br>
+東京だよね。あれ見に行きたいなぁ。<br>
+<br>
+<span style="font-size:10px;">
+3 BAPA：BasculeとPARTYという2つのインタラクティブ・クリエイティブの会社が運営する、半年間のクリエイティブコーディングの学校。7月20日に第2期の卒業制作展がヒカリエで行われる。<br>
+<a href="http://bapa.ac/">http://bapa.ac/</a>
+</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+そういうの流行りはじめてきたよね。
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/sano.jpg" width=50><br>
+クラブトレインとかもそうだよね。<br>
+こないだ西武鉄道がageHa TRAIN(※4)を<br>
+「日本初！」ってやってたけど、<br>
+電車でクラブイベントやったのは、<br>
+NxPCの方が早かったんだよ！<br>
+<br>
+<span style="font-size:10px;">
+※4 ageHa TRAIN：東京最大級のクラブ「新木場ageHa」でのイベント開催に合わせ、西武鉄道がageHaと共同で新木場直通の列車内でDJイベントを開催した。<br>
+<a href="http://kai-you.net/article/15942">http://kai-you.net/article/15942</a>
+</span>
+
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/24-4.jpg" width=300><br>
+<span class="b">クラブトレイン</span><br>
+ローカル鉄道「樽見鉄道」の車内で、<br>
+大垣駅ー樽見駅間往復の3時間、<br>
+DJ、VJ、ライブ演奏など、<br>
+音楽パフォーマンスを行った。<br>
+<a href="http://www.iamas.ac.jp/9759">
+http://www.iamas.ac.jp/9759
+</a>
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+岐阜の山奥でやっても、<br>
+なかなか注目されないわね…<br>
+向こうが先みたいになっちゃいそう。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/sano.jpg" width=50><br>
+そこはSNSの時代だし、<br>
+いろいろやりようはありそうだよね！<br>
+他にも、<span class="b">地元のお祭りでDJしたり、<br>
+深夜の地下駐車場でDJしたり</span>もしてるね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<iframe width="300" height="200" src="https://www.youtube.com/embed/0z0mi0XUzFo" frameborder="0" allowfullscreen></iframe>
+<br>
+なまずまつり2014<br>
+<a href="http://www.iamas.ac.jp/11739">http://www.iamas.ac.jp/11739</a>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/24-5.jpg" width=300><br>
+地下駐車場<br>
+<a href="https://www.facebook.com/video.php?v=727638610628367">https://www.facebook.com/video.php?v=727638610628367</a>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+<span class="b">今度のオープンハウス</span>では、
+なにやるんだっけ？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/sano.jpg" width=50><br>
+土曜日の夜に、屋外水上ステージで、<br>
+DJイベントをやるよ！<br>
+今年は流しそうめんをやろうとしてる！
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p s-i-p">
+<iframe width="300" height="200" src="https://www.youtube.com/embed/8woJKc8QG2o" frameborder="0" allowfullscreen></iframe>
+<br>
+昨年のオープンハウスでのNxPC LIVEの様子
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+<span class="b">壁をスクリーンにして、<br>
+映像とレーザー出してる…すごい！</span><br>
+そして流しそうめん！<br>
+めっちゃ楽しそう！
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+ぜひたくさん来てほしいよね！<br>
+あと次の週には、<br>
+<span class="b">奥美濃ソウルトレインもあるよ！</span><br>
+これも電車内DJイベントだね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/24-6.png" width=300><br>
+<span class="b">奥美濃ソウルトレイン</span><br>
+<a href="http://www.iamas.ac.jp/14610">http://www.iamas.ac.jp/14610</a>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+<span class="b">Aチケットは、<br>
+動きに合わせて光る下駄がもらえる</span>のよね！<br>
+ほしいなー。参加しようかしら。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/sano.jpg" width=50><br>
+NxPC Lab.は、月１くらいのペースでは、<br>
+なにかしらイベントやってるから、<br>
+<span class="b">「岐阜に行っても音楽イベントなさそう…」<br>
+って人でも全然心配ないよ！（笑）</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+それはぼくも思ってたなあ…<br>
+<span class="b">でも自分たちでイベントつくったり、<br>
+普通いじれない照明とかいろんな機材とか、<br>
+いじったりする方がずっと楽しいよ！</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+でもわたし、音楽とかプログラミングとか、<br>
+そんなに得意じゃないからなあ…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/sano.jpg" width=50><br>
+でもイア子ちゃん映像やってるじゃん！<br>
+プログラミングできる人と映像できる人で、<br>
+VJユニット組んだりとかもしてるし、<br>
+イカした記録映像を作ってる人もいるよ！<br>
+フライヤーとかも必要だしね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+そうそう。<span class="b">音楽イベントが好きな人なら、<br>
+どんな形でも関わるチャンスがある</span>のが、<br>
+NxPC Labの面白いとこでもあるね！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/nxpc_fly.jpg" width=300><br>
+ということで、<br>
+土曜日にオープンハウスに来る人は、<br>
+17時以降にセンタービルの裏に来てね！<br>
+おれもDJとVJやるよてい！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+わたしたちも17時ごろまで、<br>
+ロフトで勝手に相談会やるから、<br>
+<span class="b">来てくれた人と一緒に見に行くね！</span><br>
+さのパイセンありがとうー！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+NxPCの準備がんばろー！
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p ">
+<img src="/assets/images/iako.png" width=50><br>
+ということで引き続き、<br>
+質問のほうもお待ちしております！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+IAMASにいる人に聞きたいこととかがあれば、<br>
+ぼくたちが代わりに聞きにいきまーす！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p">
+イア子とマス男への質問やメッセージはこちらから！<br>
+<a href="http://goo.gl/forms/hlgdXfxMei">
+http://goo.gl/forms/hlgdXfxMei
+</a>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+<span style="font-weight:bold;">イアマ速報 facebookページ</span>はこちら！<br>
+<a href="https://www.facebook.com/iamasokuho">
+https://www.facebook.com/iamasokuho<br>
+</a>
+いいね！しなさいよ！
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+<span style="font-weight:bold;">イアマ速報のTwitter</span>はこちらです！<br>
+<a href="https://twitter.com/IAMASokuho">
+https://twitter.com/IAMASokuho<br>
+</a>
+いろんな情報拾っていきまーす！<br>
+
+<br>
+
+<a href="http://iamasokuho.gifu.jp/day_23.html" style="font-size:12px;">
+<< 前の記事へ
+</a>
+&nbsp;&nbsp;&nbsp;
+<a href="http://iamasokuho.gifu.jp/archive.html" style="font-size:12px;">
+記事一覧へ
+</a>
+
+            <div class="social_btn_bottom social_btn_bottom_sp uk-visible-small">
+                <div class="twitter">
+                    <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://iamasokuho.gifu.jp/day_24.html" data-via="iamasokuho">Tweet</a>
+                    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+                </div>
+                <div class="facebook">
+                    <div class="fb-like" data-href="http://iamasokuho.gifu.jp/day_24.html" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+                </div>
+                <div class="hateb">
+                    <a href="http://b.hatena.ne.jp/entry/iamasokuho.gifu.jp/day_24.html" class="hatena-bookmark-button" data-hatena-bookmark-title="【IAMASプロジェクト紹介】ライブ体験の拡張！NxPC Lab.| IAMASOKUHO" data-hatena-bookmark-layout="standard-balloon" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリ>ーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a>
+                    <script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+                </div>
+            </div>
+            </p>
+        </div>
+    </div>
+
+</body>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-64484802-1', 'auto');
+  ga('send', 'pageview');
+</script>
+</html>

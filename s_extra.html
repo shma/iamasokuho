@@ -1,0 +1,350 @@
+<html lang="ja-jp" dir="ltr" xmlns:og="http://ogp.me/ns/#">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="IAMASOKUHO">
+    <meta name="keywords" content="iamasokuho, iama速報, IAMAS, 情報科学芸術大学院大学">
+    <title>【マジキチ】今週末開催のIAMASオープンハウスｗｗｗｗｗｗｗｗｗｗｗｗｗ【360度動画あり】</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/vnd.microsoft.icon">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.11.0/css/uikit.almost-flat.min.css" rel="stylesheet">
+    <link href="/assets/css/jquery.fullPage.css" rel="stylesheet">
+    <link href="/assets/css/style.css" rel="stylesheet">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.11.0/js/uikit.min.js"></script>
+    <script src="/assets/js/three.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+    
+    <script type="text/javascript" src="assets/js/jquery.fullPage.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.typist.js"></script>
+    <style>
+        body {
+          /* 画像ファイルの指定 */
+          background-image: url(/assets/images/sp_back3.gif);
+
+          /* 画像を常に天地左右の中央に配置 */
+          background-position: center center;
+
+          /* 画像をタイル状に繰り返し表示しない */
+          background-repeat: no-repeat;
+
+          /* コンテンツの高さが画像の高さより大きい時、動かないように固定 */
+          background-attachment: fixed;
+
+          /* 表示するコンテナの大きさに基づいて、背景画像を調整 */
+          background-size: cover;
+
+          /* 背景画像が読み込まれる前に表示される背景のカラー */
+          background-color: #464646;
+        }
+    </style>
+</head>
+<body>
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v2.3&appId=884387134914356";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+    <script>
+        $('head').append(
+                '<style type="text/css">body {display:none;}</style>'
+        );
+        $(document).ready(function() {
+    
+            var camera, scene, renderer;
+            var mesh;
+            var mesh_masuo;
+            var objects = [];
+
+            // Particles
+            var group;
+            var container;
+            var particlesData = [];
+            var positions, colors;
+            var pointCloud;
+            var particlePositions;
+            var linesMesh;
+
+            var maxParticleCount = 1000;
+            var particleCount = 400;
+            if (window.innerWidth < 600) {
+                particleCount = 100;
+            } 
+
+            var r = 900;
+            var rHalf = r / 2;
+
+            var effectController = {
+                showDots: true,
+                showLines: true,
+                minDistance: 200,
+                limitConnections: false,
+                maxConnections: 100,
+                particleCount: 400
+            }
+
+    
+            init();
+            function init() {
+                $('body').fadeIn("slow");
+            }
+
+
+            $('#fullpage').fullpage({
+                sectionsColor: [],
+                verticalCentered: false,
+                paddingTop: '6em',
+                afterLoad: function(anchorLink, index){
+                    if (index == 5 || index == 3) {
+                    }
+
+                    if (index == 2 || index == 4) {
+                    }
+                }
+            });
+        });
+    </script>
+    <div id="container"></div>
+    <div class="i-head">
+        <a href="/" class="i-logo-less">
+            <img src="/assets/images/logo_2.gif" width="150">
+        </a>
+        <div class="social_btn uk-hidden-small" style="float:right;">
+            <div class="twitter">
+                <a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
+                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+            </div>
+            <div class="facebook">
+                <div class="fb-like" data-href="http://iamasokuho.gifu.jp/day_four.html" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+            </div>
+        </div>
+    </div>
+    <div id="fullpage">
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/arupaka.png" width="300"><br>
+〜これまでのあらすじ〜<br>
+2015年7月25日（土）、26日（日）に開催される、<br>
+「IAMASオープンハウス2015」へ向けて、<br>
+1日も欠かさず更新を続けてきた、<br>
+IAMAS M1のイア子とマス男！<br>
+今週末の2人の運命やいかに！？
+            </p>
+        </div>
+        <div class="section" style="padding-left:20%;">
+            <p class="i-p s-i-p">
+<blockquote class="instagram-media" data-instgrm-captioned data-instgrm-version="4" style=" background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:200px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);"><div style="padding:8px;"> <div style=" background:#F8F8F8; line-height:0; margin-top:40px; padding:50% 0; text-align:center; width:100%;"> <div style=" background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAsCAMAAAApWqozAAAAGFBMVEUiIiI9PT0eHh4gIB4hIBkcHBwcHBwcHBydr+JQAAAACHRSTlMABA4YHyQsM5jtaMwAAADfSURBVDjL7ZVBEgMhCAQBAf//42xcNbpAqakcM0ftUmFAAIBE81IqBJdS3lS6zs3bIpB9WED3YYXFPmHRfT8sgyrCP1x8uEUxLMzNWElFOYCV6mHWWwMzdPEKHlhLw7NWJqkHc4uIZphavDzA2JPzUDsBZziNae2S6owH8xPmX8G7zzgKEOPUoYHvGz1TBCxMkd3kwNVbU0gKHkx+iZILf77IofhrY1nYFnB/lQPb79drWOyJVa/DAvg9B/rLB4cC+Nqgdz/TvBbBnr6GBReqn/nRmDgaQEej7WhonozjF+Y2I/fZou/qAAAAAElFTkSuQmCC); display:block; height:44px; margin:0 auto -44px; position:relative; top:-22px; width:44px;"></div></div> <p style=" margin:8px 0 0 0; padding:0 4px;"> <a href="https://instagram.com/p/5fc-udBhC0/" style=" color:#000; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:normal; line-height:17px; text-decoration:none; word-wrap:break-word;" target="_top">明日天気になあれ #IAMASOH2015</a></p> <p style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; line-height:17px; margin-bottom:0; margin-top:8px; overflow:hidden; padding:8px 0 7px; text-align:center; text-overflow:ellipsis; white-space:nowrap;">A photo posted by イアマ速報 (@iamasokuho) on <time style=" font-family:Arial,sans-serif; font-size:14px; line-height:17px;" datetime="2015-07-23T20:06:10+00:00">Jul 23, 2015 at 1:06pm PDT</time></p></div></blockquote>
+<script async defer src="//platform.instagram.com/en_US/embeds.js"></script>
+            </p>
+        </div>
+        <div class="section" style="padding-left:20%;">
+            <p class="i-p s-i-p">
+<blockquote class="instagram-media" data-instgrm-captioned data-instgrm-version="4" style=" background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:200px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);"><div style="padding:8px;"> <div style=" background:#F8F8F8; line-height:0; margin-top:40px; padding:50% 0; text-align:center; width:100%;"> <div style=" background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAsCAMAAAApWqozAAAAGFBMVEUiIiI9PT0eHh4gIB4hIBkcHBwcHBwcHBydr+JQAAAACHRSTlMABA4YHyQsM5jtaMwAAADfSURBVDjL7ZVBEgMhCAQBAf//42xcNbpAqakcM0ftUmFAAIBE81IqBJdS3lS6zs3bIpB9WED3YYXFPmHRfT8sgyrCP1x8uEUxLMzNWElFOYCV6mHWWwMzdPEKHlhLw7NWJqkHc4uIZphavDzA2JPzUDsBZziNae2S6owH8xPmX8G7zzgKEOPUoYHvGz1TBCxMkd3kwNVbU0gKHkx+iZILf77IofhrY1nYFnB/lQPb79drWOyJVa/DAvg9B/rLB4cC+Nqgdz/TvBbBnr6GBReqn/nRmDgaQEej7WhonozjF+Y2I/fZou/qAAAAAElFTkSuQmCC); display:block; height:44px; margin:0 auto -44px; position:relative; top:-22px; width:44px;"></div></div> <p style=" margin:8px 0 0 0; padding:0 4px;"> <a href="https://instagram.com/p/5gTxTghhKv/" style=" color:#000; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:normal; line-height:17px; text-decoration:none; word-wrap:break-word;" target="_top">音楽イベント準備大会 #IAMASONIC #NxPCLab #IAMASOH2015</a></p> <p style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; line-height:17px; margin-bottom:0; margin-top:8px; overflow:hidden; padding:8px 0 7px; text-align:center; text-overflow:ellipsis; white-space:nowrap;">A photo posted by イアマ速報 (@iamasokuho) on <time style=" font-family:Arial,sans-serif; font-size:14px; line-height:17px;" datetime="2015-07-24T04:04:56+00:00">Jul 23, 2015 at 9:04pm PDT</time></p></div></blockquote>
+<script async defer src="//platform.instagram.com/en_US/embeds.js"></script>
+            </p>
+        </div>
+        <div class="section" style="padding-left:20%;">
+            <p class="i-p s-i-p">
+<blockquote class="instagram-media" data-instgrm-captioned data-instgrm-version="4" style=" background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:200px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);"><div style="padding:8px;"> <div style=" background:#F8F8F8; line-height:0; margin-top:40px; padding:50% 0; text-align:center; width:100%;"> <div style=" background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAsCAMAAAApWqozAAAAGFBMVEUiIiI9PT0eHh4gIB4hIBkcHBwcHBwcHBydr+JQAAAACHRSTlMABA4YHyQsM5jtaMwAAADfSURBVDjL7ZVBEgMhCAQBAf//42xcNbpAqakcM0ftUmFAAIBE81IqBJdS3lS6zs3bIpB9WED3YYXFPmHRfT8sgyrCP1x8uEUxLMzNWElFOYCV6mHWWwMzdPEKHlhLw7NWJqkHc4uIZphavDzA2JPzUDsBZziNae2S6owH8xPmX8G7zzgKEOPUoYHvGz1TBCxMkd3kwNVbU0gKHkx+iZILf77IofhrY1nYFnB/lQPb79drWOyJVa/DAvg9B/rLB4cC+Nqgdz/TvBbBnr6GBReqn/nRmDgaQEej7WhonozjF+Y2I/fZou/qAAAAAElFTkSuQmCC); display:block; height:44px; margin:0 auto -44px; position:relative; top:-22px; width:44px;"></div></div> <p style=" margin:8px 0 0 0; padding:0 4px;"> <a href="https://instagram.com/p/5gqhmLBhHi/" style=" color:#000; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:normal; line-height:17px; text-decoration:none; word-wrap:break-word;" target="_top">こいつも準備中 #IAMASOH2015 #pepper</a></p> <p style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; line-height:17px; margin-bottom:0; margin-top:8px; overflow:hidden; padding:8px 0 7px; text-align:center; text-overflow:ellipsis; white-space:nowrap;">A photo posted by イアマ速報 (@iamasokuho) on <time style=" font-family:Arial,sans-serif; font-size:14px; line-height:17px;" datetime="2015-07-24T07:23:46+00:00">Jul 24, 2015 at 12:23am PDT</time></p></div></blockquote>
+<script async defer src="//platform.instagram.com/en_US/embeds.js"></script>
+            </p>
+        </div>
+        <div class="section" style="padding-left:20%;">
+            <p class="i-p s-i-p">
+<blockquote class="instagram-media" data-instgrm-captioned data-instgrm-version="4" style=" background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:200px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);"><div style="padding:8px;"> <div style=" background:#F8F8F8; line-height:0; margin-top:40px; padding:50% 0; text-align:center; width:100%;"> <div style=" background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAsCAMAAAApWqozAAAAGFBMVEUiIiI9PT0eHh4gIB4hIBkcHBwcHBwcHBydr+JQAAAACHRSTlMABA4YHyQsM5jtaMwAAADfSURBVDjL7ZVBEgMhCAQBAf//42xcNbpAqakcM0ftUmFAAIBE81IqBJdS3lS6zs3bIpB9WED3YYXFPmHRfT8sgyrCP1x8uEUxLMzNWElFOYCV6mHWWwMzdPEKHlhLw7NWJqkHc4uIZphavDzA2JPzUDsBZziNae2S6owH8xPmX8G7zzgKEOPUoYHvGz1TBCxMkd3kwNVbU0gKHkx+iZILf77IofhrY1nYFnB/lQPb79drWOyJVa/DAvg9B/rLB4cC+Nqgdz/TvBbBnr6GBReqn/nRmDgaQEej7WhonozjF+Y2I/fZou/qAAAAAElFTkSuQmCC); display:block; height:44px; margin:0 auto -44px; position:relative; top:-22px; width:44px;"></div></div> <p style=" margin:8px 0 0 0; padding:0 4px;"> <a href="https://instagram.com/p/5gvMsHhhNm/" style=" color:#000; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:normal; line-height:17px; text-decoration:none; word-wrap:break-word;" target="_top">事務局、先生方への内覧会始まりました #IAMASOH2015</a></p> <p style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; line-height:17px; margin-bottom:0; margin-top:8px; overflow:hidden; padding:8px 0 7px; text-align:center; text-overflow:ellipsis; white-space:nowrap;">A photo posted by イアマ速報 (@iamasokuho) on <time style=" font-family:Arial,sans-serif; font-size:14px; line-height:17px;" datetime="2015-07-24T08:04:36+00:00">Jul 24, 2015 at 1:04am PDT</time></p></div></blockquote>
+<script async defer src="//platform.instagram.com/en_US/embeds.js"></script>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+ということで、<br>
+あしたはオープンハウスよ！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+やっとここまできたよーー！！<br>
+<span class="b">ていうか準備、<br>
+まだまだ終わってないよーーー！！</span><br>
+今夜が山だ…がんばろう！！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+ここまでオープンハウスの話とか、<br>
+オープンハウスにまつわる話とか、<br>
+いいだけ書いてきたから、<br>
+もう今更書くこともないわね…<br>
+
+<a style="font-size:10px" href="http://iamasokuho.gifu.jp/archive.html">
+【イアマ速報】ARCHIVE
+http://iamasokuho.gifu.jp/archive.html
+</a>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+
+そうだね…<br>
+もうあとは、<span class="b">来て、見てもらう。</span><br>
+それだけだね…。<br>
+来なきゃ分からないIAMAS、<br>
+来たら伝わるIAMASが、絶対ある。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+<span class="b">イアマ速報「勝手に進学相談会」は、<br>
+25日（土）12:00〜13:00、<br>
+26日（日）15:30〜17:00</span><br>
+で開催します！<br>
+<span class="b">ワークショップ5F奥の、M1ロフトへ！！</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+ちなみに、<span class="b">25日（土）17:00〜21:00で、<br>
+センタービル裏・水上ステージにて、<br>
+流しそうめんDJイベント</span>が行われます！<br>
+そこでぼくらもいくらでも話せるし、<br>
+その辺のIAMAS生ともお話しできるよ！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+なんでも話しちゃうぞ〜！！<br>
+<span class="b">
+オープンハウス期間中は、<br>
+イアマ速報TwitterやInstagramで、<br>
+情報を配信します！</span>
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<span class="b">イアマ速報Twitter</span><br>
+<a href="https://twitter.com/IAMASokuho">https://twitter.com/IAMASokuho</a><br>
+<br>
+
+<span class="b">イアマ速報Instagram</span><br>
+<a href="https://instagram.com/IAMASokuho/">https://instagram.com/IAMASokuho/</a>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+Instagramはだんだん、<br>
+<span class="b">†修羅場報告†</span>になりつつあるわね…<br>
+ぜひぜひチェックしてください！！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+そしてご来場なさったみなさん、<br>
+<span class="b">#IAMASOH2015</span>で、<br>
+ガンガンつぶやいてくださーい！<br>
+撮っちゃいけないものも、<br>
+別にそんなにないと思います！笑
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+あとIAMASって、<br>
+初めてだと結構来るの難しいのよね！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+そうそう！<br>
+だから<span class="b">来場方法を整理しておいたよ！</span><br>
+来場方法の詳細はこちら！<br>
+<br>
+<a href="http://togetter.com/li/851719" style="font-size:10px;">
+【IAMASオープンハウス2015】IAMAS来場ガイド #IAMASOH2015<br>
+http://togetter.com/li/851719
+</a>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+お気をつけてお越しくださいー！<br>
+それでは土曜日・日曜日、<br>
+岐阜県大垣市・ソフトピアジャパン、<br>
+情報科学芸術大学院大学（IAMAS）<br>
+<span class="b">オープンハウス2015</span>でお待ちしてます！！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+みなさんとお会いできるのを、<br>
+たのしみにしてまーす！！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/VpQpdaMtwOY" frameborder="0" allowfullscreen></iframe>
+
+<br>
+<span style="font-size:10px;">
+動画 Thanks to<br>
+にわあやの <a href="https://twitter.com/aya_carry">@aya_carry</a><br>
+めがね＆ボブのボブの方<br>
+(99.9%)復活⚾天才うまみ成分セミナー<br>
+ご協力頂いたみなみなさま
+</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p">
+<a href="http://iamasokuho.gifu.jp/day_30.html" style="font-size:12px;">
+<< 前の記事へ
+</a>
+&nbsp;&nbsp;&nbsp;
+<a href="http://iamasokuho.gifu.jp/archive.html" style="font-size:12px;">
+記事一覧へ
+</a>
+
+            <div class="social_btn_bottom social_btn_bottom_sp uk-visible-small">
+                <div class="twitter">
+                    <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://iamasokuho.gifu.jp/extra.html" data-via="iamasokuho">Tweet</a>
+                    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+                </div>
+                <div class="facebook">
+                    <div class="fb-like" data-href="http://iamasokuho.gifu.jp/extra.html" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+                </div>
+                <div class="hateb">
+                    <a href="http://b.hatena.ne.jp/entry/iamasokuho.gifu.jp/extra.html" class="hatena-bookmark-button" data-hatena-bookmark-title="【マジキチ】今週末開催のIAMASオープンハウスｗｗｗｗｗｗｗｗｗｗｗｗｗ【360度動画あり】" data-hatena-bookmark-layout="standard-balloon" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリ>ーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a>
+                    <script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+                </div>
+            </div>
+            </p>
+        </div>
+    </div>
+
+</body>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-64484802-1', 'auto');
+  ga('send', 'pageview');
+</script>
+</html>

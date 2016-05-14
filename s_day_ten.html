@@ -1,0 +1,589 @@
+<html lang="ja-jp" dir="ltr" xmlns:og="http://ogp.me/ns/#">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="IAMASOKUHO">
+    <meta name="keywords" content="iamasokuho, iama速報, IAMAS, 情報科学芸術大学院大学">
+    <title>【IAMAS正直Q&A】IAMASと他の大学院ってどう違うの？ | IAMASokuho</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/vnd.microsoft.icon">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.11.0/css/uikit.almost-flat.min.css" rel="stylesheet">
+    <link href="/assets/css/jquery.fullPage.css" rel="stylesheet">
+    <link href="/assets/css/style.css" rel="stylesheet">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.11.0/js/uikit.min.js"></script>
+    <script src="/assets/js/three.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+    
+    <script type="text/javascript" src="assets/js/jquery.fullPage.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.typist.js"></script>
+    <style>
+        body {
+          /* 画像ファイルの指定 */
+          background-image: url(/assets/images/sp_back3.gif);
+
+          /* 画像を常に天地左右の中央に配置 */
+          background-position: center center;
+
+          /* 画像をタイル状に繰り返し表示しない */
+          background-repeat: no-repeat;
+
+          /* コンテンツの高さが画像の高さより大きい時、動かないように固定 */
+          background-attachment: fixed;
+
+          /* 表示するコンテナの大きさに基づいて、背景画像を調整 */
+          background-size: cover;
+
+          /* 背景画像が読み込まれる前に表示される背景のカラー */
+          background-color: #464646;
+        }
+    </style>
+</head>
+<body>
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v2.3&appId=884387134914356";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+    <script>
+        $('head').append(
+                '<style type="text/css">body {display:none;}</style>'
+        );
+        $(document).ready(function() {
+    
+            var camera, scene, renderer;
+            var mesh;
+            var mesh_masuo;
+            var objects = [];
+
+            // Particles
+            var group;
+            var container;
+            var particlesData = [];
+            var positions, colors;
+            var pointCloud;
+            var particlePositions;
+            var linesMesh;
+
+            var maxParticleCount = 1000;
+            var particleCount = 400;
+            if (window.innerWidth < 600) {
+                particleCount = 100;
+            } 
+
+            var r = 900;
+            var rHalf = r / 2;
+
+            var effectController = {
+                showDots: true,
+                showLines: true,
+                minDistance: 200,
+                limitConnections: false,
+                maxConnections: 100,
+                particleCount: 400
+            }
+
+    
+            init();
+            function init() {
+                $('body').fadeIn("slow");
+            }
+
+
+            $('#fullpage').fullpage({
+                sectionsColor: ['none', 'none', 'none', 'none', 'none'],
+                verticalCentered: false,
+                paddingTop: '6em',
+                afterLoad: function(anchorLink, index){
+                    if (index == 5 || index == 3) {
+                    }
+
+                    if (index == 2 || index == 4) {
+                    }
+                }
+            });
+        });
+    </script>
+    <div id="container"></div>
+    <div class="i-head">
+        <a href="/" class="i-logo-less">
+            <img src="/assets/images/logo_2.gif" width="150">
+        </a>
+        <div class="social_btn uk-hidden-small" style="float:right;">
+            <div class="twitter">
+                <a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
+                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+            </div>
+            <div class="facebook">
+                <div class="fb-like" data-href="http://iamasokuho.gifu.jp/day_four.html" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+            </div>
+        </div>
+    </div>
+    <div id="fullpage">
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+今日はこんな質問が届いているよ！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+イアマスネーム：毎日炭水化物さん（22歳・女性）<br>
+IAMASがなにやってるのかわかんないんですけど、<br>
+IAMASって、美大とか情報系の大学院とか、<br>
+慶応SFCとかとどう違うんですか？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+毎日炭水化物って、IAMAS生かしらね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+<span style="font-weight:bold;">ぼくらがお湯で戻す系食品しか食べてない、</span><br>
+みたいな言い方やめようよ！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+わたしもこれはちょっと悩んだ部分ね…<br>
+<span style="font-weight:bold;">美大にも情報系っぽいことやってるとこあるし、<br>
+工学部とか、それこそ慶応SFCとかにも、<br>
+アートっぽいことやってるとこある</span>わよね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+分野を限定していないがゆえの難しさ、<br>
+みたいなとこはあるよね…。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<span style="font-weight:bold;">◇研究制度の違い◇</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+わたしも美大出身だけど、<br>
+美大出身の子と話しててだいたい共通してるのは、<br>
+<span style="font-weight:bold;">美大は担当の先生に左右されすぎる</span>から、<br>
+あんまり自由にやりたいことができない、<br>
+っていうのがあるわね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+あー、そういう話は聞いたことあるな。<br>
+<span style="font-weight:bold;">担当の先生が納得するものじゃないと卒業できない、</span><br>
+みたいな話。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+もちろんIAMASの修士研究も、<br>
+研究には主査・副査の先生がつくけど、<br>
+美大よりは、先生方の理解は圧倒的に広いし、<br>
+<span style="font-weight:bold;">査読の先生は、自分で決めてお願いしにいける</span>から、<br>
+<span style="font-weight:bold;">美大と比べたら自由度は段違い</span>よね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+なるほどなあ。<br>
+確かにぼくのいた工学系でも、<br>
+<span style="font-weight:bold;">研究室である程度やることが決まっている</span>し、<br>
+<span style="font-weight:bold;">研究室の成果になる研究</span>じゃないと、<br>
+修士研究にはできなかったなあ。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+その辺の<span style="font-weight:bold;">自由度は全然違う</span>かもね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<span style="font-weight:bold;">◇学生の違い◇</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+IAMASに入ってみて思ったんだけど、<br>
+IAMASは<span style="font-weight:bold;">自分でいろいろ作ってきた人</span>が多いよね。<br>
+音楽、映像、サービス、デザイン、とかいろいろ。<br>
+なんかやろう！ってなったらみんなできちゃうから、<br>
+<span style="font-weight:bold;">いつもその辺で、誰かなにかしら作ってる</span>よね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+それはほんとにそうね。<br>
+あと<span style="font-weight">かなり変な人</span>とかね。<br>
+こないだの学内イベントに出てた、<br>
+「(99.9%)復活⚾︎天才うまみ成分セミナー」<br>
+はヤバかったわね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/ten_one.jpg" width=300><br>
+エクスペリメンタルノイズユニット<br>
+「(99.9%)復活⚾︎天才うまみ成分セミナー」
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+あれは深い闇を感じたね…<br>
+なかなか美大とか工学系とかSFCとかで、<br>
+ああいうことをやるのは難しいだろうね。
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+さすがにこんなヤバい人ばっかりじゃないけど、<br>
+そういう<span style="font-weight:bold;">「ラジカルな発信ができる人」</span>が、<br>
+<span style="font-weight:bold;">もっと自由に発信ができる</span>、っていうのは、<br>
+IAMASのいいところかもしれないわね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<span style="font-weight:bold;">◇学校のスタンスの違い◇</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+
+<img src="/assets/images/masuo.png" width=50><br>
+<span style="font-weight:bold;">芸術系はアート表現の最先端、<br>
+工学系とかSFCとかは社会に資する最先端、</span><br>
+っていうイメージがあるけど、<br>
+<span style="font-weight:bold;">IAMASはそのどっちでもない</span>感じがするよね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+どっちでもない、というか、<br>
+どっちも行ったり来たり…という感じね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+IAMASはもともと、<br>
+メディアアートを中心として始まったみたいだけど、<br>
+最近はアート方面だけじゃなくて、<br>
+<span style="font-weight:bold">創造的にコミュニティを形成する実践</span>なんかも、<br>
+いろいろやっているよね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/ten_two.jpg" width=500><br>
+Craft, Fabrication and Sustainability<br>
+<span style="font-size:10px;">デジタルファブリケーションを活用して、持続可能な産業をつくるプロジェクト<span><br>
+<a href="http://www.iamas.ac.jp/projects#post-8137" style="font-size:10px;">http://www.iamas.ac.jp/projects#post-8137</a>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/ten_three.jpg" width=500><br>
+美濃のいえ<br>
+<span style="font-size:10px;">
+岐阜県美濃市の築80年の民家で、街の人々と様々な企画を実施するプロジェクト
+</span><br>
+<a href="http://www.iamas.ac.jp/projects#post-204"  style="font-size:10px;">http://www.iamas.ac.jp/projects#post-204</a>
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<span style="font-weight:bold;">◇立地の違い◇</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+わたしも名古屋だったけど、<br>
+<span style="font-weight:bold;">美大って大体都会にある</span>わよね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+そうだね。<br>
+メディアアートとかFab関連とかIoT関連とか、<br>
+<span style="font-weight:bold;">情報系のいま熱い分野も、<br>
+だいたい拠点が都会にある</span>よね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+でも、IAMASに来て気づいたけど、<br>
+都会に居ることの利点って、<br>
+<span style="font-weight:bold;">いつでもいろんな人と会ったり話したりできる、</span><br>
+くらいしかないのよね。<br>
+それはそれで大事なんだけど。
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+そうだね。<br>
+田舎にいても、<span style="font-weight:bold;">Skypeで人と話すことはできるし、<br>
+大体の要件はメールやメッセージで事足りるから、</span><br>
+思ってたより田舎の不便さは感じてないね。
+            </p>
+        </div>
+
+
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+あとIAMASだったら、<br>
+誰かしら最新の情報を知ってるから、<br>
+<span style="font-weight:bold">都会の人が知らない情報がIAMASで回ってる、</span><br>
+なんてことも少なくないわよね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+海外直輸入、みたいなね。<br>
+むしろ<span style="font-weight:bold;">世界でIAMASでしかやってないこと、</span><br>
+みたいなのも、研究だと結構あったりするよね。<br>
+<span style="font-weight:10px;">あんまり都会とか田舎とかっていうのは、<br>
+大学院での研究においては関係ないのかも。</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+そうそう。あと遊びだったら、<br>
+IAMASの人だったらいつでも遊べるしね。<br>
+飲み屋さんも意外と美味しいところあるし、<br>
+<span style="font-weight:bold;">ジャパレンっていう激安カラオケ</span>もあるしね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+<span style="font-weight:bold;">5,6人で行ったら一晩500円</span>って、<br>
+意味分かんないよね…<br>
+都会のカラオケが馬鹿馬鹿しくなるよ。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<span style="font-weight:bold;">◇現実的な違い◇</span>
+            </p>
+        </div>
+
+
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+そういえば、<span style="font-weight:bold;">美大ってだいたいが私立</span>よね。<br>
+わたしも大学は私立だったけど、<br>
+結構親に負担かけちゃったなあ…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+ぼくは国立の工学部だったけど、<br>
+国公立は大体ガチガチのエンジニアリングで、<br>
+<span style="font-weight:bold;">工学系でちょっと面白いことやってるのは、<br>
+SFCとかみたいな私立の大学</span>だったなあ。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+あんまり知られてないけど、<br>
+<span style="font-weight:bold;">実はIAMASは国公立大学だから、<br>
+学費が安い</span>のよね。<br>
+わたしはそれも結構重要だったなあ。
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+そう！意外と<span style="font-weight:bold;">岐阜県立</span>なんだよね。<br>
+入学金と年間の学費は国公立の値段だから、<br>
+2年間で140万くらいだし、<br>
+<span style="font-weight:bold;">お金ないぼくでもこういう勉強ができるのは、<br>
+日本ではIAMASだけ</span>だったなあ。
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+マス男くん、海外も調べたの？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+うん、実は海外もちょっと考えてた。<br>
+IAMASみたいなことやってる学校は、<br>
+アメリカの<a href="https://www.media.mit.edu/" style="text-decoration=underline;">MIT Media Lab</a>をはじめとして、<br>
+デンマークの<a href="http://ciid.dk/">CIID</a>とか、イタリアの<a href="http://www.fabrica.it/">Fabrica</a>とか、<br>
+他にもいろいろあると思う。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+そこまで調べたのね…。<br>
+その中でどうしてIAMASにしたの？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+授業料高いし、実際海外に行くとなると、<br>
+受験だけでも相当お金かかっちゃうからね…。<br>
+MIT Media Labはお金もらえる(※2)んだけど、<br>
+その分世界中から猛者が集まるし、<br>
+英語の推薦状3枚とか、ハードルが高くてね。<br>
+<br>
+<span style="font-size:10px;">※2 MIT Media Labは授業料不要、給料も支払われる。</span>
+<a href="https://twitter.com/ishii_mit/status/305286690614964224" style="font-size:10px;">https://twitter.com/ishii_mit/status/305286690614964224</a>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+あとお金の話だと、<br>
+<span style="font-weight:bold;">希望すればほぼ入れる学生寮</span>もあるしね！<br>
+学生寮といっても、至って普通のマンションで、<br>
+とっても暮らしやすいわ。<br>
+<span style="font-weight:bold;">家賃も2万円ちょっと</span>だものね！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+<span style="font-weight:bold;">東京に住んでた時の4分の1以下だよ…</span><br>
+お金なくてもこんなにおもしろい勉強できる、<br>
+っていうのは、<br>
+あんまり表立って言うことじゃないけど、<br>
+現実的にすごく助かってるな。
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+ということで結論！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<span style="font-weight:bold;">
+結論：<br>
+いま自分のやりたいことができてない人、<br>
+ラジカルな人々に揉まれたい人は、<br>
+IAMASにくるといいかもよ。
+</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+ということで、<br>
+引き続き、質問をお待ちしております！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+IAMASにいる人に聞きたいこととかがあれば、<br>
+ぼくたちが代わりに聞きにいきまーす！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+イア子とマス男への質問やメッセージはこちらから！<br>
+<a href="http://goo.gl/forms/hlgdXfxMei">
+http://goo.gl/forms/hlgdXfxMei
+</a>
+            </p>
+        </div>
+        <div class="section">
+<img src="/assets/images/iako.png" width=50><br>
+            <p class="i-p s-i-p">
+<span style="font-weight:bold;">イアマ速報 facebookページ</span>はこちら！<br>
+<a href="https://www.facebook.com/iamasokuho">
+https://www.facebook.com/iamasokuho<br>
+</a>
+いいね！しなさいよ！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+<span style="font-weight:bold;">イアマ速報のTwitter</span>はこちらです！<br>
+<a href="https://twitter.com/IAMASokuho">
+https://twitter.com/IAMASokuho<br>
+</a>
+いろんな情報拾っていきまーす！<br>
+
+<br>
+<a href="http://iamasokuho.gifu.jp/day_nine.html" style="font-size:12px;">
+<< 前の記事へ
+</a>
+
+            <div class="social_btn_bottom social_btn_bottom_sp uk-visible-small">
+                <div class="twitter">
+                    <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://iamasokuho.gifu.jp/day_ten.html" data-via="iamasokuho">Tweet</a>
+                    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+                </div>
+                <div class="facebook">
+                    <div class="fb-like" data-href="http://iamasokuho.gifu.jp/day_ten.html" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+                </div>
+                <div class="hateb">
+                    <a href="http://b.hatena.ne.jp/entry/iamasokuho.gifu.jp/day_ten.html" class="hatena-bookmark-button" data-hatena-bookmark-title="【IAMAS正直Q&A】IAMASと他の大学院ってどう違うの？ | IAMASOKUHO" data-hatena-bookmark-layout="standard-balloon" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリ>ーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a>
+                    <script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+                </div>
+            </div>
+            </p>
+        </div>
+    </div>
+
+</body>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-64484802-1', 'auto');
+  ga('send', 'pageview');
+</script>
+</html>

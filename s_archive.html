@@ -1,0 +1,307 @@
+<html lang="ja-jp" dir="ltr" xmlns:og="http://ogp.me/ns/#">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="IAMASOKUHO">
+    <meta name="keywords" content="iamasokuho, iama速報, IAMAS, 情報科学芸術大学院大学">
+    <title>【IAMASの日常】2年生の中間発表！（後編） | IAMASokuho</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/vnd.microsoft.icon">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.11.0/css/uikit.almost-flat.min.css" rel="stylesheet">
+    <link href="/assets/css/jquery.fullPage.css" rel="stylesheet">
+    <link href="/assets/css/style.css" rel="stylesheet">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.11.0/js/uikit.min.js"></script>
+    <script src="/assets/js/three.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+    
+    <script type="text/javascript" src="assets/js/jquery.fullPage.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.typist.js"></script>
+    <style>
+        body {
+          /* 画像ファイルの指定 */
+          background-image: url(/assets/images/sp_back3.gif);
+
+          /* 画像を常に天地左右の中央に配置 */
+          background-position: center center;
+
+          /* 画像をタイル状に繰り返し表示しない */
+          background-repeat: no-repeat;
+
+          /* コンテンツの高さが画像の高さより大きい時、動かないように固定 */
+          background-attachment: fixed;
+
+          /* 表示するコンテナの大きさに基づいて、背景画像を調整 */
+          background-size: cover;
+
+          /* 背景画像が読み込まれる前に表示される背景のカラー */
+          background-color: #464646;
+        }
+    </style>
+</head>
+<body>
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v2.3&appId=884387134914356";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+    <script>
+        $('head').append(
+                '<style type="text/css">body {display:none;}</style>'
+        );
+
+        $(document).ready(function() {
+    
+            var camera, scene, renderer;
+            var mesh;
+            var mesh_masuo;
+            var objects = [];
+
+            // Particles
+            var group;
+            var container;
+            var particlesData = [];
+            var positions, colors;
+            var pointCloud;
+            var particlePositions;
+            var linesMesh;
+
+            var maxParticleCount = 1000;
+            var particleCount = 400;
+            if (window.innerWidth < 600) {
+                particleCount = 100;
+            } 
+
+            var r = 900;
+            var rHalf = r / 2;
+
+            var effectController = {
+                showDots: true,
+                showLines: true,
+                minDistance: 200,
+                limitConnections: false,
+                maxConnections: 100,
+                particleCount: 400
+            }
+
+    
+            init();
+            function init() {
+                $('body').fadeIn("slow");
+            }
+
+
+            $('#fullpage').fullpage({
+                sectionsColor: ['none', 'none', 'none', 'none', 'none'],
+                verticalCentered: false,
+                paddingTop: '6em',
+                afterLoad: function(anchorLink, index){
+                    if (index == 5 || index == 3) {
+                    }
+
+                    if (index == 2 || index == 4) {
+                    }
+                }
+            });
+        });
+    </script>
+    <div id="container"></div>
+    <div class="i-head">
+        <a href="/" class="i-logo-less">
+            <img src="/assets/images/logo_2.gif" width="150">
+        </a>
+        <div class="social_btn uk-hidden-small" style="float:right;">
+            <div class="twitter">
+                <a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
+                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+            </div>
+            <div class="facebook">
+                <div class="fb-like" data-href="http://iamasokuho.gifu.jp/day_four.html" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+            </div>
+        </div>
+    </div>
+    <div id="fullpage">
+        <div class="section" id="section1">
+            <a href="http://iamasokuho.blog.jp/archives/33886971.html">
+            Day 1: 【衝撃】IAMAS（情報科学芸術大学院大学）のオープンハウスすごすぎワロタｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗ【画像あり】
+            </a>
+<br>
+<hr>
+            <a href="http://iamasokuho.gifu.jp/day_two.html">
+            Day 2:【あと29日】IAMASってなに？OPENHOUSEってなに？
+            </a>
+<br>
+<hr>
+            <a href="http://iamasokuho.gifu.jp/day_three.html">
+            Day 3: IAMASは「人生のサービスエリア」？
+            </a>
+<br>
+<hr>
+            <a href="http://iamasokuho.gifu.jp/day_four.html">
+            Day 4:【IAMAS正直Q&A】大垣の生活ってどうよ？
+            </a>
+<br>
+<hr>
+            <a href="http://iamasokuho.gifu.jp/day_five.html">
+            Day 5: 【IAMASの人々】新たな音楽の形式をつくる！大久保雅基さん
+
+            </a>
+
+            </p>
+        </div>
+        <div class="section" id="section1">
+            <p class="i-p s-i-p">
+            <a href="http://iamasokuho.gifu.jp/day_six.html">
+            Day 6: 【すてきな施設紹介】360度動画で紹介！IAMASこんな感じです！
+            </a>
+<br>
+<hr>
+            <a href="http://iamasokuho.gifu.jp/day_seven.html">
+            Day 7: 【IAMAS正直Q&A】実際、お金どうしてんの？
+            </a>
+<br>
+<hr>
+            <a href="http://iamasokuho.gifu.jp/day_eight.html">
+            Day 8: 【IAMASの日常】2年生の中間発表！（前編）
+
+            </a>
+<br>
+<hr>
+            <a href="http://iamasokuho.gifu.jp/day_nine.html">
+            Day 9: 【IAMASの日常】2年生の中間発表！（後編）
+            </a>
+<br>
+<hr>
+            <a href="http://iamasokuho.gifu.jp/day_ten.html">
+            Day 10: 【IAMAS正直Q&A】IAMASと他の大学院ってどう違うの？
+            </a>
+        </div>
+        <div class="section">
+                <a href="http://iamasokuho.gifu.jp/day_eleven.html">
+                Day 11: 【IAMASの人々】ゆるキャラコミュニケーションを学ぶ！ジョ・ジェヨンさん
+                </a>
+<br>
+<hr>
+                <a href="http://iamasokuho.gifu.jp/day_twelve.html">
+                Day 12: 【IAMASすてきな施設めぐり】IAMAS学生寮「RIST」
+                </a>
+<br>
+<hr>
+                <a href="http://iamasokuho.gifu.jp/day_thirteen.html">
+                Day 13: 【IAMASすてきな施設めぐり】IAMAS Library
+                </a>
+<br>
+<hr>
+                <a href="http://iamasokuho.gifu.jp/day_fourteen.html">
+                Day 14: 【IAMASの人々】図書「艦長」！小林昌廣先生
+                </a>
+
+<br>
+<hr>
+                <a href="http://iamasokuho.gifu.jp/day_fifteen.html">
+                Day 15: 【IAMASすてきな施設めぐり】イノベーション工房 
+                </a>
+        </div>
+        <div class="section">
+<br>
+<hr>
+                <a href="http://iamasokuho.gifu.jp/day_sixteen.html">
+                Day 16:【IAMASの人々】 (99.9%)復活天才うまみ成分セミナー
+                </a>
+<br>
+<hr>
+                <a href="http://iamasokuho.gifu.jp/day_seventeen.html">
+                Day 17: 【IAMASの休日】学生キャンプ
+                </a>
+<br>
+<hr>
+                <a href="http://iamasokuho.gifu.jp/day_eightteen.html">
+                Day 18: 【IAMAS正直Q&A】入試ってどんな感じなの？
+                </a>
+<br>
+<hr>
+                <a href="http://iamasokuho.gifu.jp/day_nineteen.html">
+                Day 19:【IAMASすてきな施設めぐり】IAMASシステム委員会 
+                </a>
+<br>
+<hr>
+                <a href="http://iamasokuho.gifu.jp/day_20.html">
+                Day 20:【IAMAS正直Q&A】「プロジェクト」って何？
+                </a>
+        </div>
+        <div class="section">
+                <a href="http://iamasokuho.gifu.jp/day_21.html">
+                Day 21:【あと10日】イアマ速報、オープンハウスで何をする？
+                </a>
+<br>
+<hr>
+                <a href="http://iamasokuho.gifu.jp/day_22.html">
+                Day 22:【IAMASの人々】区切りのない「日常」を生きる！松井茂先生
+                </a>
+<br>
+<hr>
+                <a href="http://iamasokuho.gifu.jp/day_23.html">
+                Day 23:【IAMAS正直Q&A】IAMAS生の1日！〜宮野くんの場合〜
+                </a>
+<br>
+<hr>
+                <a href="http://iamasokuho.gifu.jp/day_24.html">
+                Day 24:【IAMASプロジェクト紹介】ライブ体験の拡張！NxPC Lab.
+                </a>
+<br>
+<hr>
+                <a href="http://iamasokuho.gifu.jp/day_25.html">
+                Day 25:【IAMASプロジェクト紹介】根尾コ・クリエイション
+                </a>
+        </div>
+        <div class="section">
+                <a href="http://iamasokuho.gifu.jp/day_26.html">
+                Day 26:【IAMAS正直Q&A】オーストリア・リンツ交換留学
+                </a>
+<br>
+<hr>
+                <a href="http://iamasokuho.gifu.jp/day_27.html">
+                Day 27: 【#IAMASOH2015】週末に向けて続々準備中！
+                </a>
+<br>
+<hr>
+                <a href="http://iamasokuho.gifu.jp/day_28.html">
+                Day 28:【IAMASすてきな施設めぐり】360度動画で学内探検！（前編）
+                </a>
+<br>
+<hr>
+                <a href="http://iamasokuho.gifu.jp/day_29.html">
+                Day 29:【IAMASすてきな施設めぐり】360度動画で学内探検！（後編）
+                </a>
+
+
+        </div>
+        <div class="section">
+                <a href="http://iamasokuho.gifu.jp/day_30.html">
+                Day 30:【IAMAS正直Q&A】卒業したらどうするの？
+                </a>
+<br>
+<hr>
+                <a href="http://iamasokuho.gifu.jp/extra.html">
+                Extra:【マジキチ】今週末開催のIAMASオープンハウスｗｗｗｗｗｗｗｗｗｗｗｗｗ【360度動画あり】
+                </a>
+        </div>
+
+    </div>
+
+
+</body>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-64484802-1', 'auto');
+  ga('send', 'pageview');
+</script>
+</html>

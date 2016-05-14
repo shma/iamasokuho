@@ -1,0 +1,482 @@
+<html lang="ja-jp" dir="ltr" xmlns:og="http://ogp.me/ns/#">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="IAMASOKUHO">
+    <meta name="keywords" content="iamasokuho, iama速報, IAMAS, 情報科学芸術大学院大学">
+    <title>【IAMAS正直Q&A】「プロジェクト」って何？</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/vnd.microsoft.icon">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.11.0/css/uikit.almost-flat.min.css" rel="stylesheet">
+    <link href="/assets/css/jquery.fullPage.css" rel="stylesheet">
+    <link href="/assets/css/style.css" rel="stylesheet">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.11.0/js/uikit.min.js"></script>
+    <script src="/assets/js/three.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+    
+    <script type="text/javascript" src="assets/js/jquery.fullPage.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.typist.js"></script>
+    <style>
+        body {
+          /* 画像ファイルの指定 */
+          background-image: url(/assets/images/sp_back3.gif);
+
+          /* 画像を常に天地左右の中央に配置 */
+          background-position: center center;
+
+          /* 画像をタイル状に繰り返し表示しない */
+          background-repeat: no-repeat;
+
+          /* コンテンツの高さが画像の高さより大きい時、動かないように固定 */
+          background-attachment: fixed;
+
+          /* 表示するコンテナの大きさに基づいて、背景画像を調整 */
+          background-size: cover;
+
+          /* 背景画像が読み込まれる前に表示される背景のカラー */
+          background-color: #464646;
+        }
+    </style>
+</head>
+<body>
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v2.3&appId=884387134914356";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+    <script>
+        $('head').append(
+                '<style type="text/css">body {display:none;}</style>'
+        );
+        $(document).ready(function() {
+    
+            var camera, scene, renderer;
+            var mesh;
+            var mesh_masuo;
+            var objects = [];
+
+            // Particles
+            var group;
+            var container;
+            var particlesData = [];
+            var positions, colors;
+            var pointCloud;
+            var particlePositions;
+            var linesMesh;
+
+            var maxParticleCount = 1000;
+            var particleCount = 400;
+            if (window.innerWidth < 600) {
+                particleCount = 100;
+            } 
+
+            var r = 900;
+            var rHalf = r / 2;
+
+            var effectController = {
+                showDots: true,
+                showLines: true,
+                minDistance: 200,
+                limitConnections: false,
+                maxConnections: 100,
+                particleCount: 400
+            }
+
+    
+            init();
+            function init() {
+                $('body').fadeIn("slow");
+            }
+
+
+            $('#fullpage').fullpage({
+                sectionsColor: [],
+                verticalCentered: false,
+                paddingTop: '6em',
+                afterLoad: function(anchorLink, index){
+                    if (index == 5 || index == 3) {
+                    }
+
+                    if (index == 2 || index == 4) {
+                    }
+                }
+            });
+        });
+    </script>
+    <div id="container"></div>
+    <div class="i-head">
+        <a href="/" class="i-logo-less">
+            <img src="/assets/images/logo_2.gif" width="150">
+        </a>
+        <div class="social_btn uk-hidden-small" style="float:right;">
+            <div class="twitter">
+                <a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
+                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+            </div>
+            <div class="facebook">
+                <div class="fb-like" data-href="http://iamasokuho.gifu.jp/day_four.html" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+            </div>
+        </div>
+    </div>
+    <div id="fullpage">
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+今日はこんな質問がきているよ！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+イアマスネーム：<br>
+メディアアート大好き！さん（21歳・女性）<br>
+「プロジェクト」ってHPにたくさん載ってますけど、<br>
+あれってなんなんですか？全部参加できるんですか？<br>
+どれも面白そうです！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+<span class="b">ファッションメディアアート女子</span>かしら。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+<span class="b">イア子ちゃんあまりに手厳しいよ！</span><br>
+びっくりしたー。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+メディアアートがファッションかどうかは、<br>
+<span class="b">イアマ速報1週間分くらい使っちゃうから、</span><br>
+今回はやめときましょう。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+（おっかないなあこの子…）
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+プロジェクトの話ね！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+
+<img src="/assets/images/new_masuo.png" width=50><br>
+そうそう、プロジェクトの話だよ！<br>
+<span class="b">どんなプロジェクトがあるかとか、<br>
+各プロジェクトの詳細とかは、<br>
+IAMAS公式HPをみてね！</span><br>
+<a href="http://www.iamas.ac.jp/projects">
+http://www.iamas.ac.jp/projects
+</a>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+プロジェクトね…<br>
+なんて言えばいいのかしらね。<br>
+他の大学でいうと、<br>
+<span class="b">研究室とかゼミみたいなもの</span>かしら。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+そうだなあ。<br>
+<span class="b">先生方が進めているテーマに、<br>
+学生たちが加わって、<br>
+みんなで時間をかけて取り組む、</span><br>
+っていう意味では、ゼミや研究室に近いかも。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+プロジェクトによって、<br><br>
+参加する先生が異なるわよね。<br><br>
+IAMAS外の研究機関や、<br><br>
+企業の方が参加してるのもあるし！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+IAMASの学生は、いわゆる必修として、<br>
+<span class="b">最低でも1人1つは、<br>
+いずれかのプロジェクトに取り組む</span>んだよね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+そうそう！<br>
+でも<span class="b">どれもすごく面白そうだし、<br>
+2つ以上取る人もかなり多い</span>わよね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+そうなんだよね…。<br>
+どのプロジェクトも、<br>
+<span class="b">最初に体験受講ができるんだけど、<br>
+全部だいたい面白い</span>から困っちゃうよね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+そうなのよね…<br>
+<span class="b">「どのプロジェクトを取るか」は、<br>
+IAMAS最大の悩み事のひとつ</span>だと思うわ。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+プロジェクトによって、<br>
+忙しさがまちまちだから、<br>
+<span class="b">忙しいプロジェクト2つ取ったりすると、<br>
+相当大変だよね…。</span><br>
+絶対両方取れない組み合わせもあるよね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+そうね…<br>
+わたしは「HDⅡ(※1)」と、<br>
+「クラフト(※2)」を取ってるけど、<br>
+結構いっぱいいっぱいだわ…<br>
+でもどっちもすごく充実してる！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/20-1.jpg" width=300><br>
+※1 <span class="b">HDⅡ 高精細映像技術を用いた表現研究プロジェクト</span><br>
+<span style="font-size:10px;">
+4K映像など、最新の高精細映像技術を用いた映像表現を探るプロジェクト。<br>
+<a href="http://www.iamas.ac.jp/projects#post-8125">
+http://www.iamas.ac.jp/projects#post-8125
+</a>
+</span>
+            </p>
+
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/20-2.jpg" width=300><br>
+※2 <span class="b">Craft, Fabrication & Sustainabilityプロジェクト</span><br>
+<span style="font-size:10px;">
+デジタルファブリケーションと工芸の掛け合わせを、経済的な持続可能性も視野に入れながら探求するプロジェクト。<br>
+<a href="http://www.iamas.ac.jp/projects#post-8137">
+http://www.iamas.ac.jp/projects#post-8137
+</a>
+</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+ぼくは「あしプロ(※3)」と<br>
+「ねおこ(※4)」だな。<br>
+あと「体験拡張(※5)」も聴講してる。<br>
+けっこう忙しいけど、<br>
+自分のことやる時間もある程度取れてるな。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/20-3.jpg" width=300><br>
+※3 <span class="b">あしたをプロトタイピングするプロジェクト</span><br>
+<span style="font-size:10px;">
+現在の社会課題を抽出し、未来を見据えたプロトタイプの実現と、それによる未来像の創出、プロトタイプの現実化を念頭に活動するプロジェクト。<br>
+<a href="http://www.iamas.ac.jp/projects#post-8128">
+http://www.iamas.ac.jp/projects#post-8128
+</a>
+</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/20-4.jpg" width=300><br>
+※4 <span class="b">根尾コ・クリエイション</span><br>
+<span style="font-size:10px;">
+岐阜県本巣市根尾地区（旧・根尾村）で、地域住民と外部のクリエイティブなメンバーが交流しながら、持続可能な共創社会について探求するプロジェクト。<br>
+<a href="http://www.iamas.ac.jp/projects#post-13200">
+http://www.iamas.ac.jp/projects#post-13200
+</a>
+</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/20-5.jpg" width=300><br>
+※5 <span class="b">体験拡張環境プロジェクト</span><br>
+<span style="font-size:10px;">
+機械の知能が人間を超える技術的特異点（シンギュラリティ）が及ぼすであろう影響を考慮しつつ、我々人間の体験が拡張される環境を創出するプロジェクト。<br>
+<a href="http://www.iamas.ac.jp/projects#post-13191">
+http://www.iamas.ac.jp/projects#post-13191
+</a>
+</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+プロジェクトによっては、<br>
+<span class="b">参加できるタイミングで参加させてもらう<br>
+「聴講」を認めているものもある</span>わよね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+そうだね。<br>
+もちろん参加する以上、責任も伴うから、<br>
+ある程度しっかり参加できないと、<br>
+聴講も難しいけどね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+このプロジェクトを決めるタイミングは、<br>
+<span class="b">IAMASの2年間という限られた時間で、<br>
+何を選んで、何をあきらめるか、<br>
+決めなきゃいけない最初のタイミング</span>かもね。<br>
+すごく難しいけど、すごく大事なことよね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+プロジェクトを決める前には、<br>
+<span class="b">IAMASに在籍するどの先生にも、<br>
+学生から面談をお願いできる期間もある</span>し、<br>
+自分と向き合うIAMAS生活を意識する、<br>
+最初のタイミングでもあるかもね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+プロジェクトを決めるのはすごく難しいけど、<br>
+<span class="b">自分のやることを自分で決める、<br>
+っていうのは、<br>
+自由であることに伴う責任、</span><br>
+なのかもしれないわね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+ということで結論！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p b">
+結論：<br>
+プロジェクトは、先生方が掲げるテーマに、<br>
+学生も時間をかけて取り組むもの。<br>
+どれも面白いけど、自分がなにをしたいのか、<br>
+ちゃんと考えて決める必要があるよ。
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+ということで引き続き、<br>
+質問のほうもお待ちしております！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+IAMASにいる人に聞きたいこととかがあれば、<br>
+ぼくたちが代わりに聞きにいきまーす！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p">
+イア子とマス男への質問やメッセージはこちらから！<br>
+<a href="http://goo.gl/forms/hlgdXfxMei">
+http://goo.gl/forms/hlgdXfxMei
+</a>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+<span style="font-weight:bold;">イアマ速報 facebookページ</span>はこちら！<br>
+<a href="https://www.facebook.com/iamasokuho">
+https://www.facebook.com/iamasokuho<br>
+</a>
+いいね！しなさいよ！
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+<span style="font-weight:bold;">イアマ速報のTwitter</span>はこちらです！<br>
+<a href="https://twitter.com/IAMASokuho">
+https://twitter.com/IAMASokuho<br>
+</a>
+いろんな情報拾っていきまーす！<br>
+
+<br>
+
+<a href="http://iamasokuho.gifu.jp/day_nineteen.html" style="font-size:12px;">
+<< 前の記事へ
+</a>
+&nbsp;&nbsp;&nbsp;
+<a href="http://iamasokuho.gifu.jp/archive.html" style="font-size:12px;">
+記事一覧へ
+</a>
+
+            <div class="social_btn_bottom social_btn_bottom_sp uk-visible-small">
+                <div class="twitter">
+                    <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://iamasokuho.gifu.jp/day_20.html" data-via="iamasokuho">Tweet</a>
+                    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+                </div>
+                <div class="facebook">
+                    <div class="fb-like" data-href="http://iamasokuho.gifu.jp/day_20.html" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+                </div>
+                <div class="hateb">
+                    <a href="http://b.hatena.ne.jp/entry/iamasokuho.gifu.jp/day_20.html" class="hatena-bookmark-button" data-hatena-bookmark-title="【IAMAS正直Q&A】「プロジェクト」って何？| IAMASOKUHO" data-hatena-bookmark-layout="standard-balloon" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリ>ーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a>
+                    <script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+                </div>
+            </div>
+            </p>
+        </div>
+    </div>
+
+</body>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-64484802-1', 'auto');
+  ga('send', 'pageview');
+</script>
+</html>

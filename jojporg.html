@@ -1,0 +1,1285 @@
+<html lang="ja-jp" dir="ltr" xmlns:og="http://ogp.me/ns/#">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="IAMASOKUHO | 城先生今までありがとうございました">
+    <meta name="keywords" content="iamasokuho, iama速報, IAMAS, 情報科学芸術大学院大学, 城一裕">
+    <title>【IAMASの人々・特別編】城一裕先生、福岡へ行っても元気でねスペシャル</title>
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="/assets/images/logo_top.gif">
+    <link rel="shortcut icon" href="favicon.ico" type="image/vnd.microsoft.icon">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.11.0/css/uikit.almost-flat.min.css" rel="stylesheet">
+    <link href="/assets/css/jquery.fullPage.css" rel="stylesheet">
+    <link href="/assets/css/style.css" rel="stylesheet">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.11.0/js/uikit.min.js"></script>
+    <script src="/assets/js/three.min.js"></script>
+    <script src="/assets/js/iamasokuho.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.fullPage.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.typist.js"></script>
+    <style>
+        body { margin: 0;}
+        canvas { width: 100%; height: 100% }
+    </style>
+</head>
+<body>
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v2.3&appId=884387134914356";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+    <script>
+        if ((navigator.userAgent.indexOf('iPhone') > 0 && navigator.userAgent.indexOf('iPad') == -1) || navigator.userAgent.indexOf('iPod') > 0 || navigator.userAgent.indexOf('Android') > 0) {
+            url = 'http://iamasokuho.gifu.jp/s_jojporg.html';
+            location.href = url;
+        }
+
+        $('head').append(
+                '<style type="text/css">body {display:none;}</style>'
+        );
+        $(document).ready(function() {
+            
+    
+            var camera, scene, renderer;
+            var mesh;
+            var mesh_masuo;
+            var objects = [];
+
+            // Particles
+            var group;
+            var container;
+            var particlesData = [];
+            var positions, colors;
+            var pointCloud;
+            var particlePositions;
+            var linesMesh;
+
+            var maxParticleCount = 300;
+            var particleCount = 100;
+
+            var r = 600;
+            var rHalf = r / 2;
+
+            var effectController = {
+                showDots: true,
+                showLines: true,
+                minDistance: 200,
+                limitConnections: false,
+                maxConnections: 100,
+                particleCount: 400
+            }
+
+            init();
+            animate();
+
+            var zoom = 1000;
+            function zoom() {
+                for (var i = 0; i < 50; i++) {
+                    setTimeout(function(){
+                        camera.position.z = zoom - 5;
+                        zoom = zoom - 5; 
+                    },1000);
+                }
+            }
+
+            function init() {
+                container = document.getElementById( 'container' );
+
+                renderer = new THREE.WebGLRenderer({antialias: true});
+                renderer.setPixelRatio( window.devicePixelRatio );
+                renderer.setSize( window.innerWidth, window.innerHeight );
+                document.body.appendChild( renderer.domElement );
+    
+                camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 1, 1000 );
+                camera.position.z = 800;
+    
+                scene = new THREE.Scene();
+
+                group = new THREE.Group();
+                scene.add( group );
+
+                var segments = maxParticleCount * maxParticleCount;
+
+                positions = new Float32Array( segments * 3 );
+                colors = new Float32Array( segments * 3);
+            
+                var pMaterial = new THREE.PointCloudMaterial( {
+                    color: 0xFFFFF,
+                    size: 3,
+                    blending: THREE.AdditiveBlending,
+                    transparent: true,
+                    sizeAttenuation: false
+                } );
+
+                particles = new THREE.BufferGeometry();
+                particlePositions = new Float32Array( maxParticleCount * 3 );
+
+                for ( var i = 0; i < maxParticleCount; i++ ) {
+                    var x = Math.random() * r - r / 2;
+                    var y = Math.random() * r - r / 2;
+                    var z = Math.random() * r - r / 2;
+            
+                    particlePositions[i * 3]     = x;
+                    particlePositions[i * 3 + 1] = y;
+                    particlePositions[i * 3 + 2] = z;
+
+                    // add it to the geometry
+                    particlesData.push( {
+                        velocity: new THREE.Vector3( -1 + Math.random() * 2, -1 + Math.random() * 2, -1 + Math.random() * 2),
+                        numConnections: 0
+                    });
+                }
+
+                particles.drawcalls.push( {
+                    start: 0,
+                    count: particleCount,
+                    index: 0
+                });
+
+                particles.addAttribute( 'position', new THREE.DynamicBufferAttribute( particlePositions, 3));
+
+                // create the particle system
+                pointCloud = new THREE.PointCloud( particles, pMaterial);
+                pointCloud.visible = true;
+                group.add(pointCloud);
+        
+                var pGeometry = new THREE.BufferGeometry();
+                pGeometry.addAttribute( 'position', new THREE.DynamicBufferAttribute( positions, 3));
+                pGeometry.addAttribute( 'color', new THREE.DynamicBufferAttribute(colors, 3));
+
+                pGeometry.computeBoundingSphere();
+
+                pGeometry.drawcalls.push( {
+                    start: 0,
+                    count: 0,
+                    index: 0
+                } );
+
+                var pMaterial = new THREE.LineBasicMaterial( {
+                    vertexColors: THREE.VertexColors,
+                    blending: THREE.AdditiveBlending,
+                    transparent: true
+                });
+
+                linesMesh = new THREE.Line( pGeometry, pMaterial, THREE.LinePieces );
+                group.add( linesMesh );
+
+                renderer.setPixelRatio(window.devicePixelRatio);
+                renderer.setSize(window.innerWidth, window.innerHeight);
+
+                renderer.gammaInput = true;
+                renderer.gammaOutput = true;
+                renderer.setClearColor( new THREE.Color(0x000000) );
+
+                container.appendChild(renderer.domElement);
+
+                var geometry = new THREE.BoxGeometry( 70, 70, 70 );
+    
+                var texture = THREE.ImageUtils.loadTexture( 'assets/images/iako.png' );
+                texture.anisotropy = renderer.getMaxAnisotropy();
+    
+                var material = new THREE.MeshBasicMaterial( { map: texture } );
+    
+                mesh = new THREE.Mesh( geometry, material );
+                mesh.position.x = -300;
+                mesh.position.y += 150;
+                scene.add( mesh );
+    
+                // masuo
+                var texture_masuo = THREE.ImageUtils.loadTexture( 'assets/images/new_masuo.png' );
+                texture_masuo.anisotropy = renderer.getMaxAnisotropy();
+    
+                var material_masuo = new THREE.MeshBasicMaterial( { map: texture_masuo } );
+    
+                mesh_masuo = new THREE.Mesh( geometry, material_masuo );
+                mesh_masuo.position.x = 300;
+                mesh_masuo.position.y += 150;
+                scene.add( mesh_masuo ); 
+                objects.push( mesh );
+                objects.push( mesh_masuo );
+    
+    
+                window.addEventListener( 'resize', onWindowResize, false );
+                $('#fullpage').fullpage({
+                    sectionsColor: ['#000','#000'],
+                    afterLoad: function(anchorLink, index){
+                        console.log(index);
+                        if(index==3||index==6||index==8||index==11||index==14||index==17||index==23||index==28||index==34||index==39||index==42||index==46||index==50||index==56||index==61||index==65||index==69||index==73||index==76||index==81||index==84||index==89||index==94||index==95||index==98||index==100) {
+                                mesh_masuo.position.y += 15;
+                                setTimeout(function(){
+                                    mesh_masuo.position.y -= 15;
+                                },100);
+                        }
+
+                        if(index==4||index==7||index==10||index==13||index==21||index==26||index==31||index==36||index==39||index==44||index==48||index==53||index==59||index==63||index==67||index==71||index==75||index==78||index==82||index==86||index==91||index==97||index==99) {
+                            mesh.position.y += 15;
+                            setTimeout(function(){
+                                mesh.position.y -= 15;
+                            },100);
+                        }
+                    }
+                });
+                $('body').fadeIn("slow");
+            }
+    
+            function onWindowResize() {
+    
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+    
+                renderer.setSize( window.innerWidth, window.innerHeight );
+    
+            }
+    
+            function animate() {
+                var vertexpos = 0;
+                var colorpos = 0;
+                var numConnected = 0;
+
+                for ( var i = 0; i < particleCount; i++ )
+                    particlesData[ i ].numConnections = 0;
+
+                for ( var i = 0; i < particleCount; i++ ) {
+
+                    // get the particle
+                    var particleData = particlesData[i];
+
+                    particlePositions[ i * 3     ] += particleData.velocity.x;
+                    particlePositions[ i * 3 + 1 ] += particleData.velocity.y;
+                    particlePositions[ i * 3 + 2 ] += particleData.velocity.z;
+
+                    if ( particlePositions[ i * 3 + 1 ] < -rHalf || particlePositions[ i * 3 + 1 ] > rHalf )
+                        particleData.velocity.y = -particleData.velocity.y;
+
+                    if ( particlePositions[ i * 3 ] < -rHalf || particlePositions[ i * 3 ] > rHalf )
+                        particleData.velocity.x = -particleData.velocity.x;
+
+                    if ( particlePositions[ i * 3 + 2 ] < -rHalf || particlePositions[ i * 3 + 2 ] > rHalf )
+                        particleData.velocity.z = -particleData.velocity.z;
+
+                    if ( effectController.limitConnections && particleData.numConnections >= effectController.maxConnections )
+                        continue;
+
+                    // Check collision
+                    for ( var j = i + 1; j < particleCount; j++ ) {
+
+                        var particleDataB = particlesData[ j ];
+                        if ( effectController.limitConnections && particleDataB.numConnections >= effectController.maxConnections )
+                            continue;
+
+                        var dx = particlePositions[ i * 3     ] - particlePositions[ j * 3     ];
+                        var dy = particlePositions[ i * 3 + 1 ] - particlePositions[ j * 3 + 1 ];
+                        var dz = particlePositions[ i * 3 + 2 ] - particlePositions[ j * 3 + 2 ];
+                        var dist = Math.sqrt( dx * dx + dy * dy + dz * dz );
+
+                        if ( dist < effectController.minDistance ) {
+
+                            particleData.numConnections++;
+                            particleDataB.numConnections++;
+
+                            var alpha = 1.0 - dist / effectController.minDistance;
+
+                            positions[ vertexpos++ ] = particlePositions[ i * 3     ];
+                            positions[ vertexpos++ ] = particlePositions[ i * 3 + 1 ];
+                            positions[ vertexpos++ ] = particlePositions[ i * 3 + 2 ];
+
+                            positions[ vertexpos++ ] = particlePositions[ j * 3     ];
+                            positions[ vertexpos++ ] = particlePositions[ j * 3 + 1 ];
+                            positions[ vertexpos++ ] = particlePositions[ j * 3 + 2 ];
+
+                            colors[ colorpos++ ] = alpha;
+                            colors[ colorpos++ ] = alpha;
+                            colors[ colorpos++ ] = alpha;
+
+                            colors[ colorpos++ ] = alpha;
+                            colors[ colorpos++ ] = alpha;
+                            colors[ colorpos++ ] = alpha;
+
+                            numConnected++;
+                        }
+                    }
+                }
+
+
+                linesMesh.geometry.drawcalls[ 0 ].count = numConnected * 2;
+                linesMesh.geometry.attributes.position.needsUpdate = true;
+                linesMesh.geometry.attributes.color.needsUpdate = true;
+
+                pointCloud.geometry.attributes.position.needsUpdate = true;
+
+                requestAnimationFrame( animate );
+    
+    
+                mesh.rotation.x += 0.005;
+                mesh.rotation.y += 0.01;
+    
+                mesh_masuo.rotation.x += 0.005;
+                mesh_masuo.rotation.y += 0.01;
+    
+                renderer.render( scene, camera );
+            }
+
+            mesh.callback = function() { 
+                window.open("https://twitter.com/IAMAS_girl");
+            }
+            mesh_masuo.callback = function() { 
+                window.open("https://twitter.com/IAMAS_boy");
+            }
+            var raycaster = new THREE.Raycaster();
+            var mouse = new THREE.Vector2();
+            
+            document.addEventListener( 'mousedown', onDocumentMouseDown, false );
+            function onDocumentMouseDown( event ) {
+            
+                event.preventDefault();
+            
+                mouse.x = ( event.clientX / renderer.domElement.clientWidth ) * 2 - 1;
+                mouse.y = - ( event.clientY / renderer.domElement.clientHeight ) * 2 + 1;
+            
+                raycaster.setFromCamera( mouse, camera );
+            
+                var intersects = raycaster.intersectObjects( objects ); 
+            
+                if ( intersects.length > 0 ) {
+                    intersects[0].object.callback();
+                }
+            
+            }
+
+
+        });
+    </script>
+    <div id="container"></div>
+    <div class="i-head">
+        <a href="/" class="i-logo-less">
+            <img src="/assets/images/logo_2.gif" width="150">
+        </a>
+        <div class="social_btn uk-hidden-small" style="float:right;">
+            <div class="twitter">
+                <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://iamasokuho.gifu.jp" data-text="IAMASokuho" data-via="iamasokuho">Tweet</a>
+                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+            </div>
+            <div class="facebook">
+                <div class="fb-like" data-href="http://iamasokuho.gifu.jp/" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+            </div>
+        </div>
+    </div>
+    <div id="fullpage">
+        <div class="section">
+            <p class="i-p">
+<div id="fb-root"></div><script>(function(d, s, id) {  var js, fjs = d.getElementsByTagName(s)[0];  if (d.getElementById(id)) return;  js = d.createElement(s); js.id = id;  js.src = "//connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v2.3";  fjs.parentNode.insertBefore(js, fjs);}(document, 'script', 'facebook-jssdk'));</script><div class="fb-post" data-href="https://www.facebook.com/IAMAS.GraduationExhibition/posts/569404723216869:0" data-width="500"><div class="fb-xfbml-parse-ignore"><blockquote cite="https://www.facebook.com/IAMAS.GraduationExhibition/posts/569404723216869:0"><p>&#x3010;&#x25bc;IAMAS 2016&#x9589;&#x5e55;&#xff01;&#x3011;IAMAS 2016&#x306f;&#x672c;&#x65e5;&#x3092;&#x3082;&#x3061;&#x307e;&#x3057;&#x3066;&#x7121;&#x4e8b;&#x9589;&#x5e55;&#x3044;&#x305f;&#x3057;&#x307e;&#x3057;&#x305f;&#xff01;&#x3054;&#x6765;&#x5834;&#x3044;&#x305f;&#x3060;&#x3044;&#x305f;&#x7686;&#x69d8;&#x3001;&#x8aa0;&#x306b;&#x3042;&#x308a;&#x304c;&#x3068;&#x3046;&#x3054;&#x3056;&#x3044;&#x307e;&#x3057;&#x305f;&#x3002;&#x4fee;&#x4e86;&#x751f;&#x53ca;&#x3073;&#x3001;IAMAS&#x306e;&#x300c;&#x305d;&#x3057;&#x3066;&#x3001;&#x3053;&#x308c;&#x304b;&#x3089;&#x300d;&#x306b;&#x3054;&#x671f;&#x5f85;&#x304f;&#x3060;&#x3055;&#x3044;&#xff01;&#x4eca;&#x5f8c;&#x3068;&#x3082;IAMAS&#x3092;&#x3069;&#x3046;&#x305e;&#x3088;&#x308d;&#x3057;&#x304f;&#x304a;&#x9858;&#x3044;&#x3057;&#x307e;&#x3059;&#xff01;&#x5b66;&#x751f;&#x4e00;&#x540c;&#x3088;&#x308a;</p>Posted by <a href="https://www.facebook.com/IAMAS.GraduationExhibition/">IAMAS 2016</a> on&nbsp;<a href="https://www.facebook.com/IAMAS.GraduationExhibition/posts/569404723216869:0">2016年2月28日</a></blockquote></div></div>
+            </p>
+        </div>
+        <div class="section">
+        <p class="i-p">
+<blockquote class="twitter-tweet" align="center" data-lang="ja"><p lang="ja" dir="ltr">イア子です！ <a href="https://twitter.com/hashtag/IAMAS2016?src=hash">#IAMAS2016</a> 終了しました🕗🔚たくさんの方にお越しいただき嬉しかったです👫👯👩‍👩‍👧‍👧👩‍❤️‍👩また来年お会いしましょう💁🙆🙋👍🖐🙇🙏😂✨✨✨✨✨✨✨✨✨ <a href="https://t.co/BqQ3zxU6xG">pic.twitter.com/BqQ3zxU6xG</a></p>&mdash; イアマ速報 IAMASokuho (@IAMASokuho) <a href="https://twitter.com/IAMASokuho/status/703896190396420096">2016年2月28日</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+IAMAS 2016も終わったし、<br><br>
+なんか落ち着いちゃったな〜
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+マス男くん！まだ2015年度、<br><br>
+やっておかなきゃいけないことがあるじゃない！<br><br>
+<span class="b">城さんがIAMASを離れちゃう</span>わ！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/jo-1.jpg" width="200"><br><br>
+城 一裕 先生<br><br>
+2016年3月でIAMASを離任、<br><br>
+2016年4月から、出身校である<br><br>
+九州大学芸術工学部音響設計学科（元九州芸術工科大学）の教員に着任予定。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+そうだ！城先生！<br><br>
+さびしいなあ…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+せっかくだから、<br><br>
+<span class="b">最後にインタビューしなきゃ！</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+せっかくの意味がよくわかんないけど、<br><br>
+最後に話聞いておきたいよね！<br><br>
+イアマ速報のことも応援してくれてたし。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+IAMASという大学院大学 – Open House 2015 – | KABlog | Kansai Art Beat<br><br>
+<a href="http://www.kansaiartbeat.com/kablog/entries.ja/2015/08/iamas-open-house-2015.html">
+http://www.kansaiartbeat.com/kablog/entries.ja/2015/08/iamas-open-house-2015.html
+</a>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+こんなこともあろうかと、<br><br>
+城さんにはもう連絡取ってあるわ！<br><br>
+このあと学内のフリースペース「R-Cafe」<br><br>
+に来てくれる予定よ！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+謎の段取り力…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/jo.jpg" width="100"><br><br>
+ごめんなさいー、遅れました。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+あ、城さん！<br><br>
+今日も溢れ出るパパ感！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+引っ越し間際でお忙しいところすみません…<br><br>
+最後なんで話聞きたくて！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/jo.jpg" width="100"><br><br>
+はいはい、どうぞ。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/jo-2.jpg" width="200"><br><br>
+
+<span class="b">城 一裕　じょう・かずひろ</span><br><br>
+IAMAS講師。1977年生まれ。<br><br>
+音響学とインタラクション・デザインに基づく<br><br>
+研究、発表、演奏を行う。<br><br>
+主な著書に「FABに何が可能か」。<br><br>
+車輪の再発明プロジェクトがICCで展示。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+何から聞こうかなあ…<br><br>
+じゃあ、終わったばかりですが、<br><br>
+<span class="b">今年の卒展</span>はどうでしたか？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/jo-3.jpg" width="200"><br><br>
+IAMAS 2016<br><br>
+情報科学芸術大学院大学 第14期生修了研究発表会・プロジェクト研究発表会<br><br>
+<a href="http://www.iamas.ac.jp/exhibit16/">
+http://www.iamas.ac.jp/exhibit16/
+</a>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/jo.jpg" width="100"><br><br>
+個人的には、<br><br>
+<span class="b">高嶺さんと話せたのは良かった</span>っすねー。<br><br>
+結構ファンだったので、<br><br>
+同じ場に居れたのは、なんというか、<br><br>
+大人になったのかもしらん、と。<br><br>
+<span style="font-size:10px;">
+※高嶺格：IAMAS卒業生。現代美術家、演出家。http://www.takaminet.com/
+</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/jo-4.jpg" width="200"><br><br>
+IAMAS 2016 トークイベント「民主主義―それぞれの視点から」<br><br>
+<a href="http://www.iamas.ac.jp/exhibit16/events/event_3.php">
+http://www.iamas.ac.jp/exhibit16/events/event_3.php
+</a>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+卒展全体としてはどうでした？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/jo.jpg" width="100"><br><br>
+全体としては…<br><br>
+ぼくはそこまで思わなかったんですけど、<br><br>
+学生とか卒業生に言われたのは、<br><br>
+<span class="b">「考えてる感じがする作品が多い」</span><br><br>
+っていう風な話、はあったかなあ。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+たしかにTwitterとかでは、<br><br>
+そういうリアクションが多かったですね…<br><br>
+<span class="b">コンセプチュアルなものが多い</span>、という感じ。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/jo.jpg" width="100"><br><br>
+あとは、車輪の再発明プロジェクトとしては、<br><br>
+ようやくちゃんとできた、という感じがします。<br><br>
+ありがたいことに、ICCでの展示もお声掛け頂いて、<br><br>
+1年間展示させてもらったし。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/jo-5.jpg" width="200"><br><br>
+車輪の再発明プロジェクト<br><br>
+メディアの過去を読み解き、現在の素材や加工技術、社会情勢を踏まえたありかたを探るプロジェクト。<br><br>
+東京・NTTインターコミュニケーションセンター（ICC）にて2015年4月〜2016年3月展示された。<br><br>
+<a href="http://www.iamas.ac.jp/projects/145">http://www.iamas.ac.jp/projects/145</a>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+城さんって、<br><br>
+IAMASには何年いたんですか？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/jo.jpg" width="100"><br><br>
+<span class="b">IAMASには４年かな。</span>2012年の4月から。<br><br>
+アカデミーがなくなったすぐ後から。<br><br>
+いま38歳だから、来たときは34だったな。<br><br>
+
+<span style="font-size:10px;">
+※IAMASは1996年に専門学校（アカデミー）として誕生したが、2001年に大学院大学が併設された。その後2011年度でアカデミーが廃止され、2016年現在は大学院大学として存続している。今年で通算20周年。
+</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+4年間を振り返って、<br><br>
+<span class="b">思い出深い出来事</span>ってありますか？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+やっぱり、<span class="b">IAMAS校舎移転</span>はでかいよね。<br><br>
+領家町2年、ソフトピア2年。<br><br>
+思い出深いのは、丁度2年前くらい、<br><br>
+<span class="b">領家町祭</span>っていうのをやったのは、<br><br>
+誇りに思ってますね、多少なりとも。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/jo-6.png" width="200"><br>
+<span class="b">IAMAS 領家町祭</b><br>
+2014年、ソフトピアジャパン地区へのIAMASキャンパス移転に際して、大垣市領家町の旧キャンパスで行われた祭り。<br>
+<a href="http://amp.iamas.ac.jp/169">http://amp.iamas.ac.jp/169</a>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+領家町祭！<br><br>
+話は先生とか先輩に聞いたことあります。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/jo.jpg" width="100"><br><br>
+移転だし、祭りやりたいけど、予算もないし、<br><br>
+ノーギャラでやるのもどうかなあ、と思ってたのね。<br><br>
+丁度そのときに、文化庁から、<br><br>
+<span class="b">「大学を活用した文化芸術推進事業」</span><br><br>
+っていう募集があって。<br><br>
+<span style="font-size:10px;">
+※アート/メディア/身体表現に関わる専門スタッフ育成事業：<a href="http://amp.iamas.ac.jp/">http://amp.iamas.ac.jp/</a>
+</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/jo.jpg" width="100"><br><br>
+パフォーマンス的な、大きなステージで何かをする、<br><br>
+というのがIAMASにはなかったから、<br><br>
+YCAMと組んでテクノロジー人材を育成する、<br><br>
+ということにして、予算を取れたのね。<br><br>
+
+<span style="font-size:10px;">
+※YCAM：山口情報芸術センター。日本を代表するメディアアートの美術館のひとつ。<a href="http://www.ycam.jp/">http://www.ycam.jp/</a>
+</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+そういう予算の取り方があるんですね…<br><br>
+でも結果的に人材育成につながってるし、<br><br>
+みんな得する上手なやり方だったのかも。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/jo.jpg" width="100"><br><br>
+そう、これできたのは大満足だったなあ。<br><br>
+<a href="http://www.breadboardband.org/">BreadBoardBand</a>とか、エブリオブギガスとか、<br><br>
+卒業生とかいっぱい来てくれて、<br><br>
+いまや活躍してる人たちも普通にVJとかしてくれて、<br><br>
+かなりいいイベントになりましたよ。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+エブリオブギガス…？<br><br>
+
+<span style="font-size:10px;">
+※エブリオブギガス：かつてIAMASに存在したらしいJ-popHIPHOPユニット。Googleのみぞ知る。
+</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/jo.jpg" width="100"><br><br>
+あとはIAMASの紀要かなあ。<br><br>
+5巻、6巻と担当で。<br><br>
+特集論文はこれまで少なかったんだけど、<br><br>
+研究者から実業家まで、<br><br>
+学内外のいろんな人に書いてもらったね。<br><br>
+<br>
+<span style="font-size:10px;">
+※情報科学芸術大学院大学紀要<br><br>
+第5巻・2013年：<a href="http://www.iamas.ac.jp/12141">http://www.iamas.ac.jp/12141</a><br><br>
+第6巻・2014年：<a href="http://www.iamas.ac.jp/12141">http://www.iamas.ac.jp/13444</a>
+</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+紀要読みました！<br><br>
+ライゾマの斎藤さんの話とか、<br><br>
+他のところではなかなか読めないような内容で、<br><br>
+面白かったです。<br><br>
+
+<span style="font-size:10px;">
+※齋藤精一：Rhizomatiks代表取締役。
+</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+城さんは、<br><br>
+<span class="b">IAMASでやり残したこと</span>ってありますか？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/jo.jpg" width="100"><br><br>
+うーん、いっぱいあるんじゃないですかね…<br><br>
+もっとなんか、<span class="b">アカデミックなものと、<br><br>
+実践的なものをつなげることができる、<br><br>
+そのポテンシャルがIAMASにある</span>と思ってるので、<br><br>
+それをもっとできればよかったかな、と。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/jo.jpg" width="100"><br><br>
+たとえば学生CGコンテストとか、<br><br>
+メディア芸術祭とかだけじゃなくて、<br><br>
+<span class="b">査読ありの国際学会</span>とかにも出せるような、<br><br>
+両方できるような感じにできればいいのになー、<br><br>
+と思ったりはするね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+なるほど…<br><br>
+最近はそれを、<br><br>
+落合陽一さんとかがやろうとしてますよね。<br><br>
+
+<span style="font-size:10px;">
+※落合陽一：研究者、メディアアーティスト。筑波大学助教。http://96ochiai.ws/
+</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/jo.jpg" width="100"><br><br>
+うーん、落合くんのほうは、<br><br>
+アカデミックのほうからアートの方に<br><br>
+アプローチしようとしているよね。<br><br>
+IAMASはどちらかというと逆で、<br><br>
+<span class="b">アートからアカデミックの方に</span>、なのかな。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+城さんから見た、<br><br>
+IAMASの良いところとか、<br><br>
+悪いところってどんなところですか？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/jo.jpg" width="100"><br><br>
+良いところはやっぱり、<br><br>
+<span class="b">多様性が担保されているところ</span>かな。<br><br>
+少人数ってみんな近しいのがほとんどだけど、<br><br>
+これだけ少人数でみんなバラバラな環境は、<br><br>
+世界的にも珍しいんじゃないですかね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+たしかに、先生も学生も、専門領域が<br><br>
+面白いくらいみんなバラバラですもんね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/jo.jpg" width="100"><br><br>
+そうそう、逆に弊害としては、<br><br>
+それだけバラバラだから、<br><br>
+<span class="b">人的リソースが必要なことは非常に難しい、</span><br><br>
+というところはあるよね。<br><br>
+その辺は芸大とかSFCとかには抗えない。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+それは日々感じます…<br><br>
+学年20人、みんな方向性が違う難しさ。<br><br>
+一緒になにかつくるとしても、<br><br>
+せいぜい2,3人ってかんじですね…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/jo.jpg" width="100"><br><br>
+でも東京の人達がうらやましがるような、<br><br>
+<span class="b">
+最先端の先っぽの部分をやれば、<br><br>
+そういう人たちが後からついてくる</span>し、<br><br>
+それがIAMASにとっては、<br><br>
+1つのモデルなんじゃないですかね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+そういえば先日ある人から、人づてなのですが、<br><br>
+「ライゾマ入りたいのでIAMAS行きたいです！」<br><br>
+って真鍋さんに聞いた人がいて、真鍋さんは<br><br>
+「ライゾマ入りたいならIAMAS行く必要ないよ」<br><br>
+と答えていた、という話を聞きました。<br><br>
+
+<span style="font-size:10px;">
+※真鍋大度：IAMAS卒業生、メディアアーティスト。Rhizomatiks共同創業者、Rhizomatiks Research代表。<br>
+<a href="http://www.daito.ws/">http://www.daito.ws/</a>
+</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/jo.jpg" width="100"><br><br>
+そうだね、10年前の卒業生の再生産は、<br><br>
+そういう機能が必要な学校もあるだろうけど、<br><br>
+IAMASみたいな新しいことをやっていく学校には、<br><br>
+たぶん求められてないよね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/jo.jpg" width="100"><br><br>
+でも今回の卒展を見て、過去と変わったとしても、<br><br>
+<span class="b">「Techieなものがあまりにもなりを潜めているのは、<br><br>
+IAMASにとっていいことなのだろうか？」</span><br><br>
+という話は他の先生ともちょっとしていたな…<br><br>
+両方組み合わさったらいいんだけども。<br><br>
+
+<span style="font-size:10px;">
+※Techie：テクノロジーオタク、という意味のスラング。
+</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+あー、それは、<br><br>
+他の先生とお話しした時にも、<br><br>
+近いような話をしていた方がいました。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/jo.jpg" width="100"><br><br>
+そうねー。勝手な願いとしては、<br><br>
+金築さんと西野さんのワークショップのように、<br><br>
+<span class="b">第一線のプラクティカルなスキルを、<br><br>
+最初のうちに叩き込まれる経験</span>、<br><br>
+をするのが重要ではないのかな。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/jo-7.jpg" width="200"><br><br>
+※展示技法ワークショップ：<a href="http://www.iamas.ac.jp/14268">http://www.iamas.ac.jp/14268</a>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+確かにあれはためになったなあ…<br><br>
+卒展にもすごく役に立ちました。<br><br>
+他にはなんだろう…<br><br>
+LaTeXワークショップとかもやってほしいですね。<br><br>
+
+<span style="font-size:10px;">
+※LaTeX：主に論文を書くために使われるテキスト処理システム。
+</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/jo.jpg" width="100"><br><br>
+そうそう、同じ数式を、<br><br>
+InDesignでやったらどう書けるのか、とかね。<br><br>
+そういう分野をまたいでひつような基礎知識が、<br><br>
+なくて無駄な苦しみをしているのが、<br><br>
+IAMASでは多くある気がするから。<br><br>
+
+<span style="font-size:10px;">
+※Adobe InDesign：Adobeのページレイアウトソフト。
+</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/jo.jpg" width="100"><br><br>
+「車輪」は、プログラミングを分かった上で、<br><br>
+あえてそれを使わないやり方を探しているけど、<br><br>
+<span class="b">いまはプログラムが出来ないのをそのままに、<br><br>
+コンセプチュアルなやり方にいってる人もいる。</span><br><br>
+それだと文字通りの「車輪の再発明」になっちゃう。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+IAMASに限らず、<br><br>
+テクノロジーを活用しようとしているところでは、<br><br>
+「技術からの逃げ」は結構起きてしまいがち、<br><br>
+なところはありそうですね。<br><br>
+大学の時もちょっとあったな…。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/jo.jpg" width="100"><br><br>
+そうならないように、<br><br>
+<span class="b">基礎的なスキルはみんな身につけて、その上で、<br><br>
+あえてコンセプチュアルに行くのはすごく強い。</span><br><br>
+一方で、<span class="b">コンセプトを深く理解しながら、<br><br>
+あえてテックに行くのも、それもまた強い。</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+そういうのが<span class="b">「IAMASらしい研究」</span>、<br><br>
+というところなんですかね…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/jo.jpg" width="100"><br><br>
+そういう見方もあるかもね。<br><br>
+たとえばそういうコンセプチュアルなところを、<br><br>
+ドミニクとかが短期間で叩き込んでくれたりしたら、<br><br>
+さぞ楽しいだろうな、とかね。<br><br>
+妄想ですけどね。<br><br>
+
+<span style="font-size:10px;">
+※ドミニク・チェン：1981年生まれ、IAMAS非常勤講師。起業家、情報学研究者。最新テクノロジーと社会に関する批評を多く行う。日本におけるクリエイティブ・コモンズの立ち上げに参加。著書に「電脳のレリギオ」など。
+<a href="https://twitter.com/dominickchen">https://twitter.com/dominickchen</a>
+</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+九州に行くのはどんな気分ですか？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/jo.jpg" width="100"><br><br>
+福岡はいい街ですよ（笑）<br><br>
+海、近いしねー。ご飯おいしいし…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+いいなー九州…<br><br>
+<span class="b">福岡は最近ベンチャーとかも元気</span>ですよね。<br><br>
+ぼくの元同僚も何人かいるなあ…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/jo.jpg" width="100"><br><br>
+そうね、ゲーム系とか、開発専門の支社とかね。<br><br>
+<span class="b">外部公開のイベント</span>とかを大学でやったら、<br><br>
+たぶん大垣よりは人来ると思うんですよ。<br><br>
+そこで興味持った人となんかやる、<br><br>
+というのはあるかもね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+九州芸工って、<br><br>
+IAMASに近い領域で歴史はあるのに、<br><br>
+あんまり知られてないし、<br><br>
+IAMASともそんなに深い関わりないですよね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/jo.jpg" width="100"><br><br>
+うんー。ぼくは九州芸工の卒業生だけど、<br><br>
+あんまりIAMASに来る人は多くないから、<br><br>
+そこは興味ある人がいたら勧めたいかな。<br><br>
+
+<span style="font-size:10px">
+※九州芸術工科大学：1968年設立。日本初の、芸術工学を研究教育する国立の単科大学。2003年に九州大学と統合され、現在は九州大学芸術工学部。
+</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+それはまた楽しみ。<br><br>
+九州の生活は明るそうですね！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/jo.jpg" width="100"><br><br>
+「って思ってたんだけどね〜」<br><br>
+って、来年の卒展見に来たときとかに<br><br>
+言ってるかもしれないね、<br><br>
+「大垣いいとこだよ、福岡はPM2.5がひどい」<br><br>
+とかって（笑）
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<span class="b">今のIAMAS生とか、<br><br>
+今後のIAMASに期待すること</span>ってありますか？<br><br>
+イアマ速報に期待することでもいいです！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/jo.jpg" width="100"><br><br>
+イアマ速報は…<span class="b">もっとオルタナティブな、<br><br>
+IAMAS広報メディアとしての地位を、<br><br>
+確立していったら良いんじゃないのかな</span>。<br><br>
+定期的に発信して、煽っていってほしいね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+地位確立させますか…！<br><br>
+卒業生の人にも知ってもらえてる感じ、<br><br>
+最近結構出てきました。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/jo.jpg" width="100"><br><br>
+卒業生はIAMAS愛強いしね。<br><br>
+<span class="b">過去にも、美chとか、IAMAS TVとか、<br><br>
+学生主体の発信はいろいろある</span>から、<br><br>
+先人たちを踏まえてるよ、っていうのを<br><br>
+積極的に言っていくのがいいのではないかと。
+
+<span style="font-size:10px;">
+※美ch：「2003年頃に結成されたIAMAS学内のラジオ放送局です。」<a href="http://bich.iamas.ac.jp/">http://bich.iamas.ac.jp/</a><br><br>
+※IAMAS TV：2010〜2012年頃にIAMASにあったとみられる発信活動。<a href="https://vimeo.com/iamastv">https://vimeo.com/iamastv</a>
+</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+先人たちの活動、なかなかエグいわね…<br><br>
+<span class="b">美chはインターネット初期的なヤバさを感じる</span>わ…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+あとは、いまのIAMAS生に対しては？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/jo.jpg" width="100"><br><br>
+<span class="b">あんまり先生の言うことを気にし過ぎない</span>、<br><br>
+とかかなあ…気にしちゃうんだろうけど。<br><br>
+もっと文句言ってもいいと思います。<br><br>
+悩んじゃうのはほんとにつらい。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+IAMASの悩みあるあるですね…<br><br>
+先生の考えに論理的に言い返せない…笑
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/jo.jpg" width="100"><br><br>
+まあ、あんまり考えすぎず。<br><br>
+<span class="b">全く違う先生が19人もいるし。</span><br><br>
+誰かにはきっと重なるところがあると思う。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/jo.jpg" width="100"><br>
+あとは積極的に、<br><br>
+先生方を煽ってっていいんじゃないかな。<br><br>
+アンケートもあるし。<br><br>
+先生方すごいちゃんと読んでるよ（笑）<br><br>
+
+<span style="font-size:10px;">
+※学生アンケート：IAMASでは毎学期末に、学生が講義やカリキュラム、学校の設備などについての意見を提出できる。人数の少ないIAMASなので1人の意見は重く、回答内容はかなり反映される（らしい）。
+</span>
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+なるほど…あんまちゃんと書いてなかったな…<br><br>
+次からちゃんと書くようにします！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+城さん自身の今後は？<br><br>
+どうしたい、どうなっていきたい、<br><br>
+とかあるんですか？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/jo.jpg" width="100"><br><br>
+今後は…一個やりたいのは、<br><br>
+<span class="b">「車輪の再発明」を論文としてまとめるのは、<br><br>
+2016年中にやりたい、</span>と思ってます。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+そういえば「FABに何が可能か」に、<br><br>
+「2010年頃に田中浩也さんに<br><br>
+『僕はFabLabを背負うことにしたけど、<br><br>
+君は何を背負うんだ？』と言われて、<br><br>
+<span class="b">ぼくは『車輪の再発明』を背負うことにした」</span><br><br>
+と書いてましたよね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/jo.jpg" width="100"><br><br>
+そうそう…<br><br>
+ぼくは田中さんほど背負えてないと思うけどね。<br><br>
+田中さんはめちゃめちゃ背負ってると思うけど。<br><br>
+
+<span style="font-size:10px;">
+※田中浩也：1975年生まれ、慶応義塾大学情報環境学部准教授。FabLab Japan発起人。日本におけるFabLabの代表的人物。<br>
+<a href="https://ja.wikipedia.org/wiki/%E7%94%B0%E4%B8%AD%E6%B5%A9%E4%B9%9F">https://ja.wikipedia.org/wiki/%E7%94%B0%E4%B8%AD%E6%B5%A9%E4%B9%9F</a>
+</span>
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/jo.jpg" width="100"><br><br>
+20代のころは「メディア・アート」<br><br>
+って言葉を使いたくなかったんだけど、最近は<br><br>
+<span class="b">「メディア・アートは背負った方がいいのかもしれない」</span>
+と思い始めてるかな…。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+心境の変化、みたいなものがあったんですか？<br><br>
+環境も大きく変わりますよね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/jo.jpg" width="100"><br><br>
+うん、IAMASを去るからこそ、<br><br>
+メディア・アートを背負ってもいいんじゃないかな、と。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/jo.jpg" width="100"><br><br>
+「車輪の再発明」でやってきたことも、<br><br>
+単に楽しいインタラクティブわっしょいじゃないし、<br><br>
+端的にすごいテクノロジーでもないけど、<br><br>
+<span class="b">「メディア・アートとしか言いようのないもの」</span><br><br>
+だと思うし。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+4月から城さんの肩書きは、<br><br>
+「メディア・アーティスト」に…？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/jo.jpg" width="100"><br><br>
+メディア・アーティストとは名乗らないけど（笑）<br><br>
+IAMASでは音響学を専門、と名乗ってるけど、<br><br>
+<span class="b">次の音響設計学科では「メディア・アートが専門」<br><br>
+って書いてもいいと思うし。</span><br><br>
+ちょっと大人の階段登る感じかな…
+
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+じゃあ、しっかりイアマ速報に書き残して、<br><br>
+<span class="b">10年後くらいに城さんに送りつけますね！</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/jo.jpg" width="100"><br><br>
+いやー…<br><br>
+<span class="b">次階段おりてたらやだなー（笑）</span><br><br>
+「あのときこんなこと言ってたけど…」<br><br>
+「あーそんなひと居たねー」みたいな…<br><br>
+やだなーそれ（笑）
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/jo.jpg" width="100"><br><br>
+まあでも、東京からわざわざ見に来る、<br><br>
+ような感じにしたいですね。<br><br>
+いいなー福岡、みたいな。<br><br>
+<span class="b">東京の人をうらやましがらせたい。</span><br><br>
+うらやましがるクチなので（笑）
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+なるほど、いいですね！<br><br>
+ぼくらも大垣をうらやましがらせたくて、<br><br>
+やってるところあります。
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+また九州行っても相談させてください！
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/jo.jpg" width="100"><br><br>
+はいはい、facebookメッセとかでも、<br><br>
+いつでも相談のるので。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+ありがとうございましたー！
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+ところでイア子ちゃん、<br><br>
+今後イアマ速報の更新どうする？
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+
+今回ボリューム盛り盛りなのものあるけど、<br><br>
+久しぶりにやったらマジ大変ね…<br><br>
+去年の夏、毎日更新とかよくやってたわ…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+今後も地味に続けていくよ！！<br><br>
+思い出したらTwitterのぞいてみてね！
+
+            </p>
+        </div>
+        <div id="last" class="section">
+            <p class="i-p">
+イアマ速報 Twitter<br><br>
+<a href="https://twitter.com/iamasokuho">https://twitter.com/iamasokuho</a><br><br>
+
+イアマ速報 facebook<br><br>
+<a href="https://www.facebook.com/iamasokuho/">https://www.facebook.com/iamasokuho/</a>
+
+<br><br><br>
+<a href="http://iamasokuho.gifu.jp/archive.html" style="font-size:12px;">
+記事一覧へ
+</a>
+
+                <div class="social_btn_bottom">
+                    <div class="twitter">
+                        <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://iamasokuho.gifu.jp/jojporg.html">Tweet</a>
+                        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+                    </div>
+                    <div class="facebook">
+                        <div class="fb-like" data-href="http://iamasokuho.gifu.jp/jojporg.html" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+                    </div>
+                    <div class="hateb">
+                        <a href="http://b.hatena.ne.jp/entry/iamasokuho.gifu.jp/jojporg.html" class="hatena-bookmark-button" data-hatena-bookmark-title="【IAMASの人々・特別編】城一裕先生、福岡へ行っても元気でねスペシャル" data-hatena-bookmark-layout="standard-balloon" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリ>ーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a>
+                    </div>
+                    <script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+                </div> </p>
+        </div>
+    </div>
+</body>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-64484802-1', 'auto');
+  ga('send', 'pageview');
+</script>
+</html>

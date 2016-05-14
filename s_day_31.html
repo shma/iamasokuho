@@ -1,0 +1,674 @@
+<html lang="ja-jp" dir="ltr" xmlns:og="http://ogp.me/ns/#">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="IAMASOKUHO">
+    <meta name="keywords" content="iamasokuho, iama速報, IAMAS, 情報科学芸術大学院大学">
+    <title>【IAMASすてきな施設めぐり】360度動画で学内探検！（後編）</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/vnd.microsoft.icon">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.11.0/css/uikit.almost-flat.min.css" rel="stylesheet">
+    <link href="/assets/css/jquery.fullPage.css" rel="stylesheet">
+    <link href="/assets/css/style.css" rel="stylesheet">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.11.0/js/uikit.min.js"></script>
+    <script src="/assets/js/three.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+    
+    <script type="text/javascript" src="assets/js/jquery.fullPage.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.typist.js"></script>
+    <style>
+        body {
+          /* 画像ファイルの指定 */
+          background-image: url(/assets/images/sp_back3.gif);
+
+          /* 画像を常に天地左右の中央に配置 */
+          background-position: center center;
+
+          /* 画像をタイル状に繰り返し表示しない */
+          background-repeat: no-repeat;
+
+          /* コンテンツの高さが画像の高さより大きい時、動かないように固定 */
+          background-attachment: fixed;
+
+          /* 表示するコンテナの大きさに基づいて、背景画像を調整 */
+          background-size: cover;
+
+          /* 背景画像が読み込まれる前に表示される背景のカラー */
+          background-color: #464646;
+        }
+    </style>
+</head>
+<body>
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v2.3&appId=884387134914356";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+    <script>
+        $('head').append(
+                '<style type="text/css">body {display:none;}</style>'
+        );
+        $(document).ready(function() {
+    
+            var camera, scene, renderer;
+            var mesh;
+            var mesh_masuo;
+            var objects = [];
+
+            // Particles
+            var group;
+            var container;
+            var particlesData = [];
+            var positions, colors;
+            var pointCloud;
+            var particlePositions;
+            var linesMesh;
+
+            var maxParticleCount = 1000;
+            var particleCount = 400;
+            if (window.innerWidth < 600) {
+                particleCount = 100;
+            } 
+
+            var r = 900;
+            var rHalf = r / 2;
+
+            var effectController = {
+                showDots: true,
+                showLines: true,
+                minDistance: 200,
+                limitConnections: false,
+                maxConnections: 100,
+                particleCount: 400
+            }
+
+    
+            init();
+            function init() {
+                $('body').fadeIn("slow");
+            }
+
+
+            $('#fullpage').fullpage({
+                sectionsColor: [],
+                verticalCentered: false,
+                paddingTop: '6em',
+                afterLoad: function(anchorLink, index){
+                    if (index == 5 || index == 3) {
+                    }
+
+                    if (index == 2 || index == 4) {
+                    }
+                }
+            });
+        });
+    </script>
+    <div id="container"></div>
+    <div class="i-head">
+        <a href="/" class="i-logo-less">
+            <img src="/assets/images/logo_2.gif" width="150">
+        </a>
+        <div class="social_btn uk-hidden-small" style="float:right;">
+            <div class="twitter">
+                <a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
+                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+            </div>
+            <div class="facebook">
+                <div class="fb-like" data-href="http://iamasokuho.gifu.jp/day_four.html" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+            </div>
+        </div>
+    </div>
+    <div id="fullpage">
+        <div class="section">
+        <div class="section">
+            <p class="i-p">
+<blockquote class="twitter-tweet" lang="ja" align="center"><p lang="ja" dir="ltr">ランボー怒りの3徹目</p>&mdash; マス男 (@IAMAS_boy) <a href="https://twitter.com/IAMAS_boy/status/624279929971212288">2015, 7月 23</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </p>
+        </div>
+        <div class="section" style="padding-left:35%;"> 
+            <p class="i-p">
+<blockquote class="instagram-media" data-instgrm-captioned data-instgrm-version="4" style=" background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:200px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);"><div style="padding:8px;"> <div style=" background:#F8F8F8; line-height:0; margin-top:40px; padding:50% 0; text-align:center; width:100%;"> <div style=" background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAsCAMAAAApWqozAAAAGFBMVEUiIiI9PT0eHh4gIB4hIBkcHBwcHBwcHBydr+JQAAAACHRSTlMABA4YHyQsM5jtaMwAAADfSURBVDjL7ZVBEgMhCAQBAf//42xcNbpAqakcM0ftUmFAAIBE81IqBJdS3lS6zs3bIpB9WED3YYXFPmHRfT8sgyrCP1x8uEUxLMzNWElFOYCV6mHWWwMzdPEKHlhLw7NWJqkHc4uIZphavDzA2JPzUDsBZziNae2S6owH8xPmX8G7zzgKEOPUoYHvGz1TBCxMkd3kwNVbU0gKHkx+iZILf77IofhrY1nYFnB/lQPb79drWOyJVa/DAvg9B/rLB4cC+Nqgdz/TvBbBnr6GBReqn/nRmDgaQEej7WhonozjF+Y2I/fZou/qAAAAAElFTkSuQmCC); display:block; height:44px; margin:0 auto -44px; position:relative; top:-22px; width:44px;"></div></div> <p style=" margin:8px 0 0 0; padding:0 4px;"> <a href="https://instagram.com/p/5emXDWhhIH/" style=" color:#000; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:normal; line-height:17px; text-decoration:none; word-wrap:break-word;" target="_top">追い込みです #IAMASOH2015</a></p> <p style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; line-height:17px; margin-bottom:0; margin-top:8px; overflow:hidden; padding:8px 0 7px; text-align:center; text-overflow:ellipsis; white-space:nowrap;">A photo posted by イアマ速報 (@iamasokuho) on <time style=" font-family:Arial,sans-serif; font-size:14px; line-height:17px;" datetime="2015-07-23T12:08:54+00:00">Jul 23, 2015 at 5:08am PDT</time></p></div></blockquote>
+<script async defer src="//platform.instagram.com/en_US/embeds.js"></script>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<blockquote class="twitter-tweet" data-cards="hidden" lang="ja" align="center"><p lang="ja" dir="ltr">＠オープンハウス準備で涅槃が見えているIAMAS生の皆様 ご査収ください Nirvana - Come As You Are <a href="https://t.co/wQtCov7sep">https://t.co/wQtCov7sep</a> <a href="https://twitter.com/YouTube">@YouTube</a>さんから</p>&mdash; イアマ速報 IAMASokuho (@IAMASokuho) <a href="https://twitter.com/IAMASokuho/status/624222095220670464">2015, 7月 23</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </p>
+        </div>
+        <div class="section" style="padding-left:35%;">
+            <p class="i-p">
+<blockquote class="instagram-media" data-instgrm-captioned data-instgrm-version="4" style=" background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:200px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);"><div style="padding:8px;"> <div style=" background:#F8F8F8; line-height:0; margin-top:40px; padding:50% 0; text-align:center; width:100%;"> <div style=" background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAsCAMAAAApWqozAAAAGFBMVEUiIiI9PT0eHh4gIB4hIBkcHBwcHBwcHBydr+JQAAAACHRSTlMABA4YHyQsM5jtaMwAAADfSURBVDjL7ZVBEgMhCAQBAf//42xcNbpAqakcM0ftUmFAAIBE81IqBJdS3lS6zs3bIpB9WED3YYXFPmHRfT8sgyrCP1x8uEUxLMzNWElFOYCV6mHWWwMzdPEKHlhLw7NWJqkHc4uIZphavDzA2JPzUDsBZziNae2S6owH8xPmX8G7zzgKEOPUoYHvGz1TBCxMkd3kwNVbU0gKHkx+iZILf77IofhrY1nYFnB/lQPb79drWOyJVa/DAvg9B/rLB4cC+Nqgdz/TvBbBnr6GBReqn/nRmDgaQEej7WhonozjF+Y2I/fZou/qAAAAAElFTkSuQmCC); display:block; height:44px; margin:0 auto -44px; position:relative; top:-22px; width:44px;"></div></div> <p style=" margin:8px 0 0 0; padding:0 4px;"> <a href="https://instagram.com/p/5fHeVnhhHO/" style=" color:#000; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:normal; line-height:17px; text-decoration:none; word-wrap:break-word;" target="_top">現実は厳しい #色調整ナイト #IAMASOH2015</a></p> <p style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; line-height:17px; margin-bottom:0; margin-top:8px; overflow:hidden; padding:8px 0 7px; text-align:center; text-overflow:ellipsis; white-space:nowrap;">A photo posted by イアマ速報 (@iamasokuho) on <time style=" font-family:Arial,sans-serif; font-size:14px; line-height:17px;" datetime="2015-07-23T16:58:15+00:00">Jul 23, 2015 at 9:58am PDT</time></p></div></blockquote>
+<script async defer src="//platform.instagram.com/en_US/embeds.js"></script>
+            </p>
+        </div>
+        <div class="section" style="padding-left:35%;">
+            <p class="i-p">
+<blockquote class="instagram-media" data-instgrm-captioned data-instgrm-version="4" style=" background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:200px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);"><div style="padding:8px;"> <div style=" background:#F8F8F8; line-height:0; margin-top:40px; padding:50% 0; text-align:center; width:100%;"> <div style=" background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAsCAMAAAApWqozAAAAGFBMVEUiIiI9PT0eHh4gIB4hIBkcHBwcHBwcHBydr+JQAAAACHRSTlMABA4YHyQsM5jtaMwAAADfSURBVDjL7ZVBEgMhCAQBAf//42xcNbpAqakcM0ftUmFAAIBE81IqBJdS3lS6zs3bIpB9WED3YYXFPmHRfT8sgyrCP1x8uEUxLMzNWElFOYCV6mHWWwMzdPEKHlhLw7NWJqkHc4uIZphavDzA2JPzUDsBZziNae2S6owH8xPmX8G7zzgKEOPUoYHvGz1TBCxMkd3kwNVbU0gKHkx+iZILf77IofhrY1nYFnB/lQPb79drWOyJVa/DAvg9B/rLB4cC+Nqgdz/TvBbBnr6GBReqn/nRmDgaQEej7WhonozjF+Y2I/fZou/qAAAAAElFTkSuQmCC); display:block; height:44px; margin:0 auto -44px; position:relative; top:-22px; width:44px;"></div></div> <p style=" margin:8px 0 0 0; padding:0 4px;"> <a href="https://instagram.com/p/5fc-udBhC0/" style=" color:#000; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:normal; line-height:17px; text-decoration:none; word-wrap:break-word;" target="_top">明日天気になあれ #IAMASOH2015</a></p> <p style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; line-height:17px; margin-bottom:0; margin-top:8px; overflow:hidden; padding:8px 0 7px; text-align:center; text-overflow:ellipsis; white-space:nowrap;">A photo posted by イアマ速報 (@iamasokuho) on <time style=" font-family:Arial,sans-serif; font-size:14px; line-height:17px;" datetime="2015-07-23T20:06:10+00:00">Jul 23, 2015 at 1:06pm PDT</time></p></div></blockquote>
+<script async defer src="//platform.instagram.com/en_US/embeds.js"></script>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<blockquote class="twitter-tweet" lang="ja" align="center"><p lang="ja" dir="ltr">朝からみんな慌ただしい！いっかいシャワー浴びに帰ろう…</p>&mdash; イア子 (@IAMAS_girl) <a href="https://twitter.com/IAMAS_girl/status/624385343517626368">2015, 7月 24</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+ということで！<br>
+いよいよ明日だよ！！<br>
+テンションアガってくるね！！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/iako.png" width=50><br>
+マス男くん、<br>
+<span class="b">それ３日連続徹夜からくる、<br>
+ナチュラルハイじゃない？</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+そうではないと信じたいよ！ハハハ！<br>
+今日はこの質問だ！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+みんな知りたいと思うんですがさん（27歳・男性）<br>
+
+<span class="b">IAMAS卒業した人って、どんなことしてるんですか？<br>
+ぶっちゃけ就職先あるんですか？<br>
+正直生きていけるかわかんないので悩んでます。</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/iako.png" width=50><br>
+出た！！完全にマジトーン！！<br>
+いちばん難しいけど、<br>
+いちばん知りたいやつ！！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+これなあ…ほんとむずかしいよなあ…<br>
+お答えできるもんなら、<br>
+お答えしたいんだけど…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/iako.png" width=50><br>
+わたしたちでさえ、<br>
+<span class="b">卒業生の人が何してるのか、<br>
+著名な人以外は全然知らない</span>わよね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+IAMASはこれまでに、<br>
+<span class="b">約1000人の卒業生</span>を輩出しているみたい。<br>
+意外と多いよね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/iako.png" width=50><br>
+ほんとね！<br>
+どの卒業生も、就職する人、起業する人、<br>
+アーティスト活動をする人、教員になる人、<br>
+そのいくつか跨って活動している人、<br>
+いろんな人がいるらしい…ことは知ってる。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+そうだ！<br>
+こないだ大垣に遊びに来ていた、<br>
+あの卒業生の方にお話を聞いてみよう！！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<blockquote class="twitter-tweet" lang="ja" align="center"><p lang="ja" dir="ltr"><a href="https://twitter.com/soooo">@soooo</a> 菅野さん！きのうはありがとうございました！！卒業生の話とか聞かせてください！！</p>&mdash; マス男 (@IAMAS_boy) <a href="https://twitter.com/IAMAS_boy/status/623379772400205824">2015, 7月 21</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<blockquote class="twitter-tweet" lang="ja" align="center"><p lang="und" dir="ltr"><a href="https://twitter.com/IAMAS_boy">@IAMAS_boy</a> ʕ•̀ω•́ʔ✧</p>&mdash; So Kanno (@soooo) <a href="https://twitter.com/soooo/status/623429359466975233">2015, 7月 21</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/30-1.jpg" width="200"><br>
+<span class="b"菅野創さん</span><br>
+メディアアーティスト。ベルリン在住。<br>
+武蔵野美術大学造形学部デザイン情報学科卒業後、<br>
+2009年IAMAS卒業。<br>
+2012年文化庁メディア芸術祭新人賞受賞。<br>
+
+<span style="font-size:10px;">
+出典：<a href="http://kanno.so/about/">http://kanno.so/about/</a>
+</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/iako.png" width=50><br>
+今年かなりあちこちに作品を出してる、<br>
+かなりすごい人よね…<br>
+すごい人が普通に訪れるIAMAS…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<blockquote class="twitter-tweet" lang="ja" align="center"><p lang="ja" dir="ltr"><a href="https://twitter.com/soooo">@soooo</a> <a href="https://twitter.com/IAMAS_boy">@iamas_boy</a> ありがとうございます(੭‾᷄꒫‾᷅)੭ 菅野さんからみて、IAMAS卒業生の進路の割合はどんな感じですか？一般企業に就職した人、起業した人、アーティスト道を歩む人、など…菅野さんの感覚でいいので！ざっくりと教えて頂ければ幸いです！</p>&mdash; イア子 (@IAMAS_girl) <a href="https://twitter.com/IAMAS_girl/status/623500150447550464">2015, 7月 21</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<blockquote class="twitter-tweet" lang="ja" align="center"><p lang="ja" dir="ltr"><a href="https://twitter.com/IAMAS_girl">@IAMAS_girl</a> <a href="https://twitter.com/IAMAS_boy">@IAMAS_boy</a> んー、何割かなぁわかんないけど、こないだの計算だと1%くらいはベルリンに行く傾向があるみたいだよ！</p>&mdash; So Kanno (@soooo) <a href="https://twitter.com/soooo/status/623712052003999745">2015, 7月 22</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+こないだのドイツ屋(※1)での飲み会で、<br>
+<span class="b">IAMAS卒業生がベルリンに10人近くいる、</span><br>
+という話をされていたね！<br>
+<span style="font-size:10px;">
+※1 ドイツ屋：IAMAS学生寮の近くにある、月曜はほぼすべてのドリンクが1杯100円という驚異的な居酒屋。菅野さんの大垣凱旋にともなって飲み会が催された。
+</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<blockquote class="twitter-tweet" lang="ja" align="center"><p lang="ja" dir="ltr"><a href="https://twitter.com/IAMAS_girl">@IAMAS_girl</a> <a href="https://twitter.com/IAMAS_boy">@IAMAS_boy</a> マジレスすると就職しても展覧会出展できるし、起業してて大学で教えてる人もいるし、そんな割合気にする意味がよくわからないよ！</p>&mdash; So Kanno (@soooo) <a href="https://twitter.com/soooo/status/623713026491834368">2015, 7月 22</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/iako.png" width=50><br>
+うーん、実際そうよね…<br>
+IAMAS卒業生にとっては、<br>
+「やってること」「つくってるもの」<br>
+こそが大事なのかもしれないわね。<br>
+あんまり「職業」は関係ないのかも。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<blockquote class="twitter-tweet" lang="ja" align="center"><p lang="ja" dir="ltr"><a href="https://twitter.com/soooo">@soooo</a> <a href="https://twitter.com/IAMAS_boy">@iamas_boy</a> そーですよね…割合じゃくくれないですね！&#10;あとこれもなかなか答えにくいかもしれないですが、IAMASにいる間にやったこと、学んだことで、卒業からしばらく経ったいま活きていることってどういうことがありますか？</p>&mdash; マス男 (@IAMAS_boy) <a href="https://twitter.com/IAMAS_boy/status/623715938639069185">2015, 7月 22</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<blockquote class="twitter-tweet" lang="ja" align="center"><p lang="ja" dir="ltr"><a href="https://twitter.com/IAMAS_boy">@IAMAS_boy</a> んー、割と引きのある作品が作れた事はかなりあって、それはイアマスの環境がなかったら確実になし得なかったと思います。(先生、機材類、24時間入れる、田舎とか)</p>&mdash; So Kanno (@soooo) <a href="https://twitter.com/soooo/status/624013328638017537">2015, 7月 23</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<blockquote class="twitter-tweet" lang="ja" align="center"><p lang="ja" dir="ltr"><a href="https://twitter.com/IAMAS_boy">@IAMAS_boy</a> あとはイアマス人脈、村感があって、先輩たちは現学生が思っている以上にけっこう見てくれているので、東京来てからイアマス人脈で色々と機会をもらったり、仲良くなったり、お世話になってます◎</p>&mdash; So Kanno (@soooo) <a href="https://twitter.com/soooo/status/624014888692625408">2015, 7月 23</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+IAMASにいる今でこそ、こういう環境が、<br>
+結構当たり前に思ってしまうこともあるけど、<br>
+<span class="b">実は世界有数といっても言いすぎじゃない、<br>
+すごく恵まれてる環境</span>なんだよね…<br>
+すごい機材を普通に使えたりするし。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/iako.png" width=50><br>
+制作に打ち込める環境でいえば、<br>
+不自由することはほとんどないものね…。<br>
+IAMAS人脈とか村感とかは、<br>
+わたしたちはまだよく分かってないけど、<br>
+卒業したらよくわかるのかもね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<blockquote class="twitter-tweet" lang="ja" align="center"><p lang="ja" dir="ltr"><a href="https://twitter.com/soooo">@soooo</a> <a href="https://twitter.com/IAMAS_boy">@iamas_boy</a> やっぱりイアマスの環境ってかなり恵まれてるんですね…！イアマスの村感、たまにお伺いしますね。わたしたちはIAMAS卒業生の方はまだほとんど知らないのですが、菅野さんが最近すごい！と思うIAMAS卒業生の人は、どんな方がいますか？</p>&mdash; イア子 (@IAMAS_girl) <a href="https://twitter.com/IAMAS_girl/status/624021367134892032">2015, 7月 23</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<blockquote class="twitter-tweet" data-cards="hidden" lang="ja" align="center"><p lang="ja" dir="ltr"><a href="https://twitter.com/IAMAS_girl">@iamas_girl</a> <a href="https://twitter.com/IAMAS_boy">@iamas_boy</a> 難しい質問が多いですね…&#10;全然最近ではないですがIAMASの人の作品で下記の２つには大変感銘を受けたし影響されました。&#10;<a href="https://t.co/i2BANmOrdM">https://t.co/i2BANmOrdM</a>&#10;<a href="https://t.co/a6ipV91odW">https://t.co/a6ipV91odW</a></p>&mdash; So Kanno (@soooo) <a href="https://twitter.com/soooo/status/624150630282629121">2015, 7月 23</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<a href="https://www.youtube.com/watch?v=jG3yMwZvLes&list=LLDXNYEozHs65DXJ-OLd24ZQ&index=112">https://www.youtube.com/watch?v=jG3yMwZvLes&list=LLDXNYEozHs65DXJ-OLd24ZQ&index=112</a><br>
+<span class="b">好好</span><br>
+増田一太郎
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<iframe width="300" height="200200200200200200200200200200200200200200200200200200200200" src="https://www.youtube.com/embed/-VmGS8YM7mo" frameborder="0" allowfullscreen></iframe><br>
+<span class="b">moids 2.0 - acoustic emergence structure</span><br>
+斉田一樹＋三原聡一郎＋むぎばやしひろこ
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+初めて見た…<br>
+でもこれはどちらもすごいなあ。<br>
+菅野さんの作品も、これらの作品から、<br>
+刺激を受けてる部分がありそうだ。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/30-2.jpg" width=300><br>
+<span class="b">菅野 創 / yang02＜セミセンスレス・ドローイング・モジュールズ (SDM)＞2014</span><br>
+<a style="font-size:10px;" href="https://www.sapporo-internationalartfestival.jp/2014/artists/%E8%8F%85%E9%87%8E%E5%89%B5-yang02https://www.sapporo-internationalartfestival.jp/2014/artists/%E8%8F%85%E9%87%8E%E5%89%B5-yang02">出典：https://www.sapporo-internationalartfestival.jp/2014/artists/%E8%8F%85%E9%87%8E%E5%89%B5-yang02https://www.sapporo-internationalartfestival.jp/2014/artists/%E8%8F%85%E9%87%8E%E5%89%B5-yang02</a>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/iako.png" width=50><br>
+確かにわたしたちも、<br>
+同期や先輩の作品に影響を受けたりするし、<br>
+そういう環境自体が、関係の密度が濃い、<br>
+IAMASならではの良さなのかも。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<blockquote class="twitter-tweet" lang="ja" align="center"><p lang="ja" dir="ltr"><a href="https://twitter.com/soooo">@soooo</a> <a href="https://twitter.com/IAMAS_girl">@iamas_girl</a> 難しい質問ばかりすみません…！初めて拝見しました。すごいですね！どちらも菅野さんの作品に現れているものがあるように見えます。IAMAS入学前や在学中から、「卒業したらアーティストとして活動しよう」と考えてましたか？</p>&mdash; マス男 (@IAMAS_boy) <a href="https://twitter.com/IAMAS_boy/status/624185723118157824">2015, 7月 23</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<blockquote class="twitter-tweet" lang="ja" align="center"><p lang="ja" dir="ltr"><a href="https://twitter.com/IAMAS_boy">@iamas_boy</a> <a href="https://twitter.com/IAMAS_girl">@iamas_girl</a> んーそうっすね、ムサビくらいからなんとなくそう思っていたと思います。</p>&mdash; So Kanno (@soooo) <a href="https://twitter.com/soooo/status/624408600107094016">2015, 7月 24</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/iako.png" width=50><br>
+わたしたちの学年や、M2の先輩にも、<br>
+作家志望の人は何人もいるわよね。<br>
+そのまま作家の道を歩む人もいるのかも。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<blockquote class="twitter-tweet" lang="ja" align="center"><p lang="ja" dir="ltr"><a href="https://twitter.com/soooo">@soooo</a> <a href="https://twitter.com/IAMAS_girl">@IAMAS_girl</a> そうなんですね…！もともとそういう思いはあったんですね。&#10;お忙しい中難しい質問ばかり答えていただきありがとうございました！！</p>&mdash; マス男 (@IAMAS_boy) <a href="https://twitter.com/IAMAS_boy/status/624429153828220928">2015, 7月 24</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<blockquote class="twitter-tweet" lang="ja" align="center"><p lang="ja" dir="ltr"><a href="https://twitter.com/IAMAS_boy">@IAMAS_boy</a> <a href="https://twitter.com/IAMAS_girl">@IAMAS_girl</a> どういたしまして〜</p>&mdash; So Kanno (@soooo) <a href="https://twitter.com/soooo/status/624481598667296769">2015, 7月 24</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+菅野さん、<br>
+お忙しい日本滞在中に回答してくださり、<br>
+ありがとうございました！<br>
+ややこしい質問ばかりすみませんでした！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/iako.png" width=50><br>
+菅野さんの作品は、2015年7月24日現在、<br>
+菅野創＋やんツー として、<br>
+<a href="http://www.ntticc.or.jp/Exhibition/2015/Openspace2015/index_j.html">ICC「オープン・スペース2015」</a>、<br>
+<a href="http://www.2121designsight.jp/program/motion_science/">21_21 DESIGN SIGHT「動きのカガク展」</a>、<br>
+<a href="http://www.chigasaki-museum.jp/natsufuku/2015/">茅ヶ崎市美術館「正しいラクガキ展」</a><br>
+に出品中よ！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+オープン・スペース2015では、<br>
+IAMAS「車輪の再発明プロジェクト」も<br>
+展示を行っているよ！<br>
+城さんとクワクボさんの作品があったね。<br>
+ぜひ見に行ってみてくださーい！！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/iako.png" width=50><br>
+菅野さんのように、<br>
+作家をしている方以外にも、<br>
+<span class="b">IAMAS卒業生の会社は、<br>
+個人、グループ、たくさんある</span>みたいね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+よくIAMASで話題に上がるのは、<br>
+どちらも大垣にある会社だけど、<br>
+在学中にIAMAS生が企業した<span class="b">GOCCO.</span>と、<br>
+大垣の方とIAMAS卒業生で立ち上げた、<br>
+<span class="b">TAB</span>があるよね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/30-3.jpg" width=300><br>
+株式会社GOCCO.<br>
+<a href="http://www.gocco.co.jp/">http://www.gocco.co.jp/</a>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/30-4.jpg" width=300><br>
+株式会社TAB<br>
+<a href="http://www.tabjapan.com/">http://www.tabjapan.com/</a>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/iako.png" width=50><br>
+大活躍中のIAMAS卒業生、<br>
+真鍋大度さんが共同創業者の、<br>
+<span class="b">Rhizomatiks</span>もそうだし、<br>
+最近かなり注目されている<span class="b">チームラボ</span>も、<br>
+IAMAS卒業生が何人もいるみたいだね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+株式会社ライゾマティクス<br>
+<a href="http://rhizomatiks.com/">http://rhizomatiks.com/</a><br>
+<br>
+株式会社チームラボ<br>
+<a href="http://www.team-lab.com/">http://www.team-lab.com/</a>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+ほかにも美術館に務めたり、<br>
+大学教員になったり、<br>
+<span class="b">いろんな進路がある</span>みたいだね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/iako.png" width=50><br>
+在学中から、個人の作品づくりや、<br>
+会社インターンやお手伝いなどを通して、<br>
+知り合った方々と一緒に仕事をしたり、<br>
+そのまま就職してしまったりすることも、<br>
+少なくないみたいね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+作家もすごく大変みたいだけど、<br>
+お金をもらう方法は全くないわけではないし、<br>
+そこはIAMASにいる間に、<br>
+いろいろ話を聞いて、いろんなやり方を、<br>
+検討してみるのでもいいのかも。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/iako.png" width=50><br>
+IAMAS卒業生が持っている強みとして、<br>
+先生方からよく聞くのは、<br>
+<span class="b">現場での設営に強い</span>とか、<br>
+<span class="b">何かものを作りきった経験がある</span>とか、<br>
+そういうところみたいね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+あー、それはたしかにそうだね。<br>
+オープンハウスもそうだけど、IAMASでは、<br>
+「作ることの困難」に直面し続けるから、<br>
+アイデアがどこまで実現可能か考えるとき、<br>
+実際に作った経験が活きるのかも。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/iako.png" width=50><br>
+ということで結論！！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<span class="b">
+結論：<br>
+IAMASは「就職に強い」というような、<br>
+安いレッテルを貼られる学校じゃない。<br>
+誰かが作った環境に入る方法よりも、<br>
+より良い未来を切り開く方法のほうが、<br>
+IAMASでは見つけやすいかもね。
+</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+キザかよ！！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/iako.png" width=50><br>
+最後くらい良いじゃない！！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+あれ、今日これで終わり？<br>
+最終日なのに？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/iako.png" width=50><br>
+実は今日はこのあと、<br>
+エクストラ更新があるのよ…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+マジかよ！<span class="b">寝てないのによくやるね！</span><br>
+さっき会った同期、<br>
+<span class="b">寝てなさすぎて変な笑い方してたよ！</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/iako.png" width=50><br>
+全部無事に終わったら、 <br>
+安らかに眠ってほしいわね…
+            </p>
+        </div>
+
+            <p class="i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+ということで、<br>
+エクストラ更新まで、<br>
+しばしお待ちを！！
+
+
+<br>
+
+<a href="http://iamasokuho.gifu.jp/day_28.html" style="font-size:12px;">
+<< 前の記事へ
+</a>
+&nbsp;&nbsp;&nbsp;
+<a href="http://iamasokuho.gifu.jp/archive.html" style="font-size:12px;">
+記事一覧へ
+</a>
+
+            <div class="social_btn_bottom social_btn_bottom_sp uk-visible-small">
+                <div class="twitter">
+                    <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://iamasokuho.gifu.jp/day_29.html" data-via="iamasokuho">Tweet</a>
+                    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+                </div>
+                <div class="facebook">
+                    <div class="fb-like" data-href="http://iamasokuho.gifu.jp/day_29.html" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+                </div>
+                <div class="hateb">
+                    <a href="http://b.hatena.ne.jp/entry/iamasokuho.gifu.jp/day_29.html" class="hatena-bookmark-button" data-hatena-bookmark-title="【IAMASすてきな施設めぐり】360度動画で学内探検！（後編）" data-hatena-bookmark-layout="standard-balloon" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリ>ーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a>
+                    <script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+                </div>
+            </div>
+            </p>
+        </div>
+    </div>
+
+</body>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-64484802-1', 'auto');
+  ga('send', 'pageview');
+</script>
+</html>

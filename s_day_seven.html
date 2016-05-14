@@ -1,0 +1,472 @@
+<html lang="ja-jp" dir="ltr" xmlns:og="http://ogp.me/ns/#">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="IAMASOKUHO">
+    <meta name="keywords" content="iamasokuho, iama速報, IAMAS, 情報科学芸術大学院大学">
+    <title>【IAMAS正直Q&A】実際、お金どうしてんの？ | IAMASokuho</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/vnd.microsoft.icon">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.11.0/css/uikit.almost-flat.min.css" rel="stylesheet">
+    <link href="/assets/css/jquery.fullPage.css" rel="stylesheet">
+    <link href="/assets/css/style.css" rel="stylesheet">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.11.0/js/uikit.min.js"></script>
+    <script src="/assets/js/three.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+    
+    <script type="text/javascript" src="assets/js/jquery.fullPage.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.typist.js"></script>
+    <style>
+        body {
+          /* 画像ファイルの指定 */
+          background-image: url(/assets/images/sp_back3.gif);
+
+          /* 画像を常に天地左右の中央に配置 */
+          background-position: center center;
+
+          /* 画像をタイル状に繰り返し表示しない */
+          background-repeat: no-repeat;
+
+          /* コンテンツの高さが画像の高さより大きい時、動かないように固定 */
+          background-attachment: fixed;
+
+          /* 表示するコンテナの大きさに基づいて、背景画像を調整 */
+          background-size: cover;
+
+          /* 背景画像が読み込まれる前に表示される背景のカラー */
+          background-color: #464646;
+        }
+    </style>
+</head>
+<body>
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v2.3&appId=884387134914356";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+    <script>
+        $('head').append(
+                '<style type="text/css">body {display:none;}</style>'
+        );
+        $(document).ready(function() {
+    
+            var camera, scene, renderer;
+            var mesh;
+            var mesh_masuo;
+            var objects = [];
+
+            // Particles
+            var group;
+            var container;
+            var particlesData = [];
+            var positions, colors;
+            var pointCloud;
+            var particlePositions;
+            var linesMesh;
+
+            var maxParticleCount = 1000;
+            var particleCount = 400;
+            if (window.innerWidth < 600) {
+                particleCount = 100;
+            } 
+
+            var r = 900;
+            var rHalf = r / 2;
+
+            var effectController = {
+                showDots: true,
+                showLines: true,
+                minDistance: 200,
+                limitConnections: false,
+                maxConnections: 100,
+                particleCount: 400
+            }
+
+    
+            init();
+            function init() {
+                $('body').fadeIn("slow");
+            }
+
+
+            $('#fullpage').fullpage({
+                sectionsColor: ['none', 'none', 'none', 'none', 'none'],
+                verticalCentered: false,
+                paddingTop: '6em',
+                afterLoad: function(anchorLink, index){
+                    if (index == 5 || index == 3) {
+                    }
+
+                    if (index == 2 || index == 4) {
+                    }
+                }
+            });
+        });
+    </script>
+    <div id="container"></div>
+    <div class="i-head">
+        <a href="/" class="i-logo-less">
+            <img src="/assets/images/logo_2.gif" width="150">
+        </a>
+        <div class="social_btn uk-hidden-small" style="float:right;">
+            <div class="twitter">
+                <a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
+                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+            </div>
+            <div class="facebook">
+                <div class="fb-like" data-href="http://iamasokuho.gifu.jp/day_four.html" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+            </div>
+        </div>
+    </div>
+    <div id="fullpage">
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+今日も質問がきてるよー！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+イアマスネーム：ノーマネーでフィニッシュですさん（埼玉県・25歳）<br>
+IAMAS、すごい興味あるんですけど、<br>
+全然貯金ないのでどうしようか迷ってます。<br>
+税金とか年金とか払えないですよね？<br>
+IAMASのみなさんは、お金どうしてますか？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+いやー、難しい質問だね。<br>
+ぼくも結構迷ってたやつだ。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+この名前にピンとくる人、<br>
+どれくらいいるのかしら。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+20代後半くらいなのかな…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+ところでマス男くんは、お金どうしてるの？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+ぼくは5年くらい働いてからきたけど、<br>
+入学金と授業料ぶんくらいの貯金はあって、<br>
+あとは奨学金かなー。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+さすが社会人ね…<br>
+わたしも生活費は奨学金だわ。<br>
+授業料とかは親にお願いしてる…
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+なんかIAMASの半分くらいの人は、<br>
+奨学金を借りてそうだよね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+そんな感じがするわね。<br>
+あ、<span style="font-weight:bold;">IAMASの奨学金制度</span>もあるのよね！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+そうそう！<br>
+１年生は１人、２年生は２人まで、<br>
+年間60万円が支給されるよ！<br>
+<br>
+<a href="http://www.iamas.ac.jp/admission#scholarship_awards" style="font-size:10px;">
+奨学金制度の詳細はこちら：http://www.iamas.ac.jp/admission#scholarship_awards
+</a>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+これは大きいわね…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+あと成績優秀者として卒業すれば、<br>
+日本学生支援機構の奨学金は、<br>
+<span style="font-weight:bold;">返還が免除される可能性がある</span>よ！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+ますます研究に打ち込めるわね…<br>
+
+ところで、わたしは学部からそのまま大学院だけど、<br>
+<span style="font-weight:bold">働いてからきた人って、<br>
+年金とか税金とかどうするのかしら？</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+もちろん、それも調べてきたよ！！<br>
+まずは年金！<br>
+<span style-"font-weight:bold">年金は、申請すれば支払いを先延ばしにできる</span>んだ！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+あ、それはわたしも一緒だ！<br>
+学生は支払いを先延ばしにできるのよね！<br>
+
+<a href="http://www.nenkin.go.jp/n/www/service/detail.jsp?id=3896" style="font-size:10px;">
+「学生納付特例制度」の詳細はこちら：http://www.nenkin.go.jp/n/www/service/detail.jsp?id=3896
+</a>
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+そうそう！<br>
+IAMASの場合は、<span style="font-weight:bold;">すぐ近くに大垣市の出張所がある</span>から、<br>
+昼休みとか夕方にすぐ手続きができるよ！<br>
+<span style="font-weight:bold;">会社辞めた人、退職証明書と源泉徴収票はなくさずにね！</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+あれ、でも社会人から来た人って、<br>
+<span style="font-weight:bold;">税金</span>とかも大変っていうよね？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+あ、それも調べた！<br>
+税金はざっくり、<span style="font-weight:bold;">所得税と住民税</span>があるんだけど、<br>
+所得税はふつう給料から引かれてるから、<br>
+大体気にしなくていいみたい。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+いろいろあるのね…。<br>
+住民税は？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+住民税は、<span style="font-weight:bold;">前の年の給料をもとに、<br>
+次の年の6月に払う額が決まる</span>んだよ。<br>
+だからぼくらは、去年の給料をもとにした額が、<br>
+ついこないだ送られてきたね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+マス男くん、払えそうなの？<br>
+ていうか、どれくらいくるもんなの？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+うーん、社会人組で探りあってみたけど、<br>
+<span style="font-weight:bold;">だいたい年間30〜40万くらい</span>っぽいね。<br>
+もちろん前の年の給料しだいだけど！<br>
+<span style="font-weight:bold;">ぼくは全然払えないよね！！</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+うわー、地味にきついね！<br>
+それどうするの？払わなくていいの？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+うん、聞いてみたよ！<br>
+結論からいうと、<span style="font-weight:bold;">いまは払わなくていいみたい。</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+そうなの！？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+そう、ネット探しても、<br>
+社会人から学生に戻る人ってあんまいないから、<br>
+情報が書いてないんだよね…。<br>
+ちなみに<span style="font-weight:bold;">住民税は、<br>
+税務署じゃなくて市役所だから間違えないでね！</span>
+            </p>
+        </div>
+        <div class="section">
+<img src="/assets/images/iako.png" width=50><br>
+            <p class="i-p s-i-p">
+払わなくていいんだ！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+そう、いまはね！<br>
+<span style="font-weight:bold;">
+「学生だということを伝えてもらえれば、<br>
+　卒業してから払ってもらえれば大丈夫です。<br>
+　学生はその間の延滞金は頂きません」<br>
+</span>
+って言ってた！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+<span style="font-weight:bold;">学生になった、って役所に伝えておけばいい</span>のね！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+そう！<br>
+ちなみに今年のM1に、マレーシアで起業して、<br>
+1年半くらいやって帰ってきた人がいるけど、<br>
+1年以上海外に住んでいれば、<br>
+住民税が免除されるらしいよ！<br>
+
+<a href="http://www.city.izumisano.lg.jp/kakuka/somu/zeimu/menu/sizei/sizei_kojin/1387161291062.html" style="font-size:10px;">
+出典：http://www.city.izumisano.lg.jp/kakuka/somu/zeimu/menu/sizei/sizei_kojin/1387161291062.html
+</a>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+そうなの！？<br>
+じゃあIAMASに来る前に、<br>
+マレーシアで起業して1年やってきたらいいのね！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+そのとおりだよイア子ちゃん！<br>
+みんなでマレーシアに行こう！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/malaysia.gif" width=300><br>
+マレーシア<br>
+<a href="http://www.abysse.co.jp/nations/asia/images/malaysia1.gif" style="font-size:10px;">
+出典：http://www.abysse.co.jp/nations/asia/images/malaysia1.gif
+</a>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+ということで結論！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<span style="font-weight: bold;">
+結論：<br>
+ある程度奨学金でなんとかなります。<br>
+マレーシアで起業してくるといいかもしれません。
+</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+ということで、<br>
+引き続き、質問をお待ちしております！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+IAMASにいる人に聞きたいこととかがあれば、<br>
+ぼくたちが代わりに聞きにいきまーす！
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p s-i-p">
+イア子とマス男への質問やメッセージはこちらから！<br>
+<a href="http://goo.gl/forms/hlgdXfxMei">
+http://goo.gl/forms/hlgdXfxMei
+</a>
+<br>
+<a href="http://iamasokuho.gifu.jp/day_six.html" style="font-size:12px;">
+<< 前の記事へ
+</a>
+
+            <div class="social_btn_bottom social_btn_bottom_sp uk-visible-small">
+                <div class="twitter">
+                    <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://iamasokuho.gifu.jp/day_seven.html" data-via="iamasokuho">Tweet</a>
+                    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+                </div>
+                <div class="facebook">
+                    <div class="fb-like" data-href="http://iamasokuho.gifu.jp/day_seven.html" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+                </div>
+                <div class="hateb">
+                    <a href="http://b.hatena.ne.jp/entry/iamasokuho.gifu.jp/day_seven.html" class="hatena-bookmark-button" data-hatena-bookmark-title="【IAMAS正直Q&A】実際、お金どうしてんの？ | IAMASOKUHO" data-hatena-bookmark-layout="standard-balloon" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリ>ーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a>
+                    <script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+                </div>
+            </div>
+            </p>
+        </div>
+    </div>
+
+</body>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-64484802-1', 'auto');
+  ga('send', 'pageview');
+</script>
+</html>

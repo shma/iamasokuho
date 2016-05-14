@@ -1,0 +1,474 @@
+<html lang="ja-jp" dir="ltr" xmlns:og="http://ogp.me/ns/#">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
+    <meta name="description" content="IAMASOKUHO">
+    <meta name="keywords" content="iamasokuho, iama速報, IAMAS, 情報科学芸術大学院大学">
+    <title>【あと29日】IAMASってなに？OPENHOUSEってなに？ | IAMASokuho</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/vnd.microsoft.icon">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.11.0/css/uikit.almost-flat.min.css" rel="stylesheet">
+    <link href="/assets/css/jquery.fullPage.css" rel="stylesheet">
+    <link href="/assets/css/style.css" rel="stylesheet">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.11.0/js/uikit.min.js"></script>
+    <script src="/assets/js/three.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+    
+    <script type="text/javascript" src="assets/js/jquery.fullPage.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.typist.js"></script>
+    <style>
+        body {
+          /* 画像ファイルの指定 */
+          background-image: url(/assets/images/sp_back.gif);
+
+          /* 画像を常に天地左右の中央に配置 */
+          background-position: center center;
+
+          /* 画像をタイル状に繰り返し表示しない */
+          background-repeat: no-repeat;
+
+          /* コンテンツの高さが画像の高さより大きい時、動かないように固定 */
+          background-attachment: fixed;
+
+          /* 表示するコンテナの大きさに基づいて、背景画像を調整 */
+          background-size: cover;
+
+          /* 背景画像が読み込まれる前に表示される背景のカラー */
+          background-color: #464646;
+        }
+    </style>
+</head>
+<body>
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v2.3&appId=884387134914356";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+    <script>
+        $('head').append(
+                '<style type="text/css">body {display:none;}</style>'
+        );
+        $(document).ready(function() {
+    
+            var camera, scene, renderer;
+            var mesh;
+            var mesh_masuo;
+            var objects = [];
+
+            // Particles
+            var group;
+            var container;
+            var particlesData = [];
+            var positions, colors;
+            var pointCloud;
+            var particlePositions;
+            var linesMesh;
+
+            var maxParticleCount = 1000;
+            var particleCount = 400;
+            if (window.innerWidth < 600) {
+                particleCount = 100;
+            } 
+
+            var r = 900;
+            var rHalf = r / 2;
+
+            var effectController = {
+                showDots: true,
+                showLines: true,
+                minDistance: 200,
+                limitConnections: false,
+                maxConnections: 100,
+                particleCount: 400
+            }
+
+    
+            init();
+            function init() {
+                $('body').fadeIn("slow");
+            }
+
+
+            $('#fullpage').fullpage({
+                sectionsColor: ['none', 'none', 'none', 'none', 'none'],
+                verticalCentered: false,
+                paddingTop: '6em',
+                afterLoad: function(anchorLink, index){
+                    if (index == 5 || index == 3) {
+                    }
+
+                    if (index == 2 || index == 4) {
+                    }
+                }
+            });
+        });
+    </script>
+    <div id="container"></div>
+    <div class="i-head">
+        <a href="/" class="i-logo-less">
+            <img src="/assets/images/logo_2.gif" width="150">
+        </a>
+        <div class="social_btn uk-hidden-small" style="float:right;">
+            <div class="twitter">
+                <a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
+                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+            </div>
+            <div class="facebook">
+                <div class="fb-like" data-href="http://iamasokuho.gifu.jp/day_two.html" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+            </div>
+        </div>
+    </div>
+    <div id="fullpage">
+        <div class="section" id="section1">
+            <p class="i-p s-i-p">
+                〜前回のあらすじ〜<br>
+                イア子とマス男は、岐阜県立情報科学芸術大学院大学、
+                通称IAMAS（イアマス）の1年生！<br>
+                7月25日（土）、26日（日）に開催される「IAMAS OPENHOUSE」に向けて、<br>
+                案内の準備を進めているよ！<br>
+                画像や動画を拾ってチープなキャプションつけるクソバイラルを見習って、<br>
+                みんなにIAMASの情報を拡散したいと思ってがんばっているよ！<br>
+            </p>
+        </div>
+        <div class="section" id="section2">
+            <p class="i-p s-i-p">
+            〜登場人物紹介〜
+            </p>
+        </div>
+        <div class="section" id="section3">
+            <p class="i-p s-i-p">
+                <img src="/assets/images/iako.png" width=50><br>
+                イア子ちゃん<br>
+                22歳、美大卒のIAMAS 1年生！<br>
+                新しい映像表現方法を考えたくてIAMASにやってきたよ！
+            </p>
+        </div>
+        <div class="section" id="section4">
+            <p class="i-p s-i-p">
+                <img src="/assets/images/masuo.png" width=50><br>
+                マス男くん<br>
+                28歳、工学部卒、Web系ベンチャー出身のIAMAS 1年生！<br>
+                ライゾマティクスみたいなことがしたくてIAMASにやってきたよ！
+            </p>
+        </div>
+        <div class="section" id="section5">
+            <p class="i-p s-i-p">
+                <img src="/assets/images/rama.jpg" width=50><br>
+                ラマ<br>
+                耳が長いほうがラマだよ！IAMASにはいないよ！<br>
+            </p>
+        </div>
+        <div class="section" id="section6">
+            <p class="i-p s-i-p">
+                <img src="/assets/images/arupaka.png" width=50><br>
+
+                アルパカ<br>
+                耳が短いほうがアルパカだよ！IAMASにはいないよ！<br>
+            </p>
+        </div>
+        <div class="section" id="section7">
+            <p class="i-p s-i-p">
+                第2回：IAMASってなに？OPENHOUSEってなに？
+            </p>
+        </div>
+        <div class="section" id="section8">
+            <p class="i-p s-i-p">
+                <img src="/assets/images/masuo.png" width=50><br>
+                さて、Webサイトが立ち上がったけれど、これからなにをしていこうか？
+            </p>
+        </div>
+        <div class="section" id="section9">
+            <p class="i-p s-i-p">
+                <img src="/assets/images/iako.png" width=50><br>
+                そうね、IAMASについてしっかり説明してみようかしら。
+            </p>
+        </div>
+        <div class="section" id="section10">
+            <p class="i-p s-i-p">
+                <img src="/assets/images/masuo.png" width=50><br>
+                そうだね！<br>
+                IAMASは、情報科学芸術大学院大学、という、<br>
+                岐阜県大垣市にある岐阜県立の大学院だよ！<br>
+                ご覧の通り正式名称が長いから、通称IAMAS（イアマス）と呼ばれているよ！
+            </p>
+        </div>
+        <div class="section" id="section11">
+            <p class="i-p s-i-p">
+                <img src="/assets/images/iako.png" width=50><br>
+                「いままであんたみたいなミジンコ野郎にあらゆる場所で虐げられてきたわ」
+            </p>
+        </div>
+        <div class="section" id="section12">
+            <p class="i-p s-i-p">
+                I mamade<br>
+                A ntamitaina<br>
+                M ijinkoyarouni<br>
+                A rayurubashode<br>
+                S hiitageraretekitawa
+            </p>
+        </div>
+        <div class="section" id="section13">
+            <p class="i-p s-i-p">
+                <img src="/assets/images/masuo.png" width=50><br>
+                乱暴な上にあんまり面白くないよイア子ちゃん…<br>
+                正解は、Institute of Advanced Media Art and Scienceだよ！
+            </p>
+        </div>
+        <div class="section" id="section14">
+            <p class="i-p s-i-p">
+                <img src="/assets/images/iako.png" width=50><br>
+                こじつけ感が否めないわね…
+            </p>
+        </div>
+        <div class="section" id="section16">
+            <p class="i-p s-i-p">
+                <img src="/assets/images/masuo.png" width=50><br>
+                ダメだよイア子ちゃん！怖い人が来るよ！<br>
+
+                英語名の通り、応用的なメディアアートと科学の大学院として、<br>
+                文系とか理系とか芸術系とか関係なく、<br>
+                いろんな分野の先生・学生が集まっているよ！
+            </p>
+        </div>
+        <div class="section" id="section17">
+            <p class="i-p s-i-p">
+                <img src="/assets/images/iako.png" width=50><br>
+                それは本当にそうね！面白い人いっぱいいるものね！
+            </p>
+        </div>
+        <div class="section" id="section18">
+            <p class="i-p s-i-p">
+                <img src="/assets/images/masuo.png" width=50><br>
+                先生方だけでも、
+                ネットワークの専門家やデザインの専門家、<br>
+                インターネットが普及するずっと前から電子音楽作品を作ってきた先生や、<br>
+                日本のメディアアートを20年近く牽引しつづけている先生、<br>
+                ビエンナーレのキュレーターをしている先生、<br>
+                地域におけるメディアについて研究している先生、<br>
+                などなど…ひとりひとり全く別の得意分野を持った先生方が集まっているね。<br>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+                <img src="/assets/images/kyoin.png" width="300"><br>
+                教員 | 情報科学芸術大学院大学<br>
+                <a href="http://www.iamas.ac.jp/people">http://www.iamas.ac.jp/people</a>
+            </p>
+        </div>
+        <div class="section" id="section19">
+            <p class="i-p s-i-p">
+                <img src="/assets/images/iako.png" width=50><br>
+                学生たちも、<br>
+                美大を卒業してきた人や、理系の学部を卒業してきた人はもちろん、<br>
+                研究所で研究をしていた人、広告代理店で営業をしていた人、<br>
+                マレーシアで起業してきた人や、<br>
+                韓国の大手企業でデザイナーをしていた人、<br>
+                本当にバラバラのバックグラウンドの人がいるわね。<br>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+                <img src="/assets/images/nyugakuji.png" width=300><br>
+                学生→IAMAS、社会人→IAMASの割合<br>
+                ※データは昨年の在籍学生のものです<br>
+            </p>
+        </div>
+        <div class="section" id="section20">
+            <p class="i-p s-i-p">
+                <img src="/assets/images/masuo.png" width=50><br>
+                年齢層も、20代が多いけれど、先生方より年上の人もいるよね。<br>
+                <img src="/assets/images/nyugakuji.png"><br>
+                学生の年齢<br>
+                ※データは昨年の在籍学生のものです
+            </p>
+        </div>
+        <div class="section" id="section21">
+            <p class="i-p s-i-p">
+                <img src="/assets/images/iako.png" width=50><br>
+                あらゆる専門分野やバックグラウンドを持った人たちが、<br>
+                「IAMASで学びたい」という気持ちの上では対等に、いろんな議論ができる、<br>
+                というのは、本当にすごいことだといつも感じるわ。
+            </p>
+        </div>
+        <div class="section" id="section22">
+            <p class="i-p s-i-p">
+                <img src="/assets/images/masuo.png" width=50><br>
+                面白いよねえ。こんな岐阜県大垣市みたいな、<br>
+                東京から２時間半以上、名古屋からも30分以上離れた田舎に、<br>
+                こんな面白いところがあると思ってなかったよ。
+            </p>
+        </div>
+        <div class="section" id="section23">
+            <p class="i-p s-i-p">
+                <img src="/assets/images/iako.png" width=50><br>
+                待って！大垣だって人口16万人いるような、そこそこ都会なのよ！
+            </p>
+        </div>
+        <div class="section" id="section24">
+            <p class="i-p s-i-p">
+                <img src="/assets/images/masuo.png" width=50><br>
+                そうか…？
+            </p>
+        </div>
+        <div class="section" id="section25">
+            <p class="i-p s-i-p">
+                <img src="/assets/images/iako.png" width=50><br>
+                イオンモールだってイオンタウンだってアクアウォークだってあるわよ！<br>
+            </p>
+        </div>
+        <div class="section" id="section24">
+            <p class="i-p s-i-p">
+                <img src="assets/images/iontown.png" width="150"><br>
+
+                イオンタウン大垣<br>
+                <a href="http://ja.wikipedia.org/wiki/%E3%82%A4%E3%82%AA%E3%83%B3%E3%82%BF%E3%82%A6%E3%83%B3%E5%A4%A7%E5%9E%A3" style="font-size:10px;">http://ja.wikipedia.org/wiki/%E3%82%A4%E3%82%AA%E3%83%B3%E3%82%BF%E3%82%A6%E3%83%B3%E5%A4%A7%E5%9E%A3</a><br>
+            </p>
+        </div>
+        <div class="section" id="section24">
+            <p class="i-p s-i-p">
+                <img src="assets/images/ionmall.png" width="150"><br>
+                イオンモール大垣<br>
+                <a href="http://ja.wikipedia.org/wiki/%E3%82%A4%E3%82%AA%E3%83%B3%E3%83%A2%E3%83%BC%E3%83%AB%E5%A4%A7%E5%9E%A3" style="font-size:10px;">http://ja.wikipedia.org/wiki/%E3%82%A4%E3%82%AA%E3%83%B3%E3%83%A2%E3%83%BC%E3%83%AB%E5%A4%A7%E5%9E%A3</a><br>
+            </p>
+        </div>
+        <div class="section" id="section24">
+            <p class="i-p s-i-p">
+                <img src="assets/images/aquawalk.png" width="150"><br>
+                アクアウォーク<br>
+                <a href="http://ja.wikipedia.org/wiki/%E3%82%A2%E3%82%AF%E3%82%A2%E3%82%A6%E3%82%A9%E3%83%BC%E3%82%AF%E5%A4%A7%E5%9E%A3" style="font-size:10px;">http://ja.wikipedia.org/wiki/%E3%82%A2%E3%82%AF%E3%82%A2%E3%82%A6%E3%82%A9%E3%83%BC%E3%82%AF%E5%A4%A7%E5%9E%A3</a>
+            </p>
+        </div>
+        <div class="section" id="section26">
+            <p class="i-p s-i-p">
+                <img src="/assets/images/masuo.png" width=50><br>
+                大都会かよ！！大垣の紹介はおいおいしよう。<br>
+                とにかく今回は、オープンハウスの紹介だ！<br>
+                <img src="assets/images/opencampus.png" width=300><br>
+            </p>
+        </div>
+        <div class="section" id="section27">
+            <p class="i-p s-i-p">
+                <img src="/assets/images/iako.png" width=50><br>
+                オープンハウスでは、<br>
+                IAMASについての紹介や、IAMASで学べることの紹介はもちろん、<br>
+                IAMASで先生方と学生たちが取り組んでいるプロジェクトの紹介や、<br>
+                学生たちによる学内展示・パフォーマンス、学内ツアー、<br>
+                またIAMASのすべての先生方と、IAMASでなにができるのか相談できる時間もあるわ！
+            </p>
+        </div>
+        <div class="section" id="section28">
+            <p class="i-p s-i-p">
+                <img src="/assets/images/masuo.png" width=50><br>
+                予約などは基本的に必要ないから、<br>
+                ちょっとでも興味があって、7月25日（土）、26日（日）でもし時間があれば、<br>
+                大垣まで見に来てもらいたいね！<br>
+                毎年、東京や大阪、遠くは北海道や沖縄、海外からも多くの人が来てくれるみたいだ。
+            </p>
+        </div>
+        <div class="section" id="section29">
+            <p class="i-p s-i-p">
+                <img src="/assets/images/iako.png" width=50><br>
+                わたしは去年、大学の先生にIAMASのことを教えてもらって、<br>
+                土曜日にオープンキャンパスに来たわ！<br>
+                私がやりたいことと取り組みが近い先生に、親身に相談にのってもらえて、<br>
+                相談以外にもパフォーマンスやライブをやっていたりして、<br>
+                IAMASを受けようと決心したわ！
+            </p>
+        </div>
+        <div class="section" id="section30">
+            <p class="i-p s-i-p">
+                <img src="/assets/images/masuo.png" width=50><br>
+                ぼくは去年、<br>
+                土曜日にTwitterでオープンハウスのことをつぶやいている人がいて、<br>
+                「やばい、おもしろそう！」と思って、日曜日の予定をこじ開けて、<br>
+                東京から新幹線で大垣まできたよ！<br>
+                ギリギリだったけど先生に相談もできたし、学内も見学させてもらえたし、<br>
+                わざわざ来るだけの価値はあったなあ。
+            </p>
+        </div>
+        <div class="section" id="section31">
+            <p class="i-p s-i-p">
+                <img src="/assets/images/iako.png" width=50><br>
+                ちょっとでも興味のある人には、是非来てもらいたいわね！
+            </p>
+        </div>
+        <div class="section" id="section32">
+            <p class="i-p s-i-p">
+                <img src="/assets/images/masuo.png" width=50><br>
+                本当にそうだね！<br>
+                学生たちのみんなは、研究やプロジェクトの展示をしたり、<br>
+                入場無料のライブパフォーマンスをしたり、<br>
+                学内でカフェを開いたりするみたいだ！<br>
+                ぼくらからも当日、受験生に対して何かできないかなあ？
+            </p>
+        </div>
+        <div class="section" id="section33">
+            <p class="i-p s-i-p">
+                <img src="/assets/images/iako.png" width=50><br>
+                そうだ、先生が案内する学内ツアーはあるみたいだけど、<br>
+                私たちで勝手に学内ツアーやっちゃいましょうよ！<br>
+                あることないこと学生に教えちゃいましょう！
+            </p>
+        </div>
+        <div class="section" id="section34">
+            <p class="i-p s-i-p">
+                <img src="/assets/images/mauo.png" width=50><br>
+                そ、そうだね！<br><br>
+                （危険な香りがする…）
+            </p>
+        </div>
+        <div class="section" id="section35">
+            <p class="i-p s-i-p">
+                <img src="/assets/images/iako.png" width=50><br>
+                よーし、オープンハウスまであと29日！頑張るぞー！
+            </p>
+        </div>
+        <div class="section" id="section36">
+            <p class="i-p s-i-p">
+                <img src="/assets/images/masuo.png" width=50><br>
+                大丈夫かなあ…<br><br>
+                とにかく、みんなにIAMASを知ってもらえるように頑張ろう！<br><br>
+                明日からは、IAMASに関する質問に答えていくぞー！<br><br>
+            </p>
+        </div>
+        <div class="section" id="section37">
+            <p class="i-p s-i-p">
+                IAMAS OPEN HOUSE 2015 まであと29日。<br><br>
+                イア子とマス男の（あることないこと）学内ツアーは開催できるのか！？<br><br>
+                イア子とマス男の準備は間に合うのか！？<br><br>
+                IAMASに関する質問メールは届くのか！？<br><br>
+                明日からの更新も乞うご期待！！<br><br>
+                <img src="/assets/images/arupaka.png" width="150"><br>
+                <div class="social_btn_bottom social_btn_bottom_sp uk-visible-small">
+                    <div class="twitter">
+                        <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://iamasokuho.gifu.jp/day_two.html" data-via="iamasokuho">Tweet</a>
+                        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+                    </div>
+                    <div class="facebook">
+                        <div class="fb-like" data-href="http://iamasokuho.gifu.jp/day_two.html" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+                    </div>
+                    <div class="hateb">
+                        <a href="http://b.hatena.ne.jp/entry/iamasokuho.gifu.jp/day_two.html" class="hatena-bookmark-button" data-hatena-bookmark-title="【あと29日】IAMASってなに？OPENHOUSEってなに？ | IAMASOKUHO" data-hatena-bookmark-layout="standard-balloon" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリ>ーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a>
+                        <script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+                    </div>
+                </div>
+            </p>
+        </div>
+    </div>
+
+</body>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-64484802-1', 'auto');
+  ga('send', 'pageview');
+</script>
+</html>

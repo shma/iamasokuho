@@ -1,0 +1,753 @@
+<html lang="ja-jp" dir="ltr" xmlns:og="http://ogp.me/ns/#">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="IAMASOKUHO">
+    <meta name="keywords" content="iamasokuho, iama速報, IAMAS, 情報科学芸術大学院大学">
+    <title>【IAMASの人々】 (99.9%)復活⚾︎天才うまみ成分セミナー</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/vnd.microsoft.icon">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.11.0/css/uikit.almost-flat.min.css" rel="stylesheet">
+    <link href="/assets/css/jquery.fullPage.css" rel="stylesheet">
+    <link href="/assets/css/style.css" rel="stylesheet">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.11.0/js/uikit.min.js"></script>
+    <script src="/assets/js/three.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+    
+    <script type="text/javascript" src="assets/js/jquery.fullPage.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.typist.js"></script>
+    <style>
+        body {
+          /* 画像ファイルの指定 */
+          background-image: url(/assets/images/sp_back3.gif);
+
+          /* 画像を常に天地左右の中央に配置 */
+          background-position: center center;
+
+          /* 画像をタイル状に繰り返し表示しない */
+          background-repeat: no-repeat;
+
+          /* コンテンツの高さが画像の高さより大きい時、動かないように固定 */
+          background-attachment: fixed;
+
+          /* 表示するコンテナの大きさに基づいて、背景画像を調整 */
+          background-size: cover;
+
+          /* 背景画像が読み込まれる前に表示される背景のカラー */
+          background-color: #464646;
+        }
+    </style>
+</head>
+<body>
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v2.3&appId=884387134914356";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+    <script>
+        $('head').append(
+                '<style type="text/css">body {display:none;}</style>'
+        );
+        $(document).ready(function() {
+    
+            var camera, scene, renderer;
+            var mesh;
+            var mesh_masuo;
+            var objects = [];
+
+            // Particles
+            var group;
+            var container;
+            var particlesData = [];
+            var positions, colors;
+            var pointCloud;
+            var particlePositions;
+            var linesMesh;
+
+            var maxParticleCount = 1000;
+            var particleCount = 400;
+            if (window.innerWidth < 600) {
+                particleCount = 100;
+            } 
+
+            var r = 900;
+            var rHalf = r / 2;
+
+            var effectController = {
+                showDots: true,
+                showLines: true,
+                minDistance: 200,
+                limitConnections: false,
+                maxConnections: 100,
+                particleCount: 400
+            }
+
+    
+            init();
+            function init() {
+                $('body').fadeIn("slow");
+            }
+
+
+            $('#fullpage').fullpage({
+                sectionsColor: ['#000', '#000','#000','#000','#000'],
+                verticalCentered: false,
+                paddingTop: '6em',
+                afterLoad: function(anchorLink, index){
+                    if (index == 5 || index == 3) {
+                    }
+
+                    if (index == 2 || index == 4) {
+                    }
+                }
+            });
+        });
+    </script>
+    <div id="container"></div>
+    <div class="i-head">
+        <a href="/" class="i-logo-less">
+            <img src="/assets/images/logo_2.gif" width="150">
+        </a>
+        <div class="social_btn uk-hidden-small" style="float:right;">
+            <div class="twitter">
+                <a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
+                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+            </div>
+            <div class="facebook">
+                <div class="fb-like" data-href="http://iamasokuho.gifu.jp/day_four.html" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+            </div>
+        </div>
+    </div>
+    <div id="fullpage">
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+今日は、<br>
+M1の音楽ユニットにインタビューするよ！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+音楽ユニット？なんかかっこいい！<br>
+どんな人たちなのかしら！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+その名も<br>
+<span class="b">「(99.9%)復活⚾︎天才うまみ成分セミナー」</span><br>
+だよ！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+なんかめちゃくちゃ名前ね…<br>
+どんな感じなのかしら。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+今日はこの部屋で待ち合わせなんだけど…<br>
+まだ来ないなあ。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+あ、誰か来たわ…
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+あ、こんにち…わ…？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/16-1.jpg" width=300>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/16-2.jpg" width=300>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/16-3.jpg" width=300>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+<span class="b">「(99.9%)復活⚾︎天才うまみ成分セミナー」</span><br>
+の方でよろしいですか…？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/seminar.jpg" width=50><br>
+はい。
+
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+（ねえ、これちょっとやばいよ…）
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+（いや、一旦話だけ聞こう？）
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+（いや、ちょっとキツいっしょ…）<br>
+（だってこれだよ？）
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/16-3.jpg" width=300>
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+（とりあえず話を聞こう…）<br>
+あの…メンバーは、あなた1人なんですか…？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/16-4.jpg" width=300><br>
+いえ、5人です。
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+他のメンバーの方は…？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/seminar.jpg" width=50><br>
+今日はちょっと、<br>
+各自の活動で来られないようで、<br>
+私だけで応対させて頂きます。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+そうですか…<br>
+あの、失礼ですが、<br>
+お名前お伺いしてもよろしいですか？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/seminar.jpg" width=50><br>
+キャサリン・ゼタ＝ジョーンズです。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/16-5.jpg" width=150><br>
+<span class="b">キャサリン・ゼタ＝ジョーンズ</span><br>
+<span style="font-size:10px;">
+イギリスの女優。「シカゴ」でアカデミー賞助演女優賞受賞。<br>
+<a href="https://ja.wikipedia.org/wiki/%E3%82%AD%E3%83%A3%E3%82%B5%E3%83%AA%E3%83%B3%E3%83%BB%E3%82%BC%E3%82%BF%EF%BC%9D%E3%82%B8%E3%83%A7%E3%83%BC%E3%83%B3%E3%82%BA">
+https://ja.wikipedia.org/wiki/%E3%82%AD%E3%83%A3%E3%82%B5%E3%83%AA%E3%83%B3%E3%83%BB%E3%82%BC%E3%82%BF%EF%BC%9D%E3%82%B8%E3%83%A7%E3%83%BC%E3%83%B3%E3%82%BA
+</a>
+</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+（このビジュアルで）<br>
+（キャサリン・ゼタ＝ジョーンズは）<br>
+（やばい）<br>
+（帰りたい）
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+（もうちょっと話聞こう）<br>
+他の4人のメンバーは、<br>
+どんな方がいるんですか…？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/seminar.jpg" width=50><br>
+そうですね、私も名前はわからないのですが、<br>
+メインボーカル、サブパーソナリティ、<br>
+演奏者が3人いるようです。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/16-6.jpg" width=150><br>
+メインボーカル
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/16-7.jpg" width=150><br>
+サブパーソナリティ
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+（パーソナリティ…？）
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+あなたはどの楽器を演奏するんですか？
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/16-8.jpg" width=300><br>
+いえ、私は演奏しません。
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+え？でも演奏する人が3人…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/seminar.jpg" width=50><br>
+演奏者は3人います。<br>
+私は全体の<span class="b">”守護霊”のような存在</span>として、<br>
+彼らの後ろにいます。<br>
+だから人数に数えません。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+（全然なに言ってるかわからない）
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+なるほど…皆さんは、<br>
+どういうタイミングで集まるんですか？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/seminar.jpg" width=50><br>
+<span class="b">「あっ」と思ったら、ですね。</span>
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+「あっ」とは…？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/seminar.jpg" width=50><br>
+ひとり、<br>
+敏感にアンテナを立てるメンバーがいて、<br>
+彼が「あっ」となったとき、<br>
+直ちにメンバーが招集されますね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+あの…<br>
+そのお面は、なにを…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/seminar.jpg" width=50><br>
+顔です。<br>
+<span class="b">断じて、お面では、ありません。</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+（ひっ…）
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+皆さんの活動の目的、というのは、<br>
+一体なんなのでしょう？
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/seminar.jpg" width=50><br>
+そうですね、<br>
+あまり詳しくは話せないのですが、<br>
+<span class="b">我々の目標とする形は、<br>
+ティム・ウェイクフィールド、ですね。</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/16-9.jpg" width=300><br>
+ティム・ウェイクフィールド<br>
+<span style="font-size:10px;">
+元メジャーリーガー。ナックルボールを武器に200勝を挙げる。<br>
+<a href="https://ja.wikipedia.org/wiki/%E3%83%86%E3%82%A3%E3%83%A0%E3%83%BB%E3%82%A6%E3%82%A7%E3%82%A4%E3%82%AF%E3%83%95%E3%82%A3%E3%83%BC%E3%83%AB%E3%83%89">
+https://ja.wikipedia.org/wiki/%E3%83%86%E3%82%A3%E3%83%A0%E3%83%BB%E3%82%A6%E3%82%A7%E3%82%A4%E3%82%AF%E3%83%95%E3%82%A3%E3%83%BC%E3%83%AB%E3%83%89
+</a>
+</span>
+
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+（なぜ野球選手…）
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+なぜ、ティム・ウェイクフィールドさんを、<br>
+目指そうと思われたのですか？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/seminar.jpg" width=50><br>
+そうですね、細かく言うなら、<br>
+<span class="b"> 
+彼のナックルボールの技術、そして、<br>
+キャッチャーが取れないボールを投げる精神力。<br>
+それらはあらゆる生物を凌駕する</span>ものがあり、<br>
+その点を追い求めたい気持ちはありますね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+（全然わからない…）
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+<span class="b">「(99.9%)復活⚾︎天才うまみ成分セミナー」</span><br>
+というユニット名には、<br>
+なにか意味が込められているのですか？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/seminar.jpg" width=50><br>
+それもあまり詳しくは言えないのですが、<br>
+やはり、ティムが関わっていますね…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/16-9.jpg" width=300><br>
+ティム
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+あっ、もしかして…
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/16-11.jpg" width=300><br>
+野球ボールが…？
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/seminar.jpg" width=50><br>
+それは、ご想像にお任せします。
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+なるほど…<br>
+IAMASに来ようと思っている人に対して、<br>
+メッセージをお願いします。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/16-12.jpg" width=300><br>
+そうですね。<br>
+我々も<span class="b">新メンバーを募集している</span>ので、<br>
+意欲的な方に来てもらえると、<br>
+嬉しいですよね。
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+メンバー募集してるんだ…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+ちなみに、<br>
+どんなメンバーを募集しているんですか？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/seminar.jpg" width=50><br>
+そうですね…<br>
+<span class="b">ファン・ブロンクホルスト</span>みたいな、<br>
+メンバーが欲しいですね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/16-13.jpg" width=150><br>
+<span class="b">ジョバンニ・ファン・ブロンクホルスト</span><br>
+<span style="font-size:10px;">
+元サッカーオランダ代表主将、現フェイエノールト監督。2010年南アフリカW杯準決勝ウルグアイ戦で決めた41mのロングミドルは記憶に新しい。<br>
+<a href="https://ja.wikipedia.org/wiki/%E3%82%B8%E3%83%A7%E3%83%90%E3%83%B3%E3%83%8B%E3%83%BB%E3%83%95%E3%82%A1%E3%83%B3%E3%83%BB%E3%83%96%E3%83%AD%E3%83%B3%E3%82%AF%E3%83%9B%E3%83%AB%E3%82%B9%E3%83%88">
+https://ja.wikipedia.org/wiki/%E3%82%B8%E3%83%A7%E3%83%90%E3%83%B3%E3%83%8B%E3%83%BB%E3%83%95%E3%82%A1%E3%83%B3%E3%83%BB%E3%83%96%E3%83%AD%E3%83%B3%E3%82%AF%E3%83%9B%E3%83%AB%E3%82%B9%E3%83%88
+</a>
+</span>
+
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+（ここにきてサッカー…）
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/seminar.jpg" width=50><br>
+普段はキャプテンとして後ろで支えつつ、<br>
+ときに自分で上がってミドルも決められる、<br>
+そしてチームの空気もよくする、<br>
+ゆくゆくは監督にも就任できる、<br>
+そんなプレーヤーが理想ですね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+なるほど…わかります。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+（ぜったい分かってないでしょ…）
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+インタビューは以上になります。<br>
+今日はありがとうございました！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/seminar.jpg" width=50><br>
+ありがとうございました。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/16-14.jpg" width=300>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/16-15.jpg" width=300>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+あれ…？なんか眠くなって…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+これは…催眠ガス…？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+うーん…<br>
+あれ？ここは、ぼくの席？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+むにゃむにゃ…<br>
+あれ、席に戻ってる…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+なんだ、夢だったのか…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+なんか変な夢を見たわね…<br>
+そうよね、あんな顔の人いるわけないも
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/16-16.jpg" width=300><br>
+の…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/16-17.png" width=300><br>
+IAMASは、スポーツ好きも大歓迎です！
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+ということで引き続き、<br>
+質問のほうもお待ちしております！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+IAMASにいる人に聞きたいこととかがあれば、<br>
+ぼくたちが代わりに聞きにいきまーす！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p">
+イア子とマス男への質問やメッセージはこちらから！<br>
+<a href="http://goo.gl/forms/hlgdXfxMei">
+http://goo.gl/forms/hlgdXfxMei
+</a>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p s-i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+<span style="font-weight:bold;">イアマ速報 facebookページ</span>はこちら！<br>
+<a href="https://www.facebook.com/iamasokuho">
+https://www.facebook.com/iamasokuho<br>
+</a>
+いいね！しなさいよ！
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p s-i-p s-i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+<span style="font-weight:bold;">イアマ速報のTwitter</span>はこちらです！<br>
+<a href="https://twitter.com/IAMASokuho">
+https://twitter.com/IAMASokuho<br>
+</a>
+いろんな情報拾っていきまーす！<br>
+
+<br>
+
+<a href="http://iamasokuho.gifu.jp/day_fourteen.html" style="font-size:12px;">
+<< 前の記事へ
+</a>
+&nbsp;&nbsp;&nbsp;
+<a href="http://iamasokuho.gifu.jp/archive.html" style="font-size:12px;">
+記事一覧へ
+</a>
+
+            <div class="social_btn_bottom social_btn_bottom_sp uk-visible-small">
+                <div class="twitter">
+                    <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://iamasokuho.gifu.jp/day_sixteen.html" data-via="iamasokuho">Tweet</a>
+                    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+                </div>
+                <div class="facebook">
+                    <div class="fb-like" data-href="http://iamasokuho.gifu.jp/day_sixteen.html" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+                </div>
+                <div class="hateb">
+                    <a href="http://b.hatena.ne.jp/entry/iamasokuho.gifu.jp/day_sixteen.html" class="hatena-bookmark-button" data-hatena-bookmark-title="【IAMASの人々】 (99.9%)復活⚾︎天才うまみ成分セミナー| IAMASOKUHO" data-hatena-bookmark-layout="standard-balloon" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリ>ーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a>
+                    <script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+                </div>
+            </div>
+            </p>
+        </div>
+    </div>
+
+</body>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-64484802-1', 'auto');
+  ga('send', 'pageview');
+</script>
+</html>

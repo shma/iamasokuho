@@ -1,0 +1,840 @@
+<html lang="ja-jp" dir="ltr" xmlns:og="http://ogp.me/ns/#">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="IAMASOKUHO">
+    <meta name="keywords" content="iamasokuho, iama速報, IAMAS, 情報科学芸術大学院大学">
+    <title>【IAMASプロジェクト紹介】根尾コ・クリエイション.</title>
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="/assets/images/logo_top.gif">
+    <link rel="shortcut icon" href="favicon.ico" type="image/vnd.microsoft.icon">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.11.0/css/uikit.almost-flat.min.css" rel="stylesheet">
+    <link href="/assets/css/jquery.fullPage.css" rel="stylesheet">
+    <link href="/assets/css/style.css" rel="stylesheet">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.11.0/js/uikit.min.js"></script>
+    <script src="/assets/js/three.min.js"></script>
+    <script src="/assets/js/iamasokuho.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.fullPage.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.typist.js"></script>
+    <style>
+        body { margin: 0;}
+        canvas { width: 100%; height: 100% }
+    </style>
+</head>
+<body>
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v2.3&appId=884387134914356";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+    <script>
+        if ((navigator.userAgent.indexOf('iPhone') > 0 && navigator.userAgent.indexOf('iPad') == -1) || navigator.userAgent.indexOf('iPod') > 0 || navigator.userAgent.indexOf('Android') > 0) {
+            url = 'http://iamasokuho.gifu.jp/s_day_25.html';
+            location.href = url;
+        }
+
+        $('head').append(
+                '<style type="text/css">body {display:none;}</style>'
+        );
+        $(document).ready(function() {
+            
+    
+            var camera, scene, renderer;
+            var mesh;
+            var mesh_masuo;
+            var objects = [];
+
+            // Particles
+            var group;
+            var container;
+            var particlesData = [];
+            var positions, colors;
+            var pointCloud;
+            var particlePositions;
+            var linesMesh;
+
+            var maxParticleCount = 1000;
+            var particleCount = 400;
+            if (window.innerWidth < 600) {
+                particleCount = 100;
+            } 
+
+            var r = 900;
+            var rHalf = r / 2;
+
+            var effectController = {
+                showDots: true,
+                showLines: true,
+                minDistance: 200,
+                limitConnections: false,
+                maxConnections: 100,
+                particleCount: 400
+            }
+
+    
+            init();
+            animate();
+
+            var zoom = 1000;
+            function zoom() {
+                for (var i = 0; i < 50; i++) {
+                    setTimeout(function(){
+                        camera.position.z = zoom - 5;
+                        zoom = zoom - 5; 
+                    },1000);
+                }
+            }
+
+            function init() {
+                container = document.getElementById( 'container' );
+
+                renderer = new THREE.WebGLRenderer({antialias: true});
+                renderer.setPixelRatio( window.devicePixelRatio );
+                renderer.setSize( window.innerWidth, window.innerHeight );
+                document.body.appendChild( renderer.domElement );
+    
+                camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 1, 1000 );
+                camera.position.z = 800;
+    
+                scene = new THREE.Scene();
+
+                group = new THREE.Group();
+                scene.add( group );
+
+                var segments = maxParticleCount * maxParticleCount;
+
+                positions = new Float32Array( segments * 3 );
+                colors = new Float32Array( segments * 3);
+            
+                var pMaterial = new THREE.PointCloudMaterial( {
+                    color: 0xFFFFF,
+                    size: 3,
+                    blending: THREE.AdditiveBlending,
+                    transparent: true,
+                    sizeAttenuation: false
+                } );
+
+                particles = new THREE.BufferGeometry();
+                particlePositions = new Float32Array( maxParticleCount * 3 );
+
+                for ( var i = 0; i < maxParticleCount; i++ ) {
+                    var x = Math.random() * r - r / 2;
+                    var y = Math.random() * r - r / 2;
+                    var z = Math.random() * r - r / 2;
+            
+                    particlePositions[i * 3]     = x;
+                    particlePositions[i * 3 + 1] = y;
+                    particlePositions[i * 3 + 2] = z;
+
+                    // add it to the geometry
+                    particlesData.push( {
+                        velocity: new THREE.Vector3( -1 + Math.random() * 2, -1 + Math.random() * 2, -1 + Math.random() * 2),
+                        numConnections: 0
+                    });
+                }
+
+                particles.drawcalls.push( {
+                    start: 0,
+                    count: particleCount,
+                    index: 0
+                });
+
+                particles.addAttribute( 'position', new THREE.DynamicBufferAttribute( particlePositions, 3));
+
+                // create the particle system
+                pointCloud = new THREE.PointCloud( particles, pMaterial);
+                pointCloud.visible = true;
+                group.add(pointCloud);
+        
+                var pGeometry = new THREE.BufferGeometry();
+                pGeometry.addAttribute( 'position', new THREE.DynamicBufferAttribute( positions, 3));
+                pGeometry.addAttribute( 'color', new THREE.DynamicBufferAttribute(colors, 3));
+
+                pGeometry.computeBoundingSphere();
+
+                pGeometry.drawcalls.push( {
+                    start: 0,
+                    count: 0,
+                    index: 0
+                } );
+
+                var pMaterial = new THREE.LineBasicMaterial( {
+                    vertexColors: THREE.VertexColors,
+                    blending: THREE.AdditiveBlending,
+                    transparent: true
+                });
+
+                linesMesh = new THREE.Line( pGeometry, pMaterial, THREE.LinePieces );
+                group.add( linesMesh );
+
+                renderer.setPixelRatio(window.devicePixelRatio);
+                renderer.setSize(window.innerWidth, window.innerHeight);
+
+                renderer.gammaInput = true;
+                renderer.gammaOutput = true;
+                renderer.setClearColor( new THREE.Color(0x000000) );
+
+                container.appendChild(renderer.domElement);
+
+                var geometry = new THREE.BoxGeometry( 70, 70, 70 );
+    
+                var texture = THREE.ImageUtils.loadTexture( 'assets/images/iako.png' );
+                texture.anisotropy = renderer.getMaxAnisotropy();
+    
+                var material = new THREE.MeshBasicMaterial( { map: texture } );
+    
+                mesh = new THREE.Mesh( geometry, material );
+                mesh.position.x = -300;
+                mesh.position.y += 150;
+                scene.add( mesh );
+    
+                // masuo
+                var texture_masuo = THREE.ImageUtils.loadTexture( 'assets/images/new_masuo.png' );
+                texture_masuo.anisotropy = renderer.getMaxAnisotropy();
+    
+                var material_masuo = new THREE.MeshBasicMaterial( { map: texture_masuo } );
+    
+                mesh_masuo = new THREE.Mesh( geometry, material_masuo );
+                mesh_masuo.position.x = 300;
+                mesh_masuo.position.y += 150;
+                scene.add( mesh_masuo ); 
+                objects.push( mesh );
+                objects.push( mesh_masuo );
+    
+    
+                window.addEventListener( 'resize', onWindowResize, false );
+                $('#fullpage').fullpage({
+                    sectionsColor: [],
+                    afterLoad: function(anchorLink, index){
+                        console.log(index);
+                        if(index==1||index==3||index==6||index==8||index==12||index==15||index==19||index==23||index==28||index==43||index==46||index==48||index==50||index==53) {
+                                mesh_masuo.position.y += 15;
+                                setTimeout(function(){
+                                    mesh_masuo.position.y -= 15;
+                                },100);
+                        }
+
+                        if(index==2||index==5||index==7||index==11||index==17||index==21||index==26||index==33||index==41||index==45||index==47||index==49||index==52) {
+                            mesh.position.y += 15;
+                            setTimeout(function(){
+                                mesh.position.y -= 15;
+                            },100);
+                        }
+                    }
+                });
+                $('body').fadeIn("slow");
+            }
+    
+            function onWindowResize() {
+    
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+    
+                renderer.setSize( window.innerWidth, window.innerHeight );
+    
+            }
+    
+            function animate() {
+                var vertexpos = 0;
+                var colorpos = 0;
+                var numConnected = 0;
+
+                for ( var i = 0; i < particleCount; i++ )
+                    particlesData[ i ].numConnections = 0;
+
+                for ( var i = 0; i < particleCount; i++ ) {
+
+                    // get the particle
+                    var particleData = particlesData[i];
+
+                    particlePositions[ i * 3     ] += particleData.velocity.x;
+                    particlePositions[ i * 3 + 1 ] += particleData.velocity.y;
+                    particlePositions[ i * 3 + 2 ] += particleData.velocity.z;
+
+                    if ( particlePositions[ i * 3 + 1 ] < -rHalf || particlePositions[ i * 3 + 1 ] > rHalf )
+                        particleData.velocity.y = -particleData.velocity.y;
+
+                    if ( particlePositions[ i * 3 ] < -rHalf || particlePositions[ i * 3 ] > rHalf )
+                        particleData.velocity.x = -particleData.velocity.x;
+
+                    if ( particlePositions[ i * 3 + 2 ] < -rHalf || particlePositions[ i * 3 + 2 ] > rHalf )
+                        particleData.velocity.z = -particleData.velocity.z;
+
+                    if ( effectController.limitConnections && particleData.numConnections >= effectController.maxConnections )
+                        continue;
+
+                    // Check collision
+                    for ( var j = i + 1; j < particleCount; j++ ) {
+
+                        var particleDataB = particlesData[ j ];
+                        if ( effectController.limitConnections && particleDataB.numConnections >= effectController.maxConnections )
+                            continue;
+
+                        var dx = particlePositions[ i * 3     ] - particlePositions[ j * 3     ];
+                        var dy = particlePositions[ i * 3 + 1 ] - particlePositions[ j * 3 + 1 ];
+                        var dz = particlePositions[ i * 3 + 2 ] - particlePositions[ j * 3 + 2 ];
+                        var dist = Math.sqrt( dx * dx + dy * dy + dz * dz );
+
+                        if ( dist < effectController.minDistance ) {
+
+                            particleData.numConnections++;
+                            particleDataB.numConnections++;
+
+                            var alpha = 1.0 - dist / effectController.minDistance;
+
+                            positions[ vertexpos++ ] = particlePositions[ i * 3     ];
+                            positions[ vertexpos++ ] = particlePositions[ i * 3 + 1 ];
+                            positions[ vertexpos++ ] = particlePositions[ i * 3 + 2 ];
+
+                            positions[ vertexpos++ ] = particlePositions[ j * 3     ];
+                            positions[ vertexpos++ ] = particlePositions[ j * 3 + 1 ];
+                            positions[ vertexpos++ ] = particlePositions[ j * 3 + 2 ];
+
+                            colors[ colorpos++ ] = alpha;
+                            colors[ colorpos++ ] = alpha;
+                            colors[ colorpos++ ] = alpha;
+
+                            colors[ colorpos++ ] = alpha;
+                            colors[ colorpos++ ] = alpha;
+                            colors[ colorpos++ ] = alpha;
+
+                            numConnected++;
+                        }
+                    }
+                }
+
+
+                linesMesh.geometry.drawcalls[ 0 ].count = numConnected * 2;
+                linesMesh.geometry.attributes.position.needsUpdate = true;
+                linesMesh.geometry.attributes.color.needsUpdate = true;
+
+                pointCloud.geometry.attributes.position.needsUpdate = true;
+
+                requestAnimationFrame( animate );
+    
+    
+                mesh.rotation.x += 0.005;
+                mesh.rotation.y += 0.01;
+    
+                mesh_masuo.rotation.x += 0.005;
+                mesh_masuo.rotation.y += 0.01;
+    
+                renderer.render( scene, camera );
+            }
+
+            mesh.callback = function() { 
+                window.open("https://twitter.com/IAMAS_girl");
+            }
+            mesh_masuo.callback = function() { 
+                window.open("https://twitter.com/IAMAS_boy");
+            }
+            var raycaster = new THREE.Raycaster();
+            var mouse = new THREE.Vector2();
+            
+            document.addEventListener( 'mousedown', onDocumentMouseDown, false );
+            function onDocumentMouseDown( event ) {
+            
+                event.preventDefault();
+            
+                mouse.x = ( event.clientX / renderer.domElement.clientWidth ) * 2 - 1;
+                mouse.y = - ( event.clientY / renderer.domElement.clientHeight ) * 2 + 1;
+            
+                raycaster.setFromCamera( mouse, camera );
+            
+                var intersects = raycaster.intersectObjects( objects ); 
+            
+                if ( intersects.length > 0 ) {
+                    intersects[0].object.callback();
+                }
+            
+            }
+
+
+        });
+    </script>
+    <div id="container"></div>
+    <div class="i-head">
+        <a href="/" class="i-logo-less">
+            <img src="/assets/images/logo_2.gif" width="150">
+        </a>
+        <div class="social_btn uk-hidden-small" style="float:right;">
+            <div class="twitter">
+                <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://iamasokuho.gifu.jp" data-text="IAMASokuho" data-via="iamasokuho">Tweet</a>
+                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+            </div>
+            <div class="facebook">
+                <div class="fb-like" data-href="http://iamasokuho.gifu.jp/" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+            </div>
+        </div>
+    </div>
+    <div id="fullpage">
+        <div class="section">
+            <p class="i-p">
+3連休だー！！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+オープンハウス前の準備に、<br><br>
+集中できるわね…<br><br>
+でも今日はちょっとお休み！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+今日は大垣から車で１時間弱、<br><br>
+はるばる、<span style="b">岐阜県本巣市、<br><br>
+旧根尾村</span>までやってきたよ！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/25-1.jpg" width=300>
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p">
+<span class="b">山奥か！</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<span class="b">山奥だよ！</span><br><br>
+地図でいったらこのへんだね！<br><br>
+<a href="https://goo.gl/maps/oyyVZ">https://goo.gl/maps/oyyVZ</a>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+なんでわざわざ来たかというと…<br><br>
+今日は、<span class="b">ねおこ座のお披露目パーティー</span><br><br>
+なのよね！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+そうそう！<span class="b">「根尾コ・クリエイション」、<br><br>
+通称「ねおこ」</span>という、<br><br>
+IAMASのプロジェクトで借りている、<br><br>
+地元の施設のリニューアルオープンだよ！
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/25-2.jpg" width=300><br><br>
+<span class="b">根尾コ・クリエイション</span><br><br>
+<span style="font-size:10px;">
+岐阜県本巣市根尾地区（旧根尾村）で、何百年と続く歴史や文化をもつ地域住民と、外部のクリエイティブなメンバーが交流しながら、持続可能な共創社会について探求するプロジェクト。<br>
+<a href="http://www.iamas.ac.jp/projects#post-13200">http://www.iamas.ac.jp/projects#post-13200</a>
+</span>
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/25-3.jpg" width=300><br><br>
+<span class="b">ねおこ座</span><br><br>
+（旧根尾生活改善センター）
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+さっそく入ってみましょ！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+こんにちはー！<br><br>
+わ、もう結構ひとがいる！
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/25-4.jpg" width=300><br><br>
+地元の人も、<br><br>
+リニューアルオープンを見にきたのね！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/gotti.jpg" width=100><br><br>
+お、イア子ちゃん！マス男パイセン！<br><br>
+雨のなかありがとー！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+あ、ごっち！<br><br>
+朝からおつかれさま！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/25-5.jpg" width=300><br><br>
+<span class="b">ごっち</span>　後藤良太<br><br>
+IAMAS修士1年。岐阜県岐阜市出身。<br><br>
+大学では工学部で、<br><br>
+ロボットを用いたコミュニケーションを研究。<br><br>
+IAMASではコミュニティデザイン等に興味あり。<br><br>
+オープンハウスへ向けタコライスを試行錯誤中。
+
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p">
+ここは「ねおこ」のプロジェクトの人たちで、<br><br>
+リノベーションしたの？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/gotti.jpg" width=100><br><br>
+そうそう！めっちゃがんばった！<br><br>
+壁にペンキ塗ったり、床を剥がしたり、<br><br>
+ガラスのシートを剥がしたり…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+やっぱ肉体労働系が多いか…<br><br>
+でもみんなでつくっていくのは楽しいよね。<br><br>
+なんてったって<span class="b">「コ・クリエイション」</span><br><br>
+だしね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/25-6.jpg" width=300><br><br>
+そうそう、あと、和室の障子を張り替えたり…<br><br>
+このカラフルな和紙は、<br><br>
+去年ユネスコ無形文化遺産に登録された、<br><br>
+岐阜県の<span class="b">美濃の和紙</span>を使ってるよ！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+わー、めっちゃきれい！！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/25-7.jpg" width=300><br><br>
+この棚とかもね、<br><br>
+地元の木を買って、みんなで作ったんだよ。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+この棚めっちゃおしゃれじゃん！<br><br>
+「NEOCO」の電気もかっこいい！<br><br>
+ポートランド(※1)風だ！<br><br>
+
+<span style="font-size:10px;">
+※1 ポートランド：アメリカ北西部、人口60万人程度のオレゴン州の州都。世界一環境に優しい街と言われ、人口が増加している。芸術文化が盛んで、アメリカのDIY文化の中心地であり、サードウェーブコーヒーの発信源でもあるなど、洗練された街として昨今世界中から注目を集めている。
+</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/gotti.jpg" width=100><br><br>
+ね！これめっちゃいいっしょ。<br><br>
+あ、もうすぐ点灯式だ！
+            </p>
+        </div>
+        <div class="section" style="padding-left:35%;">
+            <p class="i-p">
+<blockquote class="instagram-media" data-instgrm-captioned data-instgrm-version="4" style=" background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:400px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);"><div style="padding:8px;"> <div style=" background:#F8F8F8; line-height:0; margin-top:40px; padding:50% 0; text-align:center; width:100%;"> <div style=" background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAsCAMAAAApWqozAAAAGFBMVEUiIiI9PT0eHh4gIB4hIBkcHBwcHBwcHBydr+JQAAAACHRSTlMABA4YHyQsM5jtaMwAAADfSURBVDjL7ZVBEgMhCAQBAf//42xcNbpAqakcM0ftUmFAAIBE81IqBJdS3lS6zs3bIpB9WED3YYXFPmHRfT8sgyrCP1x8uEUxLMzNWElFOYCV6mHWWwMzdPEKHlhLw7NWJqkHc4uIZphavDzA2JPzUDsBZziNae2S6owH8xPmX8G7zzgKEOPUoYHvGz1TBCxMkd3kwNVbU0gKHkx+iZILf77IofhrY1nYFnB/lQPb79drWOyJVa/DAvg9B/rLB4cC+Nqgdz/TvBbBnr6GBReqn/nRmDgaQEej7WhonozjF+Y2I/fZou/qAAAAAElFTkSuQmCC); display:block; height:44px; margin:0 auto -44px; position:relative; top:-22px; width:44px;"></div></div> <p style=" margin:8px 0 0 0; padding:0 4px;"> <a href="https://instagram.com/p/5SCxMyBhEd/" style=" color:#000; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:normal; line-height:17px; text-decoration:none; word-wrap:break-word;" target="_top">「ねおこ座」のオープンパーティー、点灯式！ #neoco</a></p> <p style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; line-height:17px; margin-bottom:0; margin-top:8px; overflow:hidden; padding:8px 0 7px; text-align:center; text-overflow:ellipsis; white-space:nowrap;">A video posted by イアマ速報 (@iamasokuho) on <time style=" font-family:Arial,sans-serif; font-size:14px; line-height:17px;" datetime="2015-07-18T15:07:01+00:00">Jul 18, 2015 at 8:07am PDT</time></p></div></blockquote>
+<script async defer src="//platform.instagram.com/en_US/embeds.js"></script>
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+やったー！たのしい！<br><br>
+なにもやってないけど、なんか嬉しい！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/gotti.jpg" width=100><br><br>
+そうだ、2人ともせっかく来たんだし、<br><br>
+<span class="b">この「ねおこ座」で使う、<br><br>
+スツールを作っていかない？</span>
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+おー！楽しそう！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/25-8.jpg" width=300><br><br>
+まずは素材をヤスリできれいにしよう。<br><br>
+CNC(※2)で木を切り出してるから、<br><br>
+バリとかが結構残っちゃうんだよね。<br><br>
+それをヤスリでとる。<br><br>
+<span style="font-size:10px;">
+※2 CNC工作機械：コンピュータでドリルの位置を制御して、材料の加工を行う機械。比較的サイズが大きく加工に手間が必要な、木材や金属などの加工に用いられることが多い。IAMASのイノベーション工房にあるShopbotもこれにあたる。
+</span>
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/25-9.jpg" width=300><br><br>
+脚と板をねじで止めて、組み合わせて、<br><br>
+天板をつけたら…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/25-10.jpg" width=300><br><br>
+こんなかんじ！
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/25-11.jpg" width=300><br><br>
+まあオシャレ！<br><br>
+TABさん(※3)の商品なんだけどね。<br><br>
+
+<span style="font-size:10px;">
+※3 株式会社TAB：大垣で建築設計、デザイン等を行う会社。IAMAS卒業生が多数在籍。「ねおこ」にも協力している。
+<a href="http://www.tabjapan.com/">http://www.tabjapan.com/</a>
+</span>
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+普通にほしい…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/gotti.jpg" width=100><br><br>
+残念だけど、<br><br>
+これはここで使う用なんだなー。<br><br>
+<span class="b">でも自分でつくるとやっぱり、<br><br>
+なんか愛着がわくよね。<br><br>
+使いたくなるし、ここに来たくもなる。</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/25-12.jpg" width=300><br><br>
+孝浩先生(※4)は、スツールより難しい、<br><br>
+ランプシェードをつくってるわ！<br><br>
+器用さが求められそうね…<br><br>
+
+<span style="font-size:10px;">
+※4 小林孝浩：IAMAS教員。岐阜県出身。工学博士。福祉や農業に活かす技術や装置の開発、また技術や装置を活かした取り組みなどを行う。
+<a href="http://www.iamas.ac.jp/people#post-74">
+http://www.iamas.ac.jp/people#post-74
+</a>
+</span>
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/25-13.jpg" width=300><br><br>
+だんだん地元の子どもたちも集まってきたね！<br><br>
+夏休みの工作教室みたい！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/25-14.jpg" width=300><br><br>
+遊び場になってるわね…<br><br>
+こんなに山奥なのに、<br><br>
+結構子どもはいっぱいいるのね！
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/gotti.jpg" width=100><br><br>
+そうそう！<br><br>
+このへんは4割近くの集落が、<br><br>
+限界集落(※5)だって言われてるけど、<br><br>
+<span class="b">意外と子どもは、まあまあいるんだよ。</span><br><br>
+たまに遊びに来てくれたりもする！<br><br>
+
+<span style="font-size:10px;">
+※5 限界集落：人口の半分以上が65歳以上の高齢者である集落。
+</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/25-15.jpg" width=300><br><br>
+<span class="b">根尾の口伝情報の調査</span>も、<br><br>
+壁に地図貼ってやってるんだね！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/gotti.jpg" width=100><br><br>
+そうそう！<br><br>
+さっきは旧根尾村の元村長さんとか、<br><br>
+本巣市の市議会議員の方とかも、<br><br>
+情報のせてってくれてた！<br><br>
+いろんな人が来てくれてありがたい…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+めっちゃおしゃれだし、<br><br>
+スツールづくりもおもしろかったー！<br><br>
+わたしの作った椅子に座りたいから、<br><br>
+また休みの日になにかあるときは、<br><br>
+ごっちの車に乗せてもらおー！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/gotti.jpg" width=100><br><br>
+おー！全然いいよ！<br><br>
+地元の人にもっと来てもらえるように、<br><br>
+いろいろやっていくつもりだから、<br><br>
+なんか面白そうな企画とか、<br><br>
+やりたいこととかあったら言って！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+いいねー！<br><br>
+ぼくもぜひ乗せて！<br><br>
+ありがとー！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/gotti.jpg" width=100><br><br>
+おいっす！<br><br>
+気をつけて帰ってねー！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+根尾、たのしいわねー。<br><br>
+こんな山あいの土地に、<br><br>
+こんな素敵なスペースがあるなんて！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+ね！ここにくるまで山道だったし、<br><br>
+ほんとに面白いものあるのかな？<br><br>
+って結構不安になったけど、<br><br>
+<span class="b">実際来てみたら、オシャレだし、<br><br>
+めっちゃ面白かったね！</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+まだまだ始まったばかりだし、<br><br>
+これから地域の住民のみなさんと、<br><br>
+いろんな面白いことやるんでしょうね！<br><br>
+楽しみ〜！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+ぼくらもできることがあったら、<br><br>
+また協力しよう！<br><br>
+<span class="b">プロジェクトのちょっとしたイベントなら、<br><br>
+履修してなくても参加できることもあるし！</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+また来ましょう！<br><br>
+ということで引き続き、<br><br>
+質問のほうもお待ちしております！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+IAMASにいる人に聞きたいこととかがあれば、<br><br>
+ぼくたちが代わりに聞きにいきまーす！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+イア子とマス男への質問やメッセージはこちらから！<br><br>
+<a href="http://goo.gl/forms/hlgdXfxMei">
+http://goo.gl/forms/hlgdXfxMei
+</a>
+            </p>
+        </div>
+
+
+        <div class="section">
+            <p class="i-p">
+<span style="font-weight:bold;">イアマ速報 facebookページ</span>はこちら！<br><br>
+<a href="https://www.facebook.com/iamasokuho">
+https://www.facebook.com/iamasokuho<br><br>
+</a>
+いいね！しなさいよ！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<span style="font-weight:bold;">イアマ速報のTwitter</span>はこちらです！<br><br>
+<a href="https://twitter.com/IAMASokuho">
+https://twitter.com/IAMASokuho<br><br>
+</a>
+いろんな情報拾っていきまーす！
+<br><br><br>
+<a href="http://iamasokuho.gifu.jp/day_24.html" style="font-size:12px;">
+<< 前の記事へ
+</a>
+&nbsp;&nbsp;&nbsp;
+<a href="http://iamasokuho.gifu.jp/archive.html" style="font-size:12px;">
+記事一覧へ
+</a>
+
+                <div class="social_btn_bottom">
+                    <div class="twitter">
+                        <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://iamasokuho.gifu.jp/day_25.html">Tweet</a>
+                        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+                    </div>
+                    <div class="facebook">
+                        <div class="fb-like" data-href="http://iamasokuho.gifu.jp/day_25.html" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+                    </div>
+                    <div class="hateb">
+                        <a href="http://b.hatena.ne.jp/entry/iamasokuho.gifu.jp/day_25.html" class="hatena-bookmark-button" data-hatena-bookmark-title="【IAMASプロジェクト紹介】根尾コ・クリエイション" data-hatena-bookmark-layout="standard-balloon" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリ>ーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a>
+                    </div>
+                    <script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+                </div>
+            </p>
+        </div>
+    </div>
+</body>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-64484802-1', 'auto');
+  ga('send', 'pageview');
+</script>
+</html>

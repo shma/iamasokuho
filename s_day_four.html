@@ -1,0 +1,602 @@
+<html lang="ja-jp" dir="ltr" xmlns:og="http://ogp.me/ns/#">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="IAMASOKUHO">
+    <meta name="keywords" content="iamasokuho, iama速報, IAMAS, 情報科学芸術大学院大学">
+    <title>【IAMAS正直Q&A】大垣の生活ってどうよ？ | IAMASokuho</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/vnd.microsoft.icon">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.11.0/css/uikit.almost-flat.min.css" rel="stylesheet">
+    <link href="/assets/css/jquery.fullPage.css" rel="stylesheet">
+    <link href="/assets/css/style.css" rel="stylesheet">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.11.0/js/uikit.min.js"></script>
+    <script src="/assets/js/three.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+    
+    <script type="text/javascript" src="assets/js/jquery.fullPage.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.typist.js"></script>
+    <style>
+        body {
+          /* 画像ファイルの指定 */
+          background-image: url(/assets/images/sp_back3.gif);
+
+          /* 画像を常に天地左右の中央に配置 */
+          background-position: center center;
+
+          /* 画像をタイル状に繰り返し表示しない */
+          background-repeat: no-repeat;
+
+          /* コンテンツの高さが画像の高さより大きい時、動かないように固定 */
+          background-attachment: fixed;
+
+          /* 表示するコンテナの大きさに基づいて、背景画像を調整 */
+          background-size: cover;
+
+          /* 背景画像が読み込まれる前に表示される背景のカラー */
+          background-color: #464646;
+        }
+    </style>
+</head>
+<body>
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v2.3&appId=884387134914356";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+    <script>
+        $('head').append(
+                '<style type="text/css">body {display:none;}</style>'
+        );
+        $(document).ready(function() {
+    
+            var camera, scene, renderer;
+            var mesh;
+            var mesh_masuo;
+            var objects = [];
+
+            // Particles
+            var group;
+            var container;
+            var particlesData = [];
+            var positions, colors;
+            var pointCloud;
+            var particlePositions;
+            var linesMesh;
+
+            var maxParticleCount = 1000;
+            var particleCount = 400;
+            if (window.innerWidth < 600) {
+                particleCount = 100;
+            } 
+
+            var r = 900;
+            var rHalf = r / 2;
+
+            var effectController = {
+                showDots: true,
+                showLines: true,
+                minDistance: 200,
+                limitConnections: false,
+                maxConnections: 100,
+                particleCount: 400
+            }
+
+    
+            init();
+            function init() {
+                $('body').fadeIn("slow");
+            }
+
+
+            $('#fullpage').fullpage({
+                sectionsColor: ['none', 'none', 'none', 'none', 'none'],
+                verticalCentered: false,
+                paddingTop: '6em',
+                afterLoad: function(anchorLink, index){
+                    if (index == 5 || index == 3) {
+                    }
+
+                    if (index == 2 || index == 4) {
+                    }
+                }
+            });
+        });
+    </script>
+    <div id="container"></div>
+    <div class="i-head">
+        <a href="/" class="i-logo-less">
+            <img src="/assets/images/logo_2.gif" width="150">
+        </a>
+        <div class="social_btn uk-hidden-small" style="float:right;">
+            <div class="twitter">
+                <a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
+                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+            </div>
+            <div class="facebook">
+                <div class="fb-like" data-href="http://iamasokuho.gifu.jp/day_four.html" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+            </div>
+        </div>
+    </div>
+    <div id="fullpage">
+        <div class="section" id="section1">
+            <p class="i-p s-i-p">
+<blockquote class="twitter-tweet" lang="ja"><p lang="ja" dir="ltr">なんだこのサイトwww <a href="http://t.co/RFgx6jEPPh">http://t.co/RFgx6jEPPh</a></p>&mdash; とが (@togazo) <a href="https://twitter.com/togazo/status/614365580691255296">2015, 6月 26</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </p>
+        </div>
+        <div class="section" id="section2">
+            <p class="i-p s-i-p">
+<blockquote class="twitter-tweet" lang="ja"><p lang="ja" dir="ltr">これはｗｗｗIAMASすげーｗｗ / “【衝撃】IAMAS（情報科学芸術大学院大学）のオープンハウスすごすぎワロタｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗ【画像あり】 - IAMASokuho” <a href="http://t.co/MxFvgmj693">http://t.co/MxFvgmj693</a></p>&mdash; 湯村 翼 Tsubasa YUMURA (@yumu19) <a href="https://twitter.com/yumu19/status/614064235182620672">2015, 6月 25</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </p>
+        </div>
+        <div class="section" id="section3">
+            <p class="i-p s-i-p">
+<blockquote class="twitter-tweet" lang="ja"><p lang="ja" dir="ltr">IAMASokuho : 【衝撃】IAMAS（情報科学芸術大学院大学）のオープンハウスすごすぎワロタｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗ【画像あり】 <a href="http://t.co/D0oE2Yrud7">http://t.co/D0oE2Yrud7</a></p>&mdash; 福岡でカズワタベがのらりくらりと (@kazzwatabe) <a href="https://twitter.com/kazzwatabe/status/614365459714981888">2015, 6月 26</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </p>
+        </div>
+        <div class="section" id="section4">
+            <p class="i-p s-i-p">
+<blockquote class="twitter-tweet" lang="ja"><p lang="ja" dir="ltr">なんだかんだ、割とバズってるわよね</p>&mdash; イア子 (@IAMAS_girl) <a href="https://twitter.com/IAMAS_girl/status/615000693552779264">2015, 6月 28</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<blockquote class="twitter-tweet" lang="ja"><p lang="ja" dir="ltr"><a href="https://twitter.com/IAMAS_girl">@iamas_girl</a> ありがたいことだ…またどっかで仕掛けたいね</p>&mdash; マス男 (@IAMAS_boy) <a href="https://twitter.com/IAMAS_boy/status/615001533734785028">2015, 6月 28</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </p>
+        </div>
+        <div class="section" id="section5">
+            <p class="i-p s-i-p">
+<blockquote class="twitter-tweet" lang="ja"><p lang="ja" dir="ltr"><a href="https://twitter.com/IAMAS_boy">@iamas_boy</a> ところでお便り全然きてないわよね</p>&mdash; イア子 (@IAMAS_girl) <a href="https://twitter.com/IAMAS_girl/status/615002152994340864">2015, 6月 28</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </p>
+        </div>
+        <div class="section" id="section6">
+            <p class="i-p s-i-p">
+<blockquote class="twitter-tweet" lang="ja"><p lang="ja" dir="ltr"><a href="https://twitter.com/IAMAS_girl">@iamas_girl</a> 来てないことないよ！1通もらってるよ！</p>&mdash; マス男 (@IAMAS_boy) <a href="https://twitter.com/IAMAS_boy/status/615002354790739968">2015, 6月 28</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </p>
+        </div>
+        <div class="section" id="section7">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+ということで1通いただいた質問を紹介するよー！<br>
+やったー！
+            </p>
+        </div>
+        <div class="section" id="section8">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+ヘイ！かかってこいマザファカ！
+            </p>
+        </div>
+        <div class="section" id="section9">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+変なものでも食べたの？
+            </p>
+        </div>
+        <div class="section" id="section11">
+            <p class="i-p s-i-p">
+イアマスネーム：<br>
+父さんな、Breakcoreで食っていこうと思うんださん<br>
+（25歳/男性）<br>
+<br>
+”実際、岐阜県大垣市の生活ってどうですか？<br>
+都会の情報入ってこなくないですか？<br>
+ あと行くとこなさそうなんですけど、<br>
+暇じゃないですか？”<br>
+            </p>
+        </div>
+        <div class="section" id="section12">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+あー出た、<span style="font-weight:bold;">大垣遠すぎ問題。</span>
+            </p>
+        </div>
+        <div class="section" id="section13">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+いやーBreakcoreよりはGabbaのほうが…
+            </p>
+        </div>
+        <div class="section" id="section14">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+そっちの話、闇深そうだからやめよう？
+            </p>
+        </div>
+        <div class="section" id="section16">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+そうね。<br>
+マス男くんは、こっちに来る前は東京にいたんだっけ？
+            </p>
+        </div>
+        <div class="section" id="section17">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+うん、<span style="font-weight:bold;">渋谷のベンチャーでプログラマーしてたよ。</span><br>
+キラキラしてないとこだけど。
+            </p>
+        </div>
+        <div class="section" id="section18">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+見りゃわかるわよ。
+            </p>
+        </div>
+        <div class="section" id="section19">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+（このアマ…）
+            </p>
+        </div>
+        <div class="section" id="section20">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+どう？大垣の暮らしは。
+            </p>
+        </div>
+        <div class="section" id="section21">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+そうだなー…<span style="font-weight:bold;">余計なストレスはない</span>よね！<br>
+地獄の田園都市線から開放されただけでも、<br>
+日々の生活の向上を感じるよ…
+            </p>
+        </div>
+        <div class="section" id="section22">
+            <p class="i-p s-i-p">
+
+<img src="/assets/images/iako.png" width=50><br>
+そんなに！？<br>
+私は東京じゃなかったから、そこまでじゃないな…
+            </p>
+        </div>
+        <div class="section" id="section23">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+<span style="font-weight:bold;">電車に乗ってて、<br>
+人に挟まれて身体が宙に浮くことって、あるんだよ。</span>
+            </p>
+        </div>
+        <div class="section" id="section24">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+東京こわ…
+            </p>
+        </div>
+        <div class="section" id="section25">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+あとはなんだろうなー、<br>
+金曜日に飲んだりすることがなくなったから、<br>
+<span style="font-weight:bold;">人と会う機会は減ったかなぁ…。</span>
+            </p>
+        </div>
+        <div class="section" id="section26">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+確かに私も、<br>
+名古屋で大学生してた時よりは、<br>
+飲む機会は減ったかも…。
+            </p>
+        </div>
+        <div class="section" id="section27">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+そうだ、イア子ちゃんは名古屋だったね。<br>
+<span style="font-weight:bold;">でもIAMAS生で飲みに行くあそこがあるよね！</span>
+            </p>
+        </div>
+        <div class="section" id="section28">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+そう！<span style="font-weight:bold;">ドイツ家！</span><br>
+よくみんなであそこに飲みに行って、<br>
+プロジェクトの話とか、<br>
+今やってることの話とかするわよね。
+            </p>
+        </div>
+        <div class="section" id="section29">
+            <p class="i-p s-i-p">
+
+ <img src="/assets/images/doitsu.jpg" width=150><br>
+◇ジャーマン風ゲルマン亭ドイツ家<br>
+IAMASと学生寮「RIST」の、<br>
+ちょうど間くらいにある、唯一の居酒屋。<br>
+「月曜日はドリンク1杯100円」というIAMAS生の味方。<br>
+いまだかつてIAMASで、<br>
+留学生に店名を説明できた者はいないと言われている。<br>
+<a href="https://www.atpress.ne.jp/news/26358" style="font-size:10px;">
+出典：https://www.atpress.ne.jp/news/26358
+</a>
+
+            </p>
+        </div>
+        <div class="section" id="section30">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+確かに人と会うことは減ったけど、<br>
+普段情報を得るのはだいたいネットだから、<br>
+そんなに変わらないんじゃないかな？
+            </p>
+        </div>
+        <div class="section" id="section31">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+むしろIAMASでしか学べないこと、<br>
+取り組めなさそうなことは、<br>
+いろいろ学べてるわよね。
+            </p>
+        </div>
+        <div class="section" id="section32">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+そうだなぁ…。都会にいたら、<br>
+土日の予定はだいたい埋まっちゃうけど、<br>
+こっちにくると<span style="font-weight:bold;">自分のやりたいことやる時間が、</span><br>
+<span style="font-weight:bold;">適度に取れてる感じ</span>がするよね。
+            </p>
+        </div>
+        <div class="section" id="section33">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+その感じ、わかるなぁ…<br>
+それに大垣だって、<br>
+いろんなお店があるわよね。
+            </p>
+        </div>
+        <div class="section" id="section34">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+うん、おしゃれなカフェも結構いっぱいあるよね。
+            </p>
+        </div>
+        <div class="section" id="section35">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+そうそう！<br>
+こないだ大垣のカフェを巡って女子会してきたわ！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/kotori.jpg" width="300"><br>
+◇ことり<br>
+大垣市中心部にある、<br>
+落ち着いた雰囲気のおしゃれカフェ<br>
+<a href="http://tabelog.com/gifu/A2101/A210104/21013318/" style="font-size: 10px;">
+出典：http://tabelog.com/gifu/A2101/A210104/21013318/
+</a>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/true.jpg" width="300"><br>
+◇トゥルティエール（TOURTIE`RE）<br>
+学校と寮の間にあるケーキ屋さん<br>
+<a href="http://tabelog.com/gifu/A2101/A210104/21007990/" style="font-size:10px;">
+出典：http://tabelog.com/gifu/A2101/A210104/21007990/
+</a>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/gaja.jpg" width="300"><br>
+◇GAJA<br>
+IAMASから徒歩1分。<br>
+早起きしてモーニングも◎<br>
+<a href="http://gaja.hp4u.jp/" style="font-size:10px;">
+出典：http://gaja.hp4u.jp/
+</a>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+この間はIAMAS生が、<br>
+大垣の街なかのおしゃれなバーで、<br>
+DJイベントやってたよね！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/dj.jpg" width="300"><br>
+◇ミロク<br>
+大垣市中心部にある、<br>
+若者が集うめちゃおしゃれなカフェ・バー<br>
+<a href="http://tabelog.com/gifu/A2101/A210104/21011891/" style="font-size:10px;">
+出典：http://tabelog.com/gifu/A2101/A210104/21011891/
+</a>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+そうそう、<br>
+<span style="font-weight:bold;">大垣ってけっこういろいろある</span>のよね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+<span style="font-weight:bold;">名古屋だって電車で30分ちょっと</span>だから、<br>
+行こうと思えば全然いけるしね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+よく名古屋の女子大通りに出没してる人もいるみたいね。<br>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/joshi.jpg" width="300"><br>
+
+◇女子大通り<br>
+名古屋の繁華街・栄の、<br>
+比較的チャラくないクラブがいっぱいあるエリア。<br>
+ちなみに女子大はない。<br>
+<a href="http://network2010.org/article/885" style="font-size:10px;">
+出典：http://network2010.org/article/885
+</a>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+名古屋でDJイベントに出たり、<br>
+プログラミング講師の活動をしてる人もいるよね！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+<span style="font-weight:bold;">京都も1時間半くらいで行ける</span>から、<br>
+関西のイベントを見に行ったり、<br>
+関西出身の子はふらっと帰ったりしてるわよね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+そうそう！<br>
+マテリアライジング展、みんなで見に行ったなー。<br>
+
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/material.png" width="150"><br>
+◇マテリアライジング展Ⅲ<br>
+IAMASから城先生、<br>
+松井先生が作品を展示していた美術展。<br>
+京都市立芸術大学ギャラリー＠KQUAにて開催された。<br>
+<a href="http://materializing.org/category/15exhibition/" style="font-size:10px;">
+出典：http://materializing.org/category/15exhibition/
+</a>
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+クリエイターとして、東京を中心に、<br>
+<span style="font-weight:bold;">全国区で活動している学生</span>も何人かいるわね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+東京もめちゃくちゃ遠いわけじゃないもんね。<br>
+行こうと思えば行けるし。<br>
+こないだ<span style="font-weight:bold;">平日の深夜バスが1500円</span>とかだったよ。
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+思ったよりずっと充実してるし、<br>
+かえって忙しいかもしれないわね。
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+ということで、結論！
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+結論：2015年の今から食っていくなら、Future Houseがオススメです<br>
+<iframe width="186" height="105" src="https://www.youtube.com/embed/xY1yCut8gG8" frameborder="0" allowfullscreen></iframe>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+引き続き、質問をお待ちしております！<br>
+<span style="font-weight:bold;">というか質問ください！1ヶ月もちません！</span>
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+IAMASにいる人に聞きたいこととかがあれば、<br>
+ぼくたちが代わりに聞きにいきまーす！<br>
+<br>
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+イア子とマス男への質問やメッセージはこちらから！<br>
+<a href="https://docs.google.com/forms/d/1wCcQZqUcdtotkoursFyHOVcIpV7H8lBKbFgjCkzg3Ig/edit?usp=sharing">
+https://docs.google.com/forms/d/1wCcQZqUcdtotkoursFyHOVcIpV7H8lBKbFgjCkzg3Ig/edit?usp=sharing
+</a>
+
+
+            </p>
+        </div>
+        <div class="section" id="section37">
+            <p class="i-p s-i-p">
+【次回予告】<br><br>
+さーて、明日のIAMASanはー？<br><br>
+<img src="/assets/images/denwa.jpg" width="50"><br><br>
+「<span style="font-weight:bold;">電話です</span>。デジタルとアートの最先端を行くIAMASで、忘れ去られたかのように置いてある私。私を最後に触ってくれたのは一体誰でしょうか…。『この建物の設備だから』という理由で撤去もできず、邪魔者扱いされてきた私…。でもそんな私を救ってくれたのは、なんと、<span style="font-weight:bold;">IoT（Internet of Things）</span>だったのです…！ユビキタス社会の到来だ！」
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+次回、<br><br>
+「電話、はじめてのBLE」<br><br>
+「イア子、ギーク女子デビュー」<br><br>
+「マス男、ハッカソン荒らす」<br><br>
+明日もまた見て下さいねー！ジャン、ケン、ポン！ウフフフフフフ！<br>
+
+                <div class="social_btn_bottom social_btn_bottom_sp uk-visible-small">
+                    <div class="twitter">
+                        <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://iamasokuho.gifu.jp/day_four.html" data-via="iamasokuho">Tweet</a>
+                        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+                    </div>
+                    <div class="facebook">
+                        <div class="fb-like" data-href="http://iamasokuho.gifu.jp/day_four.html" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+                    </div>
+                    <div class="hateb">
+                        <a href="http://b.hatena.ne.jp/entry/iamasokuho.gifu.jp/day_four.html" class="hatena-bookmark-button" data-hatena-bookmark-title="【IAMAS正直Q&A】大垣の生活ってどうよ？ | IAMASOKUHO" data-hatena-bookmark-layout="standard-balloon" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリ>ーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a>
+                        <script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+                    </div>
+                </div>
+            </p>
+        </div>
+    </div>
+
+</body>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-64484802-1', 'auto');
+  ga('send', 'pageview');
+</script>
+</html>

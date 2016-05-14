@@ -1,0 +1,551 @@
+<html lang="ja-jp" dir="ltr" xmlns:og="http://ogp.me/ns/#">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="IAMASOKUHO">
+    <meta name="keywords" content="iamasokuho, iama速報, IAMAS, 情報科学芸術大学院大学">
+    <title>【IAMASすてきな施設めぐり】360度動画で学内探検！（後編）</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/vnd.microsoft.icon">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.11.0/css/uikit.almost-flat.min.css" rel="stylesheet">
+    <link href="/assets/css/jquery.fullPage.css" rel="stylesheet">
+    <link href="/assets/css/style.css" rel="stylesheet">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.11.0/js/uikit.min.js"></script>
+    <script src="/assets/js/three.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+    
+    <script type="text/javascript" src="assets/js/jquery.fullPage.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.typist.js"></script>
+    <style>
+        body {
+          /* 画像ファイルの指定 */
+          background-image: url(/assets/images/sp_back3.gif);
+
+          /* 画像を常に天地左右の中央に配置 */
+          background-position: center center;
+
+          /* 画像をタイル状に繰り返し表示しない */
+          background-repeat: no-repeat;
+
+          /* コンテンツの高さが画像の高さより大きい時、動かないように固定 */
+          background-attachment: fixed;
+
+          /* 表示するコンテナの大きさに基づいて、背景画像を調整 */
+          background-size: cover;
+
+          /* 背景画像が読み込まれる前に表示される背景のカラー */
+          background-color: #464646;
+        }
+    </style>
+</head>
+<body>
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v2.3&appId=884387134914356";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+    <script>
+        $('head').append(
+                '<style type="text/css">body {display:none;}</style>'
+        );
+        $(document).ready(function() {
+    
+            var camera, scene, renderer;
+            var mesh;
+            var mesh_masuo;
+            var objects = [];
+
+            // Particles
+            var group;
+            var container;
+            var particlesData = [];
+            var positions, colors;
+            var pointCloud;
+            var particlePositions;
+            var linesMesh;
+
+            var maxParticleCount = 1000;
+            var particleCount = 400;
+            if (window.innerWidth < 600) {
+                particleCount = 100;
+            } 
+
+            var r = 900;
+            var rHalf = r / 2;
+
+            var effectController = {
+                showDots: true,
+                showLines: true,
+                minDistance: 200,
+                limitConnections: false,
+                maxConnections: 100,
+                particleCount: 400
+            }
+
+    
+            init();
+            function init() {
+                $('body').fadeIn("slow");
+            }
+
+
+            $('#fullpage').fullpage({
+                sectionsColor: [],
+                verticalCentered: false,
+                paddingTop: '6em',
+                afterLoad: function(anchorLink, index){
+                    if (index == 5 || index == 3) {
+                    }
+
+                    if (index == 2 || index == 4) {
+                    }
+                }
+            });
+        });
+    </script>
+    <div id="container"></div>
+    <div class="i-head">
+        <a href="/" class="i-logo-less">
+            <img src="/assets/images/logo_2.gif" width="150">
+        </a>
+        <div class="social_btn uk-hidden-small" style="float:right;">
+            <div class="twitter">
+                <a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
+                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+            </div>
+            <div class="facebook">
+                <div class="fb-like" data-href="http://iamasokuho.gifu.jp/day_four.html" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+            </div>
+        </div>
+    </div>
+    <div id="fullpage">
+        <div class="section">
+            <p class="i-p s-i-p">
+<blockquote class="twitter-tweet" lang="ja" align="center"><p lang="ja" dir="ltr">くしゃみしたら鼻血が出て身の危険を感じてる２徹目</p>&mdash; マス男 (@IAMAS_boy) <a href="https://twitter.com/IAMAS_boy/status/623888762980806660">2015, 7月 22</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<blockquote class="twitter-tweet" lang="ja" align="center"><p lang="ja" dir="ltr">ひとふんばりーーー！！！</p>&mdash; イア子 (@IAMAS_girl) <a href="https://twitter.com/IAMAS_girl/status/624090515777024000">2015, 7月 23</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<blockquote class="twitter-tweet" lang="ja" align="center"><p lang="ja" dir="ltr">マーオ</p>&mdash; マス男 (@IAMAS_boy) <a href="https://twitter.com/IAMAS_boy/status/624075091681239040">2015, 7月 23</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<blockquote class="twitter-tweet" align="center" data-cards="hidden" lang="ja"><p lang="ja" dir="ltr"><a href="https://twitter.com/IAMAS_boy">@iamas_boy</a> もきゅさんの好きなマヌルネコ見て元気出して <a href="http://t.co/wyu5oAmcav">pic.twitter.com/wyu5oAmcav</a></p>&mdash; イア子 (@IAMAS_girl) <a href="https://twitter.com/IAMAS_girl/status/624090938915172352">2015, 7月 23</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+というわけで、昨日に引き続き、<br>
+<span class="b">360度動画で学内探検</span>だよー！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+PCからご覧の人は、<br>
+Google ChromeかFirefoxで見てね！<br>
+iPhoneからご覧の人は、<br>
+YouTubeアプリをダウンロードして、<br>
+動画はYouTubeアプリで見るとおもしろいよ！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+お手数おかけしますー！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+<span class="b">IAMASはソフトピアジャパンの、<br>
+2つのビルに入っている</span>けど、<br>
+昨日はセンタービルを紹介したから、<br>
+もうひとつ、わたしたちの活動場所の<br>
+<span class="b">「ワークショップ24」</span>のほうね！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+そうそう！ <br>
+2つのビルは歩いて5分くらいの距離だよ！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/29-1.jpg" width=250><br>
+ワークショップからセンタービルを見る
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+普段引きこもりがちだから、<br>
+運動にはなるけど、<br>
+雨の日の移動がやや面倒なのよね…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+そしてこっちは、<br>
+ワークショップの自転車置場から、<br>
+エレベーターまでの道！<br>
+自転車でくると、毎日必ず通るね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<iframe width="300" height="200" src="https://www.youtube.com/embed/sQD3fxaNnfM" frameborder="0" allowfullscreen></iframe>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+なんか文字が動くようになってる…<br>
+<span class="b">でも相変わらずフォントはダサいわね…</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+そんなことないよー！<br>
+ワークショップは1Fと5FがIAMASの施設で、<br>
+3Fにもシステム委員会と講義室があるね！<br>
+<br>
+<a href="http://iamasokuho.gifu.jp/day_nineteen.html" style="font-size:10px;">
+Day 19:【IAMASすてきな施設めぐり】IAMASシステム委員会<br>
+http://iamasokuho.gifu.jp/day_nineteen.html
+</a>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+じゃあ5Fにいきましょ！<br>
+このワークショップ5Fが、<br>
+<span class="b">今回のオープンハウスでも、<br>
+いちばん賑やかな場所になりそうね！</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<iframe width="300" height="200" src="https://www.youtube.com/embed/UuAfjYvmDj8" frameborder="0" allowfullscreen></iframe>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+ここには、<span class="b">プロジェクト室と、<br>
+R-Cafe、視聴覚室、会議室、</span><br>
+あとぼくらの研究スペースである<br>
+<span class="b">「ロフト」</span>があるよ！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<iframe width="300" height="200" src="https://www.youtube.com/embed/msd6-a8sS1U" frameborder="0" allowfullscreen></iframe>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+オープンハウス当日は、R-Cafeでは、<br>
+IAMASの先生たちによる進学相談会と、<br>
+学校説明会が行われるのよね！<br>
+詳細はオープンハウス公式HPをチェック！<br>
+<a href="http://www.iamas.ac.jp/openhouse/">http://www.iamas.ac.jp/openhouse/</a>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+そうそう！<br>
+IAMASきっての美男美女たちが、<br>
+ドリンクや軽食を提供する<br>
+「イアマスコーヒーショップ」<br>
+も開かれるよ！タコライスたべたい！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/29-2.jpg" width=300><br>
+イアマスコーヒーショップ<br>
+<a href="http://www.iamas.ac.jp/openhouse/">http://www.iamas.ac.jp/openhouse/</a>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+半笑いね…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+そら改まって撮られたら恥ずかしいだろうよ！<br>
+つぎはぼくたちの暮らすロフトだ！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<iframe width="300" height="200" src="https://www.youtube.com/embed/DvnZcpNUTS4" frameborder="0" allowfullscreen></iframe>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+深夜感あるわね…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+バレた？<br>
+ちなみにオープンハウス当日は、<br>
+<span class="b">ロフトでぼくらの「勝手に進学相談会」<br>
+を開催します！</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+時間は、<span class="b">進学相談会前の13時ちょっと前か、<br>
+学内ツアー終了後の15時半すぎ、</span><br>
+を予定しています！<br>
+正直わたしたちも色々お手伝いありなので、<br>
+<span class="b">正確な時間は追ってTwitterで公開します！</span>
+
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+ゲリラ的に開催するので、<br>
+見かけたらぜひとも参加してくださいー！<br>
+<span class="b">わりとほんとに、<br>
+どんな相談にでも乗ります！</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+わたしたち以外のIAMAS生も、<br>
+来たり来なかったり、という噂！<br>
+<span class="b">先生方に聞けないことも、<br>
+何でも聞いてくださ〜い！</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+あ、そうだ！<br>
+<span class="b">そういえば質問が来てたから紹介するよ！</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+<span class="b">え、このタイミング！？</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+もう明日で終わりだから！！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+イアマスに早く進学したくて大学を飛び級したい!!!!!!さん（19歳・男性）<br>
+<span class="b">僕は大学で物理学を勉強しています。<br>
+あまり芸術に関係ない学科なので、イアマスに入れるか心配です 笑<br>
+もしイアマスに、学部時代に物理学を勉強していた方や、芸術に関係ない勉強をしていた方がいらっしゃれば、話を聴いてみたいです！（イアマスの入試のためにしたこととか…）</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+相当モチベーション高いわね…<br>
+IAMAS来る前に、<br>
+自分でプログラミング勉強するとか、<br>
+おもしろいものつくるとか、<br>
+いろいろやっちゃえばいいのに！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+やっぱIAMASは<span class="b">「メディアアートの学校」</span><br>
+ってイメージが強いんだね…。<br>
+もちろんメディアアートの色は強いけど、<br>
+<span class="b">アート以外のことをしっかりやったから、<br>
+できる表現もいろいろある</span>よね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+それはほんとにそうね！<br>
+VJをやってる先輩は、物理学を勉強して、<br>
+研究所に就職していろんな研究してから、<br>
+IAMASに来た人だったわよね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+そうそう！<br>
+ぼくも大学は工学部だったから、<br>
+全然アートな感じじゃなかったしね。<br>
+<span class="b">大手メーカーで30年働いてから来た人、<br>
+市役所で長く働いてから来た人</span>もいるよ！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+あと数学をやってきた先輩もいるわよね。<br>
+工学部で勉強しながら、<br>
+VJとして活動してた人もいるし、<br>
+逆に芸術からモノづくりに興味を持つ人も、<br>
+いろんな人がいるわよね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+そうそう。<span class="b">活動する分には、<br>
+所属は全然関係ないね。</span><br>
+あとは入試の話か！<br>
+<span class="b">IAMASの入試は、過去問見ればわかるけど、<br>
+理系向けの問題もあるよね！</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+過去問は、IAMAS公式HPから、<br>
+募集要項とともにダウンロードできるわ！<br>
+<a href="http://www.iamas.ac.jp/admission#admissions">http://www.iamas.ac.jp/admission#admissions</a>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+この結論はこんな感じ！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<span class="b">
+結論：<br>
+芸術やってきた人でも、<br>
+芸術以外のことをやってきた人でも、<br>
+IAMASは公平に受けられる試験があるし、<br>
+学んで作れるフィールドがあります。<br>
+そしてやりたいことはいまからやっちゃえ！
+</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+これよりもっと詳しく、<br>
+当日はいろいろ話しちゃうわよー！<br>
+まだまだ質問もお待ちしております！
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p s-i-p s-i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+IAMASにいる人に聞きたいこととかがあれば、<br>
+ぼくたちが代わりに聞きにいきまーす！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p">
+イア子とマス男への質問やメッセージはこちらから！<br>
+<a href="http://goo.gl/forms/hlgdXfxMei">
+http://goo.gl/forms/hlgdXfxMei
+</a>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+<span style="font-weight:bold;">イアマ速報 facebookページ</span>はこちら！<br>
+<a href="https://www.facebook.com/iamasokuho">
+https://www.facebook.com/iamasokuho<br>
+</a>
+いいね！しなさいよ！
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+<span style="font-weight:bold;">イアマ速報のTwitter</span>はこちらです！<br>
+<a href="https://twitter.com/IAMASokuho">
+https://twitter.com/IAMASokuho<br>
+</a>
+いろんな情報拾っていきまーす！<br>
+
+<br>
+
+<a href="http://iamasokuho.gifu.jp/day_28.html" style="font-size:12px;">
+<< 前の記事へ
+</a>
+&nbsp;&nbsp;&nbsp;
+<a href="http://iamasokuho.gifu.jp/archive.html" style="font-size:12px;">
+記事一覧へ
+</a>
+
+            <div class="social_btn_bottom social_btn_bottom_sp uk-visible-small">
+                <div class="twitter">
+                    <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://iamasokuho.gifu.jp/day_29.html" data-via="iamasokuho">Tweet</a>
+                    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+                </div>
+                <div class="facebook">
+                    <div class="fb-like" data-href="http://iamasokuho.gifu.jp/day_29.html" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+                </div>
+                <div class="hateb">
+                    <a href="http://b.hatena.ne.jp/entry/iamasokuho.gifu.jp/day_29.html" class="hatena-bookmark-button" data-hatena-bookmark-title="【IAMASすてきな施設めぐり】360度動画で学内探検！（後編）" data-hatena-bookmark-layout="standard-balloon" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリ>ーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a>
+                    <script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+                </div>
+            </div>
+            </p>
+        </div>
+    </div>
+
+</body>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-64484802-1', 'auto');
+  ga('send', 'pageview');
+</script>
+</html>

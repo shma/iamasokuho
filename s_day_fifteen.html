@@ -1,0 +1,628 @@
+<html lang="ja-jp" dir="ltr" xmlns:og="http://ogp.me/ns/#">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="IAMASOKUHO">
+    <meta name="keywords" content="iamasokuho, iama速報, IAMAS, 情報科学芸術大学院大学">
+    <title>【IAMASの人々】図書「艦長」！小林昌廣先生</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/vnd.microsoft.icon">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.11.0/css/uikit.almost-flat.min.css" rel="stylesheet">
+    <link href="/assets/css/jquery.fullPage.css" rel="stylesheet">
+    <link href="/assets/css/style.css" rel="stylesheet">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.11.0/js/uikit.min.js"></script>
+    <script src="/assets/js/three.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+    
+    <script type="text/javascript" src="assets/js/jquery.fullPage.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.typist.js"></script>
+    <style>
+        body {
+          /* 画像ファイルの指定 */
+          background-image: url(/assets/images/sp_back3.gif);
+
+          /* 画像を常に天地左右の中央に配置 */
+          background-position: center center;
+
+          /* 画像をタイル状に繰り返し表示しない */
+          background-repeat: no-repeat;
+
+          /* コンテンツの高さが画像の高さより大きい時、動かないように固定 */
+          background-attachment: fixed;
+
+          /* 表示するコンテナの大きさに基づいて、背景画像を調整 */
+          background-size: cover;
+
+          /* 背景画像が読み込まれる前に表示される背景のカラー */
+          background-color: #464646;
+        }
+    </style>
+</head>
+<body>
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v2.3&appId=884387134914356";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+    <script>
+        $('head').append(
+                '<style type="text/css">body {display:none;}</style>'
+        );
+        $(document).ready(function() {
+    
+            var camera, scene, renderer;
+            var mesh;
+            var mesh_masuo;
+            var objects = [];
+
+            // Particles
+            var group;
+            var container;
+            var particlesData = [];
+            var positions, colors;
+            var pointCloud;
+            var particlePositions;
+            var linesMesh;
+
+            var maxParticleCount = 1000;
+            var particleCount = 400;
+            if (window.innerWidth < 600) {
+                particleCount = 100;
+            } 
+
+            var r = 900;
+            var rHalf = r / 2;
+
+            var effectController = {
+                showDots: true,
+                showLines: true,
+                minDistance: 200,
+                limitConnections: false,
+                maxConnections: 100,
+                particleCount: 400
+            }
+
+    
+            init();
+            function init() {
+                $('body').fadeIn("slow");
+            }
+
+
+            $('#fullpage').fullpage({
+                sectionsColor: ['#000', '#000','#000','#000','#000'],
+                verticalCentered: false,
+                paddingTop: '6em',
+                afterLoad: function(anchorLink, index){
+                    if (index == 5 || index == 3) {
+                    }
+
+                    if (index == 2 || index == 4) {
+                    }
+                }
+            });
+        });
+    </script>
+    <div id="container"></div>
+    <div class="i-head">
+        <a href="/" class="i-logo-less">
+            <img src="/assets/images/logo_2.gif" width="150">
+        </a>
+        <div class="social_btn uk-hidden-small" style="float:right;">
+            <div class="twitter">
+                <a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
+                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+            </div>
+            <div class="facebook">
+                <div class="fb-like" data-href="http://iamasokuho.gifu.jp/day_four.html" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+            </div>
+        </div>
+    </div>
+    <div id="fullpage">
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+今日はこの施設を紹介するよ！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/15-1.jpg" width=300>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+ここは、イノベーション工房ね！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+そう！<br>
+ここイノベーション工房は、<br>
+<span class="b">デジタルファブリケーションのための、<br>
+最新鋭の工作機械がたくさん備わっている</span>んだ！<br>
+早速入ってみよう！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/15-2.jpg" width=300>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+こんにちはー…<br>
+あ、高見さん！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/takami.jpg" width=50><br>
+あ、イア子ちゃん、マス男くん、こんにちは〜。
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/15-3.jpg" width=300><br>
+<span class="b">高見さん</span><br>
+IAMASイノベーション工房の管理人。<br>
+デジタル工作機械を使いこなすお姉さんだ！<br>
+IAMAS卒業生、ぼくらの先輩でもあるぞ！
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+大きな機械がいくつかあるね！<br>
+高見さん、ここの機械は誰でも使えるんですか？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/takami.jpg" width=50><br>
+あ、ここは<span class="b">IAMAS関係者だけが使える</span>よ！<br>
+１年生の前期にある実習を受けた人なら、<br>
+誰でも使っていいことになってるよ〜。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+レーザーカッターの実習や、<br>
+3D造形の実習を受けたわね！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/15-4.jpg" width=300><br>
+<span style="font-size:10px;">
+イノベーション工房にはいつも高見さんがいる。<br>
+プロジェクトがある日などには、研究補助員の方もいるよ！
+</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+ここにはどんな機械があるんですか？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/takami.jpg" width=50><br>
+うん、それぞれ紹介しますね〜。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/15-5.jpeg" width=300>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/15-6.jpeg" width=300>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/takami.jpg" width=50><br>
+これがレーザーカッターです。<br>
+工房の機械では、いちばんよく使われてるかな。<br>
+trotecと、UNIVERSAL、<br>
+HAJIMEの3台があります。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+あ、これはこないだ使いました！<br>
+illustratorでデータをつくったら、<br>
+その通りに切ってくれるんですよね！
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/takami.jpg" width=50><br>
+そうそう〜。<br>
+2年生の中間発表とかでも、使ってる人多かったね。<br>
+正しく安全に使えば、<br>
+ちょっとした展示物とかつくるのにはとても手軽！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+こっちはなんですか？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/15-7.jpg" width=300>
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/15-8.jpeg" width=300>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/takami.jpg" width=50><br>
+それは<span class="b">3Dプリンター</span>です！<br>
+Replicator 5th、ARM-10、UP Plus2と、<br>
+Cubeが2台、計5台があります。<br>
+造形が、慣れるまでなかなか大変なんだよね〜。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+あ、これもこないだやったわね！<br>
+Rhinoceros、難しかったなー…<br>
+でも実際のものになるのは面白いわよね！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+これはミシン…ですか？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/15-9.jpg" width=300>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/takami.jpg" width=50><br>
+そうそう！<span class="b">刺繍ミシン</span>だよ。<br>
+PCからデータを送ったら、<br>
+そのデータの通り刺繍してくれるミシン！<br>
+こんな感じになります。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/15-10.jpeg" width=300>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+（デイジーと、地獄…？）
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/takami.jpg" width=50><br>
+…あ、その「地獄」は、<br>
+「揖斐川ワンダーピクニック」(※1)<br>
+っていうイベントで使ったの！<br>
+
+<span style="font-size:10px;">
+※1 揖斐川ワンダーピクニック：5月に岐阜県揖斐川町で行われた、複合型タウンフェスティバル。IAMASも「軽トラまるけ」「地獄絵スタンプラリー」などで協力参加した。<br>
+<a href="http://www.iwp2015.com/">http://www.iwp2015.com/</a>
+</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+すごい！<br>
+色ごとに刺繍するのね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/15-11.jpeg" width=300>
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/takami.jpg" width=50><br>
+そうそう、まだまだ試してるところだけど、<br>
+結構いろいろできそうな感じ！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+レーザーカッターや3Dプリンターもですけど、<br>
+<span class="b">データじゃなくて実際のモノを使うって、<br>
+なかなか難しい</span>ですね…。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+難しさをなんとか乗り越えて、<br>
+<span class="b">実際のモノになるのが楽しかったりする</span>のよ！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+ところで、この大きな小屋？みたいな部屋は…？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/15-12.jpg" width=300>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+中になんか大きな機械がある…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/15-13.jpeg" width=300>
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/takami.jpg" width=50><br>
+それはShopbotっていう、<br>
+大きな木の板とかを削る機械だよ。<br>
+うまくやれば、家具とかも作れるかも。<br>
+これも講習を受ければ、みんな使えるよ。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/15-14.jpeg" width=300>
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+あ、こないだCraftのプロジェクト(※1)で使いました！<br>
+
+<span style="font-size:10px;">
+※1 Craft, Fabrication and Sustainabilityプロジェクト：デジタルファブリケーションを用いて、持続可能な産業を開発するプロジェクト。Fab機械の使い方を学び、使い勝手をよくするところから始まる。<br>
+<a href="http://www.iamas.ac.jp/projects/8137">http://www.iamas.ac.jp/projects/8137</a>
+</span>
+            </p>
+
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<blockquote class="instagram-media" data-instgrm-captioned data-instgrm-version="4" style=" background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:300px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);"><div style="padding:8px;"> <div style=" background:#F8F8F8; line-height:0; margin-top:40px; padding:50% 0; text-align:center; width:100%;"> <div style=" background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAsCAMAAAApWqozAAAAGFBMVEUiIiI9PT0eHh4gIB4hIBkcHBwcHBwcHBydr+JQAAAACHRSTlMABA4YHyQsM5jtaMwAAADfSURBVDjL7ZVBEgMhCAQBAf//42xcNbpAqakcM0ftUmFAAIBE81IqBJdS3lS6zs3bIpB9WED3YYXFPmHRfT8sgyrCP1x8uEUxLMzNWElFOYCV6mHWWwMzdPEKHlhLw7NWJqkHc4uIZphavDzA2JPzUDsBZziNae2S6owH8xPmX8G7zzgKEOPUoYHvGz1TBCxMkd3kwNVbU0gKHkx+iZILf77IofhrY1nYFnB/lQPb79drWOyJVa/DAvg9B/rLB4cC+Nqgdz/TvBbBnr6GBReqn/nRmDgaQEej7WhonozjF+Y2I/fZou/qAAAAAElFTkSuQmCC); display:block; height:44px; margin:0 auto -44px; position:relative; top:-22px; width:44px;"></div></div> <p style=" margin:8px 0 0 0; padding:0 4px;"> <a href="https://instagram.com/p/4lt8EEhhEh/" style=" color:#000; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:normal; line-height:17px; text-decoration:none; word-wrap:break-word;" target="_top">イア子です！今日はイノベーション工房のShopbotをさわってます！すごい！</a></p> <p style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; line-height:17px; margin-bottom:0; margin-top:8px; overflow:hidden; padding:8px 0 7px; text-align:center; text-overflow:ellipsis; white-space:nowrap;">A video posted by イアマ速報 (@iamasokuho) on <time style=" font-family:Arial,sans-serif; font-size:14px; line-height:17px;" datetime="2015-07-01T09:58:24+00:00">Jul 1, 2015 at 2:58am PDT</time></p></div></blockquote>
+<script async defer src="//platform.instagram.com/en_US/embeds.js"></script>
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/takami.jpg" width=50><br>
+そうそう、Craftのプロジェクトに参加する人に、<br>
+いろいろ使ってもらう感じにしてるんです。<br>
+<span class="b">まだまだ私たちも、この機械を使う世界のどの人も、<br>
+どういう材料がどう削れるかとか、<br>
+分かってないことがいっぱいある</span>から。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+デジタルファブリケーションは、<br>
+機械の使い方以上のマニュアルがないから、<br>
+<span class="b">使い方から作っていく</span>んだね。<br>
+機械ができて、使い道がみんなでつくられていく…<br>
+オープンソースだなぁ。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/takami.jpg" width=50><br>
+あ、ちなみに奥にある<span class="b">木工室と金工室も、<br>
+実習を受ければ使える</span>から、<br>
+有効に使ってくださいね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+木工なんかは、<br>
+展示用の台とかつくるときにも使うわよね！<br>
+学内で作れるのは便利よね。
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+ほんとだね。<br>
+高見さん、OPEN HOUSEでは、<br>
+イノベーション工房は見学できるんですか？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/takami.jpg" width=50><br>
+うん！<br>
+OPEN HOUSE当日は、ここイノベーション工房で、<br>
+Craftのプロジェクトの成果展示、<br>
+<span class="b">「mikketa和紙(※2)」を使ったワークショップ</span>をします！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+
+<img src="/assets/images/15-15.jpg" width=150><br>
+<span style="font-size:10px;">
+※2 mikketa：岐阜で約130年の歴史がある会社「三星毛糸株式会社」と、IAMAS卒業生が活躍する会社「株式会社TAB」の共同で、廃材を活用して新たな材料や製品をつくり、販売するプロジェクト。代官山蔦屋書店や湘南T-SITEなどでもワークショップが行われた。
+<br>
+<a href="http://mikketa.jp/">
+http://mikketa.jp/
+</a>
+</span>
+<br>
+
+OPEN HOUSEでの展示・ワークショップ詳細はこちら！<br>
+<a href="http://cfs.iamas.ac.jp/ja/59">
+http://cfs.iamas.ac.jp/ja/59
+</a>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+<span class="b">わ、すごい！かわいい！</span><br>
+これはつくってみたいわね…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/takami.jpg" width=50><br>
+<span class="b">2日間、3名ずつで締め切り</span>なので、<br>
+OPEN HOUSEに来る方で、興味ある方はぜひ、<br>
+<span class="b">お早めに申し込んでくださいね！</span><br>
+7月9日で、いまは土曜日1人、日曜日2人、<br>
+まだ空いてます。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+OPEN HOUSEで初めてIAMASに来て、<br>
+イノベーション工房を見たとき、<br>
+<span class="b">どんだけ充実してるんだ！ってびっくりしたなあ。</span><br>
+せっかくこれだけ良い施設があるんだし、<br>
+ぼくらもいろいろ作ってみよう！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+ほんとにそうね！<br>
+ホームセンターで材料買ってきましょ！<br>
+高見さん、ありがとうございました！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/takami.jpg" width=50><br>
+いいえ〜！おつかれさまです！
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p s-i-p s-i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+ということで引き続き、<br>
+質問のほうもお待ちしております！
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p s-i-p s-i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+IAMASにいる人に聞きたいこととかがあれば、<br>
+ぼくたちが代わりに聞きにいきまーす！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p s-i-p s-i-p">
+イア子とマス男への質問やメッセージはこちらから！<br>
+<a href="http://goo.gl/forms/hlgdXfxMei">
+http://goo.gl/forms/hlgdXfxMei
+</a>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+<span style="font-weight:bold;">イアマ速報 facebookページ</span>はこちら！<br>
+<a href="https://www.facebook.com/iamasokuho">
+https://www.facebook.com/iamasokuho<br>
+</a>
+いいね！しなさいよ！
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+<span style="font-weight:bold;">イアマ速報のTwitter</span>はこちらです！<br>
+<a href="https://twitter.com/IAMASokuho">
+https://twitter.com/IAMASokuho<br>
+</a>
+いろんな情報拾っていきまーす！<br>
+
+<br>
+
+<a href="http://iamasokuho.gifu.jp/day_fourteen.html" style="font-size:12px;">
+<< 前の記事へ
+</a>
+&nbsp;&nbsp;&nbsp;
+<a href="http://iamasokuho.gifu.jp/archive.html" style="font-size:12px;">
+記事一覧へ
+</a>
+
+            <div class="social_btn_bottom social_btn_bottom_sp uk-visible-small">
+                <div class="twitter">
+                    <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://iamasokuho.gifu.jp/day_fifteen.html" data-via="iamasokuho">Tweet</a>
+                    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+                </div>
+                <div class="facebook">
+                    <div class="fb-like" data-href="http://iamasokuho.gifu.jp/day_fifteen.html" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+                </div>
+                <div class="hateb">
+                    <a href="http://b.hatena.ne.jp/entry/iamasokuho.gifu.jp/day_fifteen.html" class="hatena-bookmark-button" data-hatena-bookmark-title="【IAMASの人々】図書「艦長」！小林昌廣先生| IAMASOKUHO" data-hatena-bookmark-layout="standard-balloon" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリ>ーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a>
+                    <script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+                </div>
+            </div>
+            </p>
+        </div>
+    </div>
+
+</body>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-64484802-1', 'auto');
+  ga('send', 'pageview');
+</script>
+</html>

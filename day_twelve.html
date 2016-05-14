@@ -1,0 +1,996 @@
+<html lang="ja-jp" dir="ltr" xmlns:og="http://ogp.me/ns/#">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="IAMASOKUHO">
+    <meta name="keywords" content="iamasokuho, iama速報, IAMAS, 情報科学芸術大学院大学">
+    <title>【IAMASすてきな施設めぐり】IAMAS学生寮「RIST」| IAMASokuho</title>
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="/assets/images/logo_top.gif">
+    <link rel="shortcut icon" href="favicon.ico" type="image/vnd.microsoft.icon">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.11.0/css/uikit.almost-flat.min.css" rel="stylesheet">
+    <link href="/assets/css/jquery.fullPage.css" rel="stylesheet">
+    <link href="/assets/css/style.css" rel="stylesheet">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.11.0/js/uikit.min.js"></script>
+    <script src="/assets/js/three.min.js"></script>
+    <script src="/assets/js/iamasokuho.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.fullPage.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.typist.js"></script>
+    <style>
+        body { margin: 0;}
+        canvas { width: 100%; height: 100% }
+    </style>
+</head>
+<body>
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v2.3&appId=884387134914356";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+    <script>
+        if ((navigator.userAgent.indexOf('iPhone') > 0 && navigator.userAgent.indexOf('iPad') == -1) || navigator.userAgent.indexOf('iPod') > 0 || navigator.userAgent.indexOf('Android') > 0) {
+            url = 'http://iamasokuho.gifu.jp/s_day_twelve.html';
+            location.href = url;
+        }
+
+        $('head').append(
+                '<style type="text/css">body {display:none;}</style>'
+        );
+        $(document).ready(function() {
+            
+    
+            var camera, scene, renderer;
+            var mesh;
+            var mesh_masuo;
+            var objects = [];
+
+            // Particles
+            var group;
+            var container;
+            var particlesData = [];
+            var positions, colors;
+            var pointCloud;
+            var particlePositions;
+            var linesMesh;
+
+            var maxParticleCount = 1000;
+            var particleCount = 400;
+            if (window.innerWidth < 600) {
+                particleCount = 100;
+            } 
+
+            var r = 900;
+            var rHalf = r / 2;
+
+            var effectController = {
+                showDots: true,
+                showLines: true,
+                minDistance: 200,
+                limitConnections: false,
+                maxConnections: 100,
+                particleCount: 400
+            }
+
+    
+            init();
+            animate();
+
+            var zoom = 1000;
+            function zoom() {
+                for (var i = 0; i < 50; i++) {
+                    setTimeout(function(){
+                        camera.position.z = zoom - 5;
+                        zoom = zoom - 5; 
+                    },1000);
+                }
+            }
+
+            function init() {
+                container = document.getElementById( 'container' );
+
+                renderer = new THREE.WebGLRenderer({antialias: true});
+                renderer.setPixelRatio( window.devicePixelRatio );
+                renderer.setSize( window.innerWidth, window.innerHeight );
+                document.body.appendChild( renderer.domElement );
+    
+                camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 1, 1000 );
+                camera.position.z = 800;
+    
+                scene = new THREE.Scene();
+
+                group = new THREE.Group();
+                scene.add( group );
+
+                var segments = maxParticleCount * maxParticleCount;
+
+                positions = new Float32Array( segments * 3 );
+                colors = new Float32Array( segments * 3);
+            
+                var pMaterial = new THREE.PointCloudMaterial( {
+                    color: 0xFFFFF,
+                    size: 3,
+                    blending: THREE.AdditiveBlending,
+                    transparent: true,
+                    sizeAttenuation: false
+                } );
+
+                particles = new THREE.BufferGeometry();
+                particlePositions = new Float32Array( maxParticleCount * 3 );
+
+                for ( var i = 0; i < maxParticleCount; i++ ) {
+                    var x = Math.random() * r - r / 2;
+                    var y = Math.random() * r - r / 2;
+                    var z = Math.random() * r - r / 2;
+            
+                    particlePositions[i * 3]     = x;
+                    particlePositions[i * 3 + 1] = y;
+                    particlePositions[i * 3 + 2] = z;
+
+                    // add it to the geometry
+                    particlesData.push( {
+                        velocity: new THREE.Vector3( -1 + Math.random() * 2, -1 + Math.random() * 2, -1 + Math.random() * 2),
+                        numConnections: 0
+                    });
+                }
+
+                particles.drawcalls.push( {
+                    start: 0,
+                    count: particleCount,
+                    index: 0
+                });
+
+                particles.addAttribute( 'position', new THREE.DynamicBufferAttribute( particlePositions, 3));
+
+                // create the particle system
+                pointCloud = new THREE.PointCloud( particles, pMaterial);
+                pointCloud.visible = true;
+                group.add(pointCloud);
+        
+                var pGeometry = new THREE.BufferGeometry();
+                pGeometry.addAttribute( 'position', new THREE.DynamicBufferAttribute( positions, 3));
+                pGeometry.addAttribute( 'color', new THREE.DynamicBufferAttribute(colors, 3));
+
+                pGeometry.computeBoundingSphere();
+
+                pGeometry.drawcalls.push( {
+                    start: 0,
+                    count: 0,
+                    index: 0
+                } );
+
+                var pMaterial = new THREE.LineBasicMaterial( {
+                    vertexColors: THREE.VertexColors,
+                    blending: THREE.AdditiveBlending,
+                    transparent: true
+                });
+
+                linesMesh = new THREE.Line( pGeometry, pMaterial, THREE.LinePieces );
+                group.add( linesMesh );
+
+                renderer.setPixelRatio(window.devicePixelRatio);
+                renderer.setSize(window.innerWidth, window.innerHeight);
+
+                renderer.gammaInput = true;
+                renderer.gammaOutput = true;
+                renderer.setClearColor( new THREE.Color(0x000000) );
+
+                container.appendChild(renderer.domElement);
+
+                var geometry = new THREE.BoxGeometry( 70, 70, 70 );
+    
+                var texture = THREE.ImageUtils.loadTexture( 'assets/images/iako.png' );
+                texture.anisotropy = renderer.getMaxAnisotropy();
+    
+                var material = new THREE.MeshBasicMaterial( { map: texture } );
+    
+                mesh = new THREE.Mesh( geometry, material );
+                mesh.position.x = -300;
+                mesh.position.y += 150;
+                scene.add( mesh );
+    
+                // masuo
+                var texture_masuo = THREE.ImageUtils.loadTexture( 'assets/images/new_masuo.png' );
+                texture_masuo.anisotropy = renderer.getMaxAnisotropy();
+    
+                var material_masuo = new THREE.MeshBasicMaterial( { map: texture_masuo } );
+    
+                mesh_masuo = new THREE.Mesh( geometry, material_masuo );
+                mesh_masuo.position.x = 300;
+                mesh_masuo.position.y += 150;
+                scene.add( mesh_masuo ); 
+                objects.push( mesh );
+                objects.push( mesh_masuo );
+    
+    
+                window.addEventListener( 'resize', onWindowResize, false );
+                $('#fullpage').fullpage({
+                    sectionsColor: ["#000","#000","#000","#000","#000"],
+                    afterLoad: function(anchorLink, index){
+                        console.log(index);
+                        if(index==6||index==9||index==11||index==17||index==20||index==23||index==26||index==3||index==41||index==44||index==46||index==58||index==61||index==64||index==67||index==69||index==71||index==75||index==79||index==83||index==863) {
+                                mesh_masuo.position.y += 15;
+                                setTimeout(function(){
+                                    mesh_masuo.position.y -= 15;
+                                },100);
+                        }
+
+                        if(index==8||index==10||index==13||index==16||index==19||index==25||index==28||index==35||index==37||index==43||index==59||index==63||index==72||index==77||index==80||index==82||index==85) {
+                            mesh.position.y += 15;
+                            setTimeout(function(){
+                                mesh.position.y -= 15;
+                            },100);
+                        }
+                    }
+                });
+                $('body').fadeIn("slow");
+            }
+    
+            function onWindowResize() {
+    
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+    
+                renderer.setSize( window.innerWidth, window.innerHeight );
+    
+            }
+    
+            function animate() {
+                var vertexpos = 0;
+                var colorpos = 0;
+                var numConnected = 0;
+
+                for ( var i = 0; i < particleCount; i++ )
+                    particlesData[ i ].numConnections = 0;
+
+                for ( var i = 0; i < particleCount; i++ ) {
+
+                    // get the particle
+                    var particleData = particlesData[i];
+
+                    particlePositions[ i * 3     ] += particleData.velocity.x;
+                    particlePositions[ i * 3 + 1 ] += particleData.velocity.y;
+                    particlePositions[ i * 3 + 2 ] += particleData.velocity.z;
+
+                    if ( particlePositions[ i * 3 + 1 ] < -rHalf || particlePositions[ i * 3 + 1 ] > rHalf )
+                        particleData.velocity.y = -particleData.velocity.y;
+
+                    if ( particlePositions[ i * 3 ] < -rHalf || particlePositions[ i * 3 ] > rHalf )
+                        particleData.velocity.x = -particleData.velocity.x;
+
+                    if ( particlePositions[ i * 3 + 2 ] < -rHalf || particlePositions[ i * 3 + 2 ] > rHalf )
+                        particleData.velocity.z = -particleData.velocity.z;
+
+                    if ( effectController.limitConnections && particleData.numConnections >= effectController.maxConnections )
+                        continue;
+
+                    // Check collision
+                    for ( var j = i + 1; j < particleCount; j++ ) {
+
+                        var particleDataB = particlesData[ j ];
+                        if ( effectController.limitConnections && particleDataB.numConnections >= effectController.maxConnections )
+                            continue;
+
+                        var dx = particlePositions[ i * 3     ] - particlePositions[ j * 3     ];
+                        var dy = particlePositions[ i * 3 + 1 ] - particlePositions[ j * 3 + 1 ];
+                        var dz = particlePositions[ i * 3 + 2 ] - particlePositions[ j * 3 + 2 ];
+                        var dist = Math.sqrt( dx * dx + dy * dy + dz * dz );
+
+                        if ( dist < effectController.minDistance ) {
+
+                            particleData.numConnections++;
+                            particleDataB.numConnections++;
+
+                            var alpha = 1.0 - dist / effectController.minDistance;
+
+                            positions[ vertexpos++ ] = particlePositions[ i * 3     ];
+                            positions[ vertexpos++ ] = particlePositions[ i * 3 + 1 ];
+                            positions[ vertexpos++ ] = particlePositions[ i * 3 + 2 ];
+
+                            positions[ vertexpos++ ] = particlePositions[ j * 3     ];
+                            positions[ vertexpos++ ] = particlePositions[ j * 3 + 1 ];
+                            positions[ vertexpos++ ] = particlePositions[ j * 3 + 2 ];
+
+                            colors[ colorpos++ ] = alpha;
+                            colors[ colorpos++ ] = alpha;
+                            colors[ colorpos++ ] = alpha;
+
+                            colors[ colorpos++ ] = alpha;
+                            colors[ colorpos++ ] = alpha;
+                            colors[ colorpos++ ] = alpha;
+
+                            numConnected++;
+                        }
+                    }
+                }
+
+
+                linesMesh.geometry.drawcalls[ 0 ].count = numConnected * 2;
+                linesMesh.geometry.attributes.position.needsUpdate = true;
+                linesMesh.geometry.attributes.color.needsUpdate = true;
+
+                pointCloud.geometry.attributes.position.needsUpdate = true;
+
+                requestAnimationFrame( animate );
+    
+    
+                mesh.rotation.x += 0.005;
+                mesh.rotation.y += 0.01;
+    
+                mesh_masuo.rotation.x += 0.005;
+                mesh_masuo.rotation.y += 0.01;
+    
+                renderer.render( scene, camera );
+            }
+
+            mesh.callback = function() { 
+                window.open("https://twitter.com/IAMAS_girl");
+            }
+            mesh_masuo.callback = function() { 
+                window.open("https://twitter.com/IAMAS_boy");
+            }
+            var raycaster = new THREE.Raycaster();
+            var mouse = new THREE.Vector2();
+            
+            document.addEventListener( 'mousedown', onDocumentMouseDown, false );
+            function onDocumentMouseDown( event ) {
+            
+                event.preventDefault();
+            
+                mouse.x = ( event.clientX / renderer.domElement.clientWidth ) * 2 - 1;
+                mouse.y = - ( event.clientY / renderer.domElement.clientHeight ) * 2 + 1;
+            
+                raycaster.setFromCamera( mouse, camera );
+            
+                var intersects = raycaster.intersectObjects( objects ); 
+            
+                if ( intersects.length > 0 ) {
+                    intersects[0].object.callback();
+                }
+            
+            }
+
+
+        });
+    </script>
+    <div id="container"></div>
+    <div class="i-head">
+        <a href="/" class="i-logo-less">
+            <img src="/assets/images/logo_2.gif" width="150">
+        </a>
+        <div class="social_btn uk-hidden-small" style="float:right;">
+            <div class="twitter">
+                <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://iamasokuho.gifu.jp" data-text="IAMASokuho" data-via="iamasokuho">Tweet</a>
+                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+            </div>
+            <div class="facebook">
+                <div class="fb-like" data-href="http://iamasokuho.gifu.jp/" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+            </div>
+        </div>
+    </div>
+    <div id="fullpage">
+        <div class="section" style="padding-left: 35%;">
+            <p class="i-p" >
+<blockquote class="twitter-tweet" data-cards="hidden" lang="ja"><p lang="ja" dir="ltr">やばい…ぼくたちのマックスバリュが… <a href="http://t.co/l71qHTiy5n">pic.twitter.com/l71qHTiy5n</a></p>&mdash; マス男 (@IAMAS_boy) <a href="https://twitter.com/IAMAS_boy/status/617641210350403585">2015, 7月 5</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </p>
+        </div>
+        <div class="section"  style="padding-left: 35%;">
+            <p class="i-p">
+<blockquote class="twitter-tweet" lang="ja"><p lang="ja" dir="ltr"><a href="https://twitter.com/IAMAS_boy">@iamas_boy</a> 死活問題じゃない…</p>&mdash; イア子 (@IAMAS_girl) <a href="https://twitter.com/IAMAS_girl/status/617643250879311872">2015, 7月 5</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </p>
+        </div>
+        <div class="section"  style="padding-left: 35%;">
+            <p class="i-p">
+<blockquote class="twitter-tweet" lang="ja"><p lang="ja" dir="ltr"><a href="https://twitter.com/IAMAS_girl">@iamas_girl</a> バローはちょっと遠いんだよなあ… <a href="http://t.co/xhNnDbL4Uj">pic.twitter.com/xhNnDbL4Uj</a></p>&mdash; マス男 (@IAMAS_boy) <a href="https://twitter.com/IAMAS_boy/status/617645999473848320">2015, 7月 5</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </p>
+        </div>
+        <div class="section"  style="padding-left: 35%;">
+            <p class="i-p">
+<blockquote class="twitter-tweet" lang="ja"><p lang="ja" dir="ltr"><a href="https://twitter.com/IAMAS_boy">@iamas_boy</a> 改めて見るとマックスバリュは神立地ね…完全にライフラインじゃない…</p>&mdash; イア子 (@IAMAS_girl) <a href="https://twitter.com/IAMAS_girl/status/617646488982650880">2015, 7月 5</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </p>
+        </div>
+        <div class="section"  style="padding-left: 35%;">
+            <p class="i-p">
+<blockquote class="twitter-tweet" lang="ja"><p lang="ja" dir="ltr"><a href="https://twitter.com/IAMAS_girl">@iamas_girl</a> 24時間だしね…完全に不規則なIAMAS生の生活インフラだよ…ありがたみあるなあ</p>&mdash; マス男 (@IAMAS_boy) <a href="https://twitter.com/IAMAS_boy/status/617647186168287232">2015, 7月 5</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+ということで、<br><br>
+今日はぼくたちの家、<br><br>
+<span class="b">IAMAS学生寮「RIST」</span>を紹介するよ！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-o-p">
+<img src="/assets/images/12-1.jpeg" width=300><br><br>
+情報科学芸術大学院大学 学生寮 「RIST」<br><br>
+<a href="http://www.iamas.ac.jp/facility#rist">http://www.iamas.ac.jp/facility#rist</a>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+マックスバリューー！！早く復活してーー！！<br><br>
+それはそうとして、RISTの話って、<br><br>
+IAMAS生のライフラインなのに、<br><br>
+なかなか情報がないのよねー。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+2015年現在、<span class="b">mixiとかにしか情報がない、</span><br><br>
+という噂さえあるよ。<br><br>
+IAMAS謎に包まれすぎだろ…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+そんなわけで、<br><br>
+今回はRISTを詳しく紹介しちゃいます！<br><br>
+で、誰に話を聞きましょうか？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+そういえば、<br><br>
+RISTには<span class="b">学生自治会がある</span>よね！<br><br>
+自治会長に話を聞いてみよう！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-o-p">
+<img src="/assets/images/12-2.jpg" width=300>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+あ、みきてゐさんいいところに！<br><br>
+いま大丈夫ですか？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/miki_t.jpg" width=100><br><br>
+あ、大丈夫だよー。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-o-p">
+<img src="/assets/images/12-3.jpeg" width=300><br><br>
+<span style="b">みきてゐさん a.k.a. miki_t</span><br><br>
+1992年生まれ、IAMAS修士2年。RIST自治会長。<br><br>
+テクノにハマり、大学時代からDJとして活動。<br><br>
+ドイツへテクノ留学を経てIAMASへ。<br><br>
+いま熱いテクノアーティストはBlawan。<br><br>
+いま熱い蛍光灯はNEC M2161B。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+みきてゐさん、RIST案内してください！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+案内してもらうほどでもなくね？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/miki_t.jpg" width=100><br><br>
+あ、いいよー。<br><br>
+そんな案内するものないけど（笑）<br><br>
+じゃあ、後でRISTでね。
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+ありがとうございます！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+（パワープレイだ…）
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+〜IAMASから自転車で10分〜
+            </p>
+
+        </div>
+        <div class="section">
+            <p class="i-o-p">
+<img src="/assets/images/12-4.jpg" width=300>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+ついたぞ！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-o-p">
+<img src="/assets/images/12-5.jpg" width=300>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+これがあの女のハウスね…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+全然ぼくらの家だね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/miki_t.jpg" width=100><br><br>
+あ、イア子ちゃん、マスオくん。
+            </p>
+
+        </div>
+        <div class="section">
+            <p class="i-p">
+みきてゐさん！<br><br>
+わざわざありがとうございます！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/miki_t.jpg" width=100><br><br>
+いいえー。<br><br>
+えーっと、何から案内したらいいかな…<br><br>
+ここに駐輪場があって、こっちがポストと掲示板。<br><br>
+で、中庭？が駐車場になってるよ。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-o-p">
+<img src="/assets/images/12-6.jpeg" width=300><br><br>
+駐輪場
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-o-p">
+<img src="/assets/images/12-7.jpg" width=300><br><br>
+ポストと掲示板
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-o-p">
+<img src="/assets/images/12-8.jpeg" width=300><br><br>
+駐車場
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<span class="b">駐車場も駐輪場も、<br><br>
+申請すれば無料で使える</span>んですよね！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/miki_t.jpg" width=100><br><br>
+そうそうー。<br><br>
+だから<span class="b">車持ってる人は、<br><br>
+持ってきたほうが絶対便利</span>だね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+プロジェクトで遠くに行くときとか、<br><br>
+資材を買いにホームセンターに行くときとか、<br><br>
+車があるとすごく便利だものね！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/miki_t.jpg" width=100><br><br>
+そうそう。<br><br>
+じゃ、中に入ろうか。<br><br>
+<span class="b">入り口はオートロック</span>になってるよ
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+「寮」とはいうけど、<br><br>
+全部屋個室だし、それぞれトイレもシャワーもあるし、<br><br>
+<span class="b">いたって普通のマンション</span>なのよね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-o-p">
+<img src="/assets/images/12-11.jpg" width=300><br><br>
+廊下
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/miki_t.jpg" width=100><br><br>
+そうそう。<br><br>
+普通のマンションと違うとこといえば、<br><br>
+<span class="b">常駐の管理人さん（女性）がいることと、<br><br>
+談話室があること</span>くらいかなぁ。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-o-p">
+<img src="/assets/images/12-12.jpg" width=300><br><br>
+談話室
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<span class="b">2階、3階、4階の談話室は、<br><br>
+学生が自由に使っていい</span>んですよね！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/miki_t.jpg" width=100><br><br>
+うん、ガスコンロは使っちゃいけないとか、<br><br>
+23時以降は使っちゃいけないとか、<br><br>
+うるさい音出しちゃいけないとか、<br><br>
+<span class="b">いろいろルールはあるけど、常識の範囲内で、<br><br>
+好きに使っていい</span>ことになってる。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+留学生の送別パーティーとか、<br><br>
+お店にいくほどでもない打ち上げとか、<br><br>
+ちょっとした集まりでよく使うわよね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+そうだね。談話室だけじゃなくて、<br><br>
+<span class="b">誰かの部屋でごはん会したり飲み会したり</span>も、<br><br>
+よくやるよね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/miki_t.jpg" width=100><br><br>
+あとはせっかくだし、<br><br>
+<span class="b">部屋がどんな感じか紹介</span>しとこうかー。<br><br>
+空き部屋の鍵借りてきた。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+そうですね！<br><br>
+合格してから寮の部屋の図面はもらったけど、<br><br>
+<span class="b">実際どんな感じか全然わかんなかったから、<br><br>
+写真で紹介しておいたらわかりやすい</span>ですね！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/miki_t.jpg" width=100><br><br>
+はい、ここがいま開いてる2階の部屋だよ。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-o-p">
+<img src="/assets/images/12-13.jpg" width=300><br><br>
+IAMASができてからあるから、築20年くらい？
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-o-p">
+<img src="/assets/images/12-14.jpg" width=300><br><br>
+地味に下駄箱大きいのは助かる
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-o-p">
+<img src="/assets/images/12-15.jpg" width=300><br><br>
+キッチンはバブルを感じるオール電化
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-o-p">
+<img src="/assets/images/12-16.jpg" width=300><br><br>
+洗濯機は室内、独立洗面台あり
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-o-p">
+<img src="/assets/images/12-17.jpg" width=300><br><br>
+まあまあ広いお風呂
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-o-p">
+<img src="/assets/images/12-18.jpg" width=300><br><br>
+トイレも独立。冬に助かる暖房便座
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-o-p">
+<img src="/assets/images/12-19.jpg" width=300><br><br>
+お部屋は約9畳！ひろい！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-o-p">
+<img src="/assets/images/12-20.jpg" width=300><br><br>
+ベランダあります。<br><br>
+中庭向きと外向きの部屋がある
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-o-p">
+<img src="/assets/images/12-21.jpg" width=300><br><br>
+オートロックと部屋のインターホン、<br><br>
+エアコンあり
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-o-p">
+<img src="/assets/images/12-22.jpg" width=300><br><br>
+ベッドと広い収納あり！<br><br>
+これが地味に大活躍
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+この写真だけで結構伝わると思うけど、<br><br>
+<span class="b">たぶん部屋の広さとか、<br><br>
+イマイチわかりにくい</span>よなあ…。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+そんなこともあろうかと、<br><br>
+<span class="b">比較対象</b>を用意してきたわ！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-o-p">
+<img src="/assets/images/12-23.jpg" width=300><br><br>
+<a href="http://amzn.to/1KCErPa">
+我が闘争（幻冬舎単行本） / 堀江貴文
+</a>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+（なぜホリエモン…？）
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-o-p">
+<img src="/assets/images/12-24.jpg" width=300>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<span class="b">
+ほら！これでわかりやすい！
+</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+（かえってよく解らなくなったような…）
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-o-p">
+<img src="/assets/images/12-25.jpg" width=300><br><br>
+この広い収納だって、ほら！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-o-p">
+<img src="/assets/images/12-26.jpg" width=300><br><br>
+これでわかりやすい！<br><br>
+<span class="b">わあ！めちゃくちゃ広いじゃない！！</span><br><br>
+「我が闘争」なら1,000冊くらい行けそうね！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+（回し者か…？）
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-o-p">
+<img src="/assets/images/12-27.jpg" width=300><br><br>
+ベッドの上の収納にも、<br><br>
+<span class="b">「我が闘争」300冊くらいはいけそう</span>ね！
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+イア子ちゃん、もっとなんかさあ、<br><br>
+ピースフルなやつにしようよ…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-o-p">
+<img src="/assets/images/12-28.jpg" width=300><br><br>
+「恋空」とかのほうが良かった？<br><br>
+<a href="http://amzn.to/1KCFfU6">
+恋空 〜切ナイ恋物語〜
+</a>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+（振れ幅よ…）
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+みきてゐさん、<br><br>
+RISTの行事って何かあるんですか？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/miki_t.jpg" width=100><br><br>
+うーん、そんなにないけど、<br><br>
+強いて言えば<span class="b">自治会総会と、<br><br>
+RIST新歓</span>くらいかな？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-o-p">
+<img src="/assets/images/12-29.png" width=300><br><br>
+RIST新歓の様子。<br><br>
+M2がひとり1品持ち寄って料理をふるまう。
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+なるほど！<br><br>
+これで月額22,800円(※1)、<br><br>
+かなり安いですよね…。<br><br>
+
+<span style="font-size:10px;">
+※1 別途共益費が年間35,000円。共益費の用途は自治会総会において決められる。<br>
+<a href="http://www.iamas.ac.jp/facility#rist">http://www.iamas.ac.jp/facility#rist</a>
+</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/miki_t.jpg" width=100><br><br>
+都会に比べればそうだよねー。<br><br>
+でも実際<span class="b">オール電化で電気代そこそこかかる</span>し、<br><br>
+<span class="b">このへんでみると特別安いわけでもない</span>みたい。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+あ、それは思いました！<br><br>
+電気代とか共益費も合わせると、<br><br>
+結局毎月トータル３万円くらいになるから、<br><br>
+RISTの外に住んでる同期と、<br><br>
+あんまりかかるお金は変わんないみたいですね…。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/miki_t.jpg" width=100><br><br>
+でも<span class="b">半分以上の人はRISTに住んでる</span>から、<br><br>
+プロジェクトとか、飲みに行くとか、<br><br>
+<span class="b">みんなでどっか行くときは、<br><br>
+だいたいRIST集合・解散になる</span>よね。<br><br>
+そのへんはRISTに住んでたほうが楽かも。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+それはそうかも！<br><br>
+<span class="b">自分のメリットを考えて決めるのが、<br><br>
+いちばん良さそう</span>ですねー。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+みきてゐさん、ありがとうございました！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/miki_t.jpg" width=100><br><br>
+いいえー。じゃあまたねー。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+ということで引き続き、<br><br>
+質問のほうもお待ちしております！
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p">
+IAMASにいる人に聞きたいこととかがあれば、<br><br>
+ぼくたちが代わりに聞きにいきまーす！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+イア子とマス男への質問やメッセージはこちらから！<br><br>
+<a href="http://goo.gl/forms/hlgdXfxMei">
+http://goo.gl/forms/hlgdXfxMei
+</a>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<span style="font-weight:bold;">イアマ速報 facebookページ</span>はこちら！<br><br>
+<a href="https://www.facebook.com/iamasokuho">
+https://www.facebook.com/iamasokuho<br><br>
+</a>
+いいね！しなさいよ！
+            </p>
+        </div>
+        <div class="section" id="last">
+            <p class="i-p">
+<span style="font-weight:bold;">イアマ速報のTwitter</span>はこちらです！<br><br>
+<a href="https://twitter.com/IAMASokuho">
+https://twitter.com/IAMASokuho<br><br>
+</a>
+いろんな情報拾っていきまーす！
+<br><br><br>
+<a href="http://iamasokuho.gifu.jp/day_eleven.html" style="font-size:12px;">
+<< 前の記事へ
+</a>
+&nbsp;&nbsp;&nbsp;
+<a href="http://iamasokuho.gifu.jp/archive.html" style="font-size:12px;">
+記事一覧へ
+</a>
+
+                <div class="social_btn_bottom">
+                    <div class="twitter">
+                        <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://iamasokuho.gifu.jp/day_twelve.html">Tweet</a>
+                        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+                    </div>
+                    <div class="facebook">
+                        <div class="fb-like" data-href="http://iamasokuho.gifu.jp/day_twelve.html" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+                    </div>
+                    <div class="hateb">
+                        <a href="http://b.hatena.ne.jp/entry/iamasokuho.gifu.jp/day_twelve.html" class="hatena-bookmark-button" data-hatena-bookmark-title="【IAMASすてきな施設めぐり】IAMAS学生寮「RIST」" data-hatena-bookmark-layout="standard-balloon" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリ>ーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a>
+                    </div>
+                    <script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+                </div>
+            </p>
+        </div>
+    </div>
+</body>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-64484802-1', 'auto');
+  ga('send', 'pageview');
+</script>
+</html>

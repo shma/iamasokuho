@@ -1,0 +1,1060 @@
+<html lang="ja-jp" dir="ltr" xmlns:og="http://ogp.me/ns/#">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="IAMASOKUHO">
+    <meta name="keywords" content="iamasokuho, iama速報, IAMAS, 情報科学芸術大学院大学">
+    <title>【IAMASの人々】図書「艦長」！小林昌廣先生</title>
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="/assets/images/logo_top.gif">
+    <link rel="shortcut icon" href="favicon.ico" type="image/vnd.microsoft.icon">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.11.0/css/uikit.almost-flat.min.css" rel="stylesheet">
+    <link href="/assets/css/jquery.fullPage.css" rel="stylesheet">
+    <link href="/assets/css/style.css" rel="stylesheet">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.11.0/js/uikit.min.js"></script>
+    <script src="/assets/js/three.min.js"></script>
+    <script src="/assets/js/iamasokuho.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.fullPage.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.typist.js"></script>
+    <style>
+        body { margin: 0;}
+        canvas { width: 100%; height: 100% }
+    </style>
+</head>
+<body>
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v2.3&appId=884387134914356";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+    <script>
+        if ((navigator.userAgent.indexOf('iPhone') > 0 && navigator.userAgent.indexOf('iPad') == -1) || navigator.userAgent.indexOf('iPod') > 0 || navigator.userAgent.indexOf('Android') > 0) {
+            url = 'http://iamasokuho.gifu.jp/s_day_fourteen.html';
+            location.href = url;
+        }
+
+        $('head').append(
+                '<style type="text/css">body {display:none;}</style>'
+        );
+        $(document).ready(function() {
+            
+    
+            var camera, scene, renderer;
+            var mesh;
+            var mesh_masuo;
+            var objects = [];
+
+            // Particles
+            var group;
+            var container;
+            var particlesData = [];
+            var positions, colors;
+            var pointCloud;
+            var particlePositions;
+            var linesMesh;
+
+            var maxParticleCount = 1000;
+            var particleCount = 400;
+            if (window.innerWidth < 600) {
+                particleCount = 100;
+            } 
+
+            var r = 900;
+            var rHalf = r / 2;
+
+            var effectController = {
+                showDots: true,
+                showLines: true,
+                minDistance: 200,
+                limitConnections: false,
+                maxConnections: 100,
+                particleCount: 400
+            }
+
+    
+            init();
+            animate();
+
+            var zoom = 1000;
+            function zoom() {
+                for (var i = 0; i < 50; i++) {
+                    setTimeout(function(){
+                        camera.position.z = zoom - 5;
+                        zoom = zoom - 5; 
+                    },1000);
+                }
+            }
+
+            function init() {
+                container = document.getElementById( 'container' );
+
+                renderer = new THREE.WebGLRenderer({antialias: true});
+                renderer.setPixelRatio( window.devicePixelRatio );
+                renderer.setSize( window.innerWidth, window.innerHeight );
+                document.body.appendChild( renderer.domElement );
+    
+                camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 1, 1000 );
+                camera.position.z = 800;
+    
+                scene = new THREE.Scene();
+
+                group = new THREE.Group();
+                scene.add( group );
+
+                var segments = maxParticleCount * maxParticleCount;
+
+                positions = new Float32Array( segments * 3 );
+                colors = new Float32Array( segments * 3);
+            
+                var pMaterial = new THREE.PointCloudMaterial( {
+                    color: 0xFFFFF,
+                    size: 3,
+                    blending: THREE.AdditiveBlending,
+                    transparent: true,
+                    sizeAttenuation: false
+                } );
+
+                particles = new THREE.BufferGeometry();
+                particlePositions = new Float32Array( maxParticleCount * 3 );
+
+                for ( var i = 0; i < maxParticleCount; i++ ) {
+                    var x = Math.random() * r - r / 2;
+                    var y = Math.random() * r - r / 2;
+                    var z = Math.random() * r - r / 2;
+            
+                    particlePositions[i * 3]     = x;
+                    particlePositions[i * 3 + 1] = y;
+                    particlePositions[i * 3 + 2] = z;
+
+                    // add it to the geometry
+                    particlesData.push( {
+                        velocity: new THREE.Vector3( -1 + Math.random() * 2, -1 + Math.random() * 2, -1 + Math.random() * 2),
+                        numConnections: 0
+                    });
+                }
+
+                particles.drawcalls.push( {
+                    start: 0,
+                    count: particleCount,
+                    index: 0
+                });
+
+                particles.addAttribute( 'position', new THREE.DynamicBufferAttribute( particlePositions, 3));
+
+                // create the particle system
+                pointCloud = new THREE.PointCloud( particles, pMaterial);
+                pointCloud.visible = true;
+                group.add(pointCloud);
+        
+                var pGeometry = new THREE.BufferGeometry();
+                pGeometry.addAttribute( 'position', new THREE.DynamicBufferAttribute( positions, 3));
+                pGeometry.addAttribute( 'color', new THREE.DynamicBufferAttribute(colors, 3));
+
+                pGeometry.computeBoundingSphere();
+
+                pGeometry.drawcalls.push( {
+                    start: 0,
+                    count: 0,
+                    index: 0
+                } );
+
+                var pMaterial = new THREE.LineBasicMaterial( {
+                    vertexColors: THREE.VertexColors,
+                    blending: THREE.AdditiveBlending,
+                    transparent: true
+                });
+
+                linesMesh = new THREE.Line( pGeometry, pMaterial, THREE.LinePieces );
+                group.add( linesMesh );
+
+                renderer.setPixelRatio(window.devicePixelRatio);
+                renderer.setSize(window.innerWidth, window.innerHeight);
+
+                renderer.gammaInput = true;
+                renderer.gammaOutput = true;
+                renderer.setClearColor( new THREE.Color(0x000000) );
+
+                container.appendChild(renderer.domElement);
+
+                var geometry = new THREE.BoxGeometry( 70, 70, 70 );
+    
+                var texture = THREE.ImageUtils.loadTexture( 'assets/images/iako.png' );
+                texture.anisotropy = renderer.getMaxAnisotropy();
+    
+                var material = new THREE.MeshBasicMaterial( { map: texture } );
+    
+                mesh = new THREE.Mesh( geometry, material );
+                mesh.position.x = -300;
+                mesh.position.y += 150;
+                scene.add( mesh );
+    
+                // masuo
+                var texture_masuo = THREE.ImageUtils.loadTexture( 'assets/images/new_masuo.png' );
+                texture_masuo.anisotropy = renderer.getMaxAnisotropy();
+    
+                var material_masuo = new THREE.MeshBasicMaterial( { map: texture_masuo } );
+    
+                mesh_masuo = new THREE.Mesh( geometry, material_masuo );
+                mesh_masuo.position.x = 300;
+                mesh_masuo.position.y += 150;
+                scene.add( mesh_masuo ); 
+                objects.push( mesh );
+                objects.push( mesh_masuo );
+    
+    
+                window.addEventListener( 'resize', onWindowResize, false );
+                $('#fullpage').fullpage({
+                    sectionsColor: [],
+                    afterLoad: function(anchorLink, index){
+                        console.log(index);
+                        if(index==1||index==3||index==5||index==8||index==12||index==14||index==16||index==18||index==21||index==25||index==33||index==38||index==43||index==46||index==50||index==52||index==56||index==59||index==63||index==66||index==70||index==73||index==75||index==79||index==82||index==86||index==88||index==90||index==93) {
+                                mesh_masuo.position.y += 15;
+                                setTimeout(function(){
+                                    mesh_masuo.position.y -= 15;
+                                },100);
+                        }
+
+                        if(index==4||index==6||index==10||index==13||index==15||index==20||index==22||index==26||index==36||index==39||index==41||index==44||index==48||index==51||index==54||index==58||index==61||index==65||index==67||index==71||index==76||index==78||index==81||index==84||index==85||index==87||index==89||index==92) {
+                            mesh.position.y += 15;
+                            setTimeout(function(){
+                                mesh.position.y -= 15;
+                            },100);
+                        }
+                    }
+                });
+                $('body').fadeIn("slow");
+            }
+    
+            function onWindowResize() {
+    
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+    
+                renderer.setSize( window.innerWidth, window.innerHeight );
+    
+            }
+    
+            function animate() {
+                var vertexpos = 0;
+                var colorpos = 0;
+                var numConnected = 0;
+
+                for ( var i = 0; i < particleCount; i++ )
+                    particlesData[ i ].numConnections = 0;
+
+                for ( var i = 0; i < particleCount; i++ ) {
+
+                    // get the particle
+                    var particleData = particlesData[i];
+
+                    particlePositions[ i * 3     ] += particleData.velocity.x;
+                    particlePositions[ i * 3 + 1 ] += particleData.velocity.y;
+                    particlePositions[ i * 3 + 2 ] += particleData.velocity.z;
+
+                    if ( particlePositions[ i * 3 + 1 ] < -rHalf || particlePositions[ i * 3 + 1 ] > rHalf )
+                        particleData.velocity.y = -particleData.velocity.y;
+
+                    if ( particlePositions[ i * 3 ] < -rHalf || particlePositions[ i * 3 ] > rHalf )
+                        particleData.velocity.x = -particleData.velocity.x;
+
+                    if ( particlePositions[ i * 3 + 2 ] < -rHalf || particlePositions[ i * 3 + 2 ] > rHalf )
+                        particleData.velocity.z = -particleData.velocity.z;
+
+                    if ( effectController.limitConnections && particleData.numConnections >= effectController.maxConnections )
+                        continue;
+
+                    // Check collision
+                    for ( var j = i + 1; j < particleCount; j++ ) {
+
+                        var particleDataB = particlesData[ j ];
+                        if ( effectController.limitConnections && particleDataB.numConnections >= effectController.maxConnections )
+                            continue;
+
+                        var dx = particlePositions[ i * 3     ] - particlePositions[ j * 3     ];
+                        var dy = particlePositions[ i * 3 + 1 ] - particlePositions[ j * 3 + 1 ];
+                        var dz = particlePositions[ i * 3 + 2 ] - particlePositions[ j * 3 + 2 ];
+                        var dist = Math.sqrt( dx * dx + dy * dy + dz * dz );
+
+                        if ( dist < effectController.minDistance ) {
+
+                            particleData.numConnections++;
+                            particleDataB.numConnections++;
+
+                            var alpha = 1.0 - dist / effectController.minDistance;
+
+                            positions[ vertexpos++ ] = particlePositions[ i * 3     ];
+                            positions[ vertexpos++ ] = particlePositions[ i * 3 + 1 ];
+                            positions[ vertexpos++ ] = particlePositions[ i * 3 + 2 ];
+
+                            positions[ vertexpos++ ] = particlePositions[ j * 3     ];
+                            positions[ vertexpos++ ] = particlePositions[ j * 3 + 1 ];
+                            positions[ vertexpos++ ] = particlePositions[ j * 3 + 2 ];
+
+                            colors[ colorpos++ ] = alpha;
+                            colors[ colorpos++ ] = alpha;
+                            colors[ colorpos++ ] = alpha;
+
+                            colors[ colorpos++ ] = alpha;
+                            colors[ colorpos++ ] = alpha;
+                            colors[ colorpos++ ] = alpha;
+
+                            numConnected++;
+                        }
+                    }
+                }
+
+
+                linesMesh.geometry.drawcalls[ 0 ].count = numConnected * 2;
+                linesMesh.geometry.attributes.position.needsUpdate = true;
+                linesMesh.geometry.attributes.color.needsUpdate = true;
+
+                pointCloud.geometry.attributes.position.needsUpdate = true;
+
+                requestAnimationFrame( animate );
+    
+    
+                mesh.rotation.x += 0.005;
+                mesh.rotation.y += 0.01;
+    
+                mesh_masuo.rotation.x += 0.005;
+                mesh_masuo.rotation.y += 0.01;
+    
+                renderer.render( scene, camera );
+            }
+
+            mesh.callback = function() { 
+                window.open("https://twitter.com/IAMAS_girl");
+            }
+            mesh_masuo.callback = function() { 
+                window.open("https://twitter.com/IAMAS_boy");
+            }
+            var raycaster = new THREE.Raycaster();
+            var mouse = new THREE.Vector2();
+            
+            document.addEventListener( 'mousedown', onDocumentMouseDown, false );
+            function onDocumentMouseDown( event ) {
+            
+                event.preventDefault();
+            
+                mouse.x = ( event.clientX / renderer.domElement.clientWidth ) * 2 - 1;
+                mouse.y = - ( event.clientY / renderer.domElement.clientHeight ) * 2 + 1;
+            
+                raycaster.setFromCamera( mouse, camera );
+            
+                var intersects = raycaster.intersectObjects( objects ); 
+            
+                if ( intersects.length > 0 ) {
+                    intersects[0].object.callback();
+                }
+            
+            }
+
+
+        });
+    </script>
+    <div id="container"></div>
+    <div class="i-head">
+        <a href="/" class="i-logo-less">
+            <img src="/assets/images/logo_2.gif" width="150">
+        </a>
+        <div class="social_btn uk-hidden-small" style="float:right;">
+            <div class="twitter">
+                <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://iamasokuho.gifu.jp" data-text="IAMASokuho" data-via="iamasokuho">Tweet</a>
+                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+            </div>
+            <div class="facebook">
+                <div class="fb-like" data-href="http://iamasokuho.gifu.jp/" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+            </div>
+        </div>
+    </div>
+    <div id="fullpage">
+        <div class="section">
+            <p class="i-p">
+今日紹介する先生はこの方！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p i-o-p">
+<img src="/assets/images/14-1.jpg" width=300><br><br>
+小林昌廣先生<br><br>
+<a href="http://www.iamas.ac.jp/people#post-60">
+http://www.iamas.ac.jp/people#post-60
+</a>
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+昌廣先生は、<br><br>
+古典芸能と身体・医療、そして哲学を通して、<br><br>
+<span class="b">医療人類学や身体論</span>に取り組んでいるよ！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<span class="b">普段はAKBのシャツでIAMASに現れる</span>けど、<br><br>
+AKBの握手会やAKBカフェに頻繁に出没して、<br><br>
+メンバーからも「先生」と呼ばれているそうね！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+さすがIAMASという感じだ…縦横無尽…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+実はIAMASには、20人くらいの先生のうち、<br><br>
+<span class="b">小林先生が3人</span>いるのよ！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p i-o-p">
+<img src="/assets/images/14-2.png" width=450><br><br>
+情報科学芸術大学院大学の小林先生
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+往年の千葉ロッテかよ！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p i-o-p">
+<img src="/assets/images/14-3.png" width=450><br><br>
+往年の千葉ロッテマリーンズの小林投手<br><br>
+<a href="http://ja.wikipedia.org/wiki/%E5%B0%8F%E6%9E%97%E5%AE%8F%E4%B9%8B%28%E9%87%8E%E7%90%83%29" style="font-size:10px">
+http://ja.wikipedia.org/wiki/%E5%B0%8F%E6%9E%97%E5%AE%8F%E4%B9%8B%28%E9%87%8E%E7%90%83%29<br>
+</a>
+<a href="http://ja.wikipedia.org/wiki/%E5%B0%8F%E6%9E%97%E9%9B%85%E8%8B%B1" style="font-size:10px">
+http://ja.wikipedia.org/wiki/%E5%B0%8F%E6%9E%97%E9%9B%85%E8%8B%B1<br>
+</a>
+<a href="http://blog.livedoor.jp/thanks_39jp/?p=19" style="font-size:10px">
+http://blog.livedoor.jp/thanks_39jp/?p=19<br>
+</a>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+うーん、正しくはこうね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/14-4.png" width=450><br><br>
+往年の千葉ロッテマリーンズの小林投手（答え）
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+（こいつも縦横無尽かよ…）
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+早速昌廣先生を訪ねてみましょ！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+そうしよう！<br><br>
+えーと、昌廣先生の部屋は…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<span class="b">昌廣先生は図書館長</b>だから、<br><br>
+図書館にお部屋があるわ！<br><br>
+昨日の怪しい部屋ね…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+よし、じゃあ図書館に行ってみよう！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/14-5.jpg" width=300><br><br>
+〜IAMAS図書館〜
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+今日も図書館に来たぞ…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/14-6.jpg" width=300>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+ここがあの女のハウスね…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+そのネタ好きだね？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+昌廣先生ー、こんにちはー…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/masahiro.jpg" width=100><br><br>
+おーう、いらっしゃーい、<br><br>
+ちょっと片付いてないけどなー。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/14-7.jpeg" width=450>
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+すげえ…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+すごいわね…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/14-8.jpeg" width=300><br><br>
+<span class="b">「艦長」</span>なんだ…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/14-9.jpeg" width=300><br><br>
+<span class="b">AKBグループの女の子の写真と、<br><br>
+古典芸能の本が交互に置いてある</span>わね…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/14-10.jpeg" width=300><br><br>
+<span class="b">「小林 昌廣　こばやし・まさひろ</span><br><br>
+<a href="http://www.iamas.ac.jp/people#post-60" style="font-size:10px;">
+http://www.iamas.ac.jp/people#post-60<br><br>
+</a>
+
+IAMAS教授・図書館長。<br><br>
+19年前のIAMAS創設時からの教員のひとり。<br><br>
+身体論、医療人類学、古典芸能を中心に、<br><br>
+横断的に考察する傍ら、AKB48を猛烈に愛する。
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/14-11.jpeg" width=300><br><br>
+このタワーは…？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/14-12.jpeg" width=300><br><br>
+こっちにもいっぱいあるわ…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/masahiro.jpg" width=100><br><br>
+ああ、それ持ってっていいよ（笑）
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+え、これですか？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/masahiro.jpg" width=100><br><br>
+うんん、それ全部。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/14-13.jpeg" width=300><br><br>
+それ<br><br>
+（CD入りダンボール（山））
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+握手券を取る作業が大変そうね…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/14-14.jpeg" width=300>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+西田幾多郎(※1)全集の前にぎっしりプロマイドが…<br><br>
+
+<span style="font-size:10px;">
+※1 西田幾多郎（にしだ・きたろう）：戦前「西田哲学」と呼ばれる、仏教思想と西洋哲学の根本からの融合を試みた、日本を代表する哲学者。京都の「哲学の道」は西田幾多郎が散策していたことに由来する。<br>
+<a href="https://ja.wikipedia.org/wiki/%E8%A5%BF%E7%94%B0%E5%B9%BE%E5%A4%9A%E9%83%8E">
+https://ja.wikipedia.org/wiki/%E8%A5%BF%E7%94%B0%E5%B9%BE%E5%A4%9A%E9%83%8E
+</a>
+</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p i-o-p">
+<img src="/assets/images/14-15.jpeg" width=300><br><br>
+これは…？チェキ…？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/masahiro.jpg" width=100><br><br>
+あーそうそう、それAKBカフェに行ったら、<br><br>
+<span class="b">誕生日祝ってくれたんだよ。</span><br><br>
+それさ、「Dear my Teacher」って昔の曲があってさ、<br><br>
+うまいことやるなぁ〜って思ったよね。<br><br>
+よくそこまでできるなーって。さすがだよね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+AKBカフェでも「先生」なんですね！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/masahiro.jpg" width=100><br><br>
+そうそう、大学の病院で小児科実習があって、<br><br>
+そのときそこに入院してた子が、<br><br>
+のちのちAKBのメンバーになってさ、<br><br>
+もう卒業しちゃったんだけど。<br><br>
+それでいまもなんか「センセイ」って呼ばれるね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+（なんかよくわかんないけどすごい）
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/14-16.jpeg" width=300><br><br>
+<span class="b">全部大島優子ね…</span><br><br>
+優子推しなんですか？
+
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/masahiro.jpg" width=100><br><br>
+そうそう！それ優子が卒業する前にAKBカフェに足繁く通って集めたんだよ。<span class="b">AKBカフェはIAMASより行ってるかもしれない</span>。でも優子卒業しちゃったからなぁ…なんかオレが推すと卒業しちゃうみたいなジンクスがあるからさ、<span class="b">いまだいぶみるきー(※2)に傾いてる</span>んだけど、推し始めると卒業しちゃいそうだから迷ってるんだよね…たかみなも卒業しちゃったし
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+（文字数が…）
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/14-17.jpeg" width=300><br><br>
+あ、（ちゃんと）哲学書もあるね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<span class="b">いま推しの哲学者は誰ですか？</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/14-18.jpeg" width=300><br><br>
+<span class="b">推し！？哲学者！？</span>推しかあ…それでいうとやっぱ<span class="b">レヴィナス</span>(※3)かな、エマニュエル・レヴィナス。こないだハイデガー(※4)も紹介したけどさ、あとフッサール(※5)とかね。<span class="b">やっぱり最近、存在論(※6)とかその辺がアツい</span>感じはするよな。レヴィナスだとこれかな。「実存から実存者へ(※7)」。これは彼の結構初期の本なんだけど
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+（脚注がハードワークすぎる…）<br><br>
+
+<span style="font-size:10px">
+※3 エマニュエル・レヴィナス(1905-1995)：戦後に活躍したフランスの哲学者。フッサールの現象学やハイデガーの存在論、ユダヤ思想に立脚した独自の倫理学思想を展開した。<br>
+<a href="https://ja.wikipedia.org/wiki/%E3%82%A8%E3%83%9E%E3%83%8B%E3%83%A5%E3%82%A8%E3%83%AB%E3%83%BB%E3%83%AC%E3%83%B4%E3%82%A3%E3%83%8A%E3%82%B9">
+https://ja.wikipedia.org/wiki/%E3%82%A8%E3%83%9E%E3%83%8B%E3%83%A5%E3%82%A8%E3%83%AB%E3%83%BB%E3%83%AC%E3%83%B4%E3%82%A3%E3%83%8A%E3%82%B9
+</a><br>
+※4 マルティン・ハイデガー(1889-1976)：ドイツの哲学者。存在論を展開。20世紀最も重要な哲学者の1人とも言われる。<br>
+<a href="https://ja.wikipedia.org/wiki/%E3%83%9E%E3%83%AB%E3%83%86%E3%82%A3%E3%83%B3%E3%83%BB%E3%83%8F%E3%82%A4%E3%83%87%E3%83%83%E3%82%AC%E3%83%BC">
+https://ja.wikipedia.org/wiki/%E3%83%9E%E3%83%AB%E3%83%86%E3%82%A3%E3%83%B3%E3%83%BB%E3%83%8F%E3%82%A4%E3%83%87%E3%83%83%E3%82%AC%E3%83%BC
+</a><br>
+※5 フッサール：哲学者。現象学。<br>
+<a href="https://ja.wikipedia.org/wiki/%E3%82%A8%E3%83%88%E3%83%A0%E3%83%B3%E3%83%88%E3%83%BB%E3%83%95%E3%83%83%E3%82%B5%E3%83%BC%E3%83%AB">
+https://ja.wikipedia.org/wiki/%E3%82%A8%E3%83%88%E3%83%A0%E3%83%B3%E3%83%88%E3%83%BB%E3%83%95%E3%83%83%E3%82%B5%E3%83%BC%E3%83%AB
+</a><br>
+※6 存在論：WikipedIa参照。<br>
+<a href="https://ja.wikipedia.org/wiki/%E5%AD%98%E5%9C%A8%E8%AB%96">
+https://ja.wikipedia.org/wiki/%E5%AD%98%E5%9C%A8%E8%AB%96
+</a><br>
+※7 実存から実存者へ：<a href="http://amzn.to/1fko0u9">http://amzn.to/1fko0u9</a>
+</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/14-19.jpeg" width=300><br><br>
+落語のCDの上に生駒ちゃんとゆきりんが！
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/14-20.jpeg" width=300><br><br>
+意外とYUKIちゃんとかも好きなんですね…
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/masahiro.jpg" width=100><br><br>
+そうそう、<br><br>
+YUKIちゃんはジュディマリの時からライブ行ってたよ。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<span class="b">先生、なんか研究っぽいもの見せてください！</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/masahiro.jpg" width=100><br><br>
+研究っぽいものかー、<br><br>
+<span class="b">こないだ歌舞伎見に行った時のノート</span>見る？<br><br>
+んー、どれかなあ…あったこれだ。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+あ、見たいです！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/14-21.jpeg" width=300><br><br>
+こんな感じ。最初はメモで取ってたんだけどさ、やっぱメモだと後から読んだらわかんなくて。絵に書いたほうが早いんじゃね？と思ってヘッタクソでも書いてみたら、やっぱこっちのほうが分かるんだよ。これもう書き溜めて書き溜めて、家に300冊くらいある。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+わー…すごい！<br><br>
+<span class="b">身体の動き</span>がよくわかる…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+ちゃんと身体論ですね！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/masahiro.jpg" width=100><br><br>
+そうそう、AKBばっかりじゃないよ？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<span class="b">先生、IAMASに興味がある人に、<br><br>
+何かメッセージをお願いします！</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/masahiro.jpg" width=100><br><br>
+うーん、<span class="b">AKB好きなヤツかな？</span>去年はいたんだけど今年はあんまりいなくてねー。あ、ひとりM2に指原が好きな子がいたな。指原はすごいよなぁ…まああれも中国票が結構デカいんだけどね。今回のHKTの躍進は中国に行ったときにファンをいっぱい作ったのがデカいんだよな。あんまり金額に換算するもんじゃないけど、指原1人で3億くら
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+（やっぱりそっちか…）
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/masahiro.jpg" width=100><br><br>
+まあそれはいいや。うーんなんだろう、<br><br>
+<span class="b">気になってるならオープンハウス来たら？</span><br><br>
+って感じかな。まあ損はしないだろうからね。<br><br>
+自分で見て、自分で話さないとわかんないし。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+それはほんとそうですね…！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+（めっちゃいいこと言う…）
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+あ、そういえば、<br><br>
+<span class="b">明日の「今週の一冊」は、<br><br>
+記念すべき第50回ですよね！</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/14-22.jpg" width=300><br><br>
+図書館長が選ぶ今週の一冊<br><br>
+<span style="font-size:10px;">
+図書館長・小林昌廣先生が毎週1冊を選び、15分程度でその本について語る。<br><br>
+毎週木曜日午後6時半よりIAMAS図書館にて行われ、Ustreamでも配信される。<br><br>
+<a href="http://www.iamas.ac.jp/9325">
+http://www.iamas.ac.jp/9325
+</a>
+</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/14-23.jpeg" width=300><br><br>
+そうそう、明日で50回だからさー、本考えなきゃいけないんだよねー。あとTシャツか！<span class="b">毎週Tシャツにはちょっとこだわっちゃうんだよな</span>。こないだからAKBチームTシャツを着てんだけど、先週は「B」を着たから、50回目は「4」だな。<span class="b">よし、明日はみんな黄色カラーで集合！</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+よし、明日は黄色いTシャツ来てこよう！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+わたしは黄色の靴履いてこようかしら！<br><br>
+<span class="b">明日の18時30分</span>よね！<br><br>
+IAMASに居ない人も、<span class="b">Ustreamで見られる</span>から、<br><br>
+ぜひ見てほしいわね！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+「今週の一冊」Ustreamはこちら！<br><br>
+毎週木曜18時30分から！<br><br>
+<a href="http://www.ustream.tv/channel/iamas-library">
+http://www.ustream.tv/channel/iamas-library
+</a>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+あとオープンハウスでも、<br><br>
+<span class="b">今週の一冊とかビブリオバトルとか、<br><br>
+トークイベントとか</span>やるんですよね！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/masahiro.jpg" width=100><br><br>
+そうそう、出ずっぱりなんだよなー！<br><br>
+毎年AKBの握手会とか行ってるんだけど、<br><br>
+今年は珍しく参加だし、出ずっぱり。<br><br>
+<span class="b">ビブリオバトルも参加者募集中</span>ですよ。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+ぼくらもオープンハウス、<br><br>
+自分たちでIAMAS紹介するような企画を、<br><br>
+なにかしようと思ってるんですけど…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/14-24.jpeg" width=300><br><br>
+あ、先生、<br><br>
+<span class="b">このNMBのプロマイド、<br><br>
+何枚かもらってもいいですか！？</span>
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/masahiro.jpg" width=100><br><br>
+あ、それ？<br><br>
+うん、コンプして余ってるやつだからいいよ。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+やったー！<br><br>
+マスオくん、2枚ずつ選んで、<br><br>
+<span class="b">オープンハウス当日にプレゼント</span>しましょ！<br><br>
+わたしは、この子と…この子！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+お、おう…<br><br>
+うーん…この子と、この子かな…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/masahiro.jpg" width=100><br><br>
+お、良いセンスしてるねぇ〜。あーなるほど、逆に先入観がないからそう選ぶか…オレだとその子がどういう子だとかそういうバックグラウンドで見ちゃうからな…あーその子もなかなか…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/14-25.jpg" width=300><br><br>
+よし、OK！<br><br>
+<span class="b">この4枚をプレゼントしまーす！</span>
+
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+昌廣先生、お忙しい中ありがとうございました！
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/masahiro.jpg" width=100><br><br>
+おうー、じゃまた明日の夕方よろしく！<br><br>
+<span class="b">黄色グッズを忘れずに！</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+ありがとうございましたー！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/14-26.jpeg" width=300><br><br>
+すっかり図書館も閉まってしまったわね…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<span class="b">昌廣先生あるある</span>だね…<br><br>
+なんかすごく、<br><br>
+<span class="b">IAMASの横断性を浴びた感じ</span>だ…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+昌廣先生に限らず、どの先生と話しても、<br><br>
+<span class="b">学生の考えを尊重して意見をくれるし、<br><br>
+頭ごなしな否定じゃなく、<br><br>
+考えを促す意見をもらえる</span>のは、<br><br>
+本当に幸せな環境よね…
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p">
+ほんとそうだよね…<br><br>
+<span class="b">学生もそういう意見交換ができる人が多いし、<br><br>
+意見が違うことを認め合えるって、<br><br>
+すごいこと</span>だよね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+ということで引き続き、<br><br>
+質問のほうもお待ちしております！
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p">
+IAMASにいる人に聞きたいこととかがあれば、<br><br>
+ぼくたちが代わりに聞きにいきまーす！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+イア子とマス男への質問やメッセージはこちらから！<br><br>
+<a href="http://goo.gl/forms/hlgdXfxMei">
+http://goo.gl/forms/hlgdXfxMei
+</a>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<span style="font-weight:bold;">イアマ速報 facebookページ</span>はこちら！<br><br>
+<a href="https://www.facebook.com/iamasokuho">
+https://www.facebook.com/iamasokuho<br><br>
+</a>
+いいね！しなさいよ！
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p">
+<span style="font-weight:bold;">イアマ速報のTwitter</span>はこちらです！<br><br>
+<a href="https://twitter.com/IAMASokuho">
+https://twitter.com/IAMASokuho<br><br>
+</a>
+いろんな情報拾っていきまーす！
+<br><br><br>
+<a href="http://iamasokuho.gifu.jp/day_thirteen.html" style="font-size:12px;">
+<< 前の記事へ
+</a>
+&nbsp;&nbsp;&nbsp;
+<a href="http://iamasokuho.gifu.jp/archive.html" style="font-size:12px;">
+記事一覧へ
+</a>
+
+                <div class="social_btn_bottom">
+                    <div class="twitter">
+                        <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://iamasokuho.gifu.jp/day_fourteen.html">Tweet</a>
+                        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+                    </div>
+                    <div class="facebook">
+                        <div class="fb-like" data-href="http://iamasokuho.gifu.jp/day_fourteen.html" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+                    </div>
+                    <div class="hateb">
+                        <a href="http://b.hatena.ne.jp/entry/iamasokuho.gifu.jp/day_fourteen.html" class="hatena-bookmark-button" data-hatena-bookmark-title="【IAMASの人々】図書「艦長」！小林昌廣先生" data-hatena-bookmark-layout="standard-balloon" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリ>ーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a>
+                    </div>
+                    <script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+                </div>
+            </p>
+        </div>
+    </div>
+</body>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-64484802-1', 'auto');
+  ga('send', 'pageview');
+</script>
+</html>

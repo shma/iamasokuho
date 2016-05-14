@@ -1,0 +1,825 @@
+<html lang="ja-jp" dir="ltr" xmlns:og="http://ogp.me/ns/#">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="IAMASOKUHO">
+    <meta name="keywords" content="iamasokuho, iama速報, IAMAS, 情報科学芸術大学院大学">
+    <title>【IAMASすてきな施設めぐり】イノベーション工房</title>
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="/assets/images/logo_top.gif">
+    <link rel="shortcut icon" href="favicon.ico" type="image/vnd.microsoft.icon">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.11.0/css/uikit.almost-flat.min.css" rel="stylesheet">
+    <link href="/assets/css/jquery.fullPage.css" rel="stylesheet">
+    <link href="/assets/css/style.css" rel="stylesheet">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.11.0/js/uikit.min.js"></script>
+    <script src="/assets/js/three.min.js"></script>
+    <script src="/assets/js/iamasokuho.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.fullPage.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.typist.js"></script>
+    <style>
+        body { margin: 0;}
+        canvas { width: 100%; height: 100% }
+    </style>
+</head>
+<body>
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v2.3&appId=884387134914356";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+    <script>
+        if ((navigator.userAgent.indexOf('iPhone') > 0 && navigator.userAgent.indexOf('iPad') == -1) || navigator.userAgent.indexOf('iPod') > 0 || navigator.userAgent.indexOf('Android') > 0) {
+            url = 'http://iamasokuho.gifu.jp/s_day_fifteen.html';
+            location.href = url;
+        }
+
+        $('head').append(
+                '<style type="text/css">body {display:none;}</style>'
+        );
+        $(document).ready(function() {
+            
+    
+            var camera, scene, renderer;
+            var mesh;
+            var mesh_masuo;
+            var objects = [];
+
+            // Particles
+            var group;
+            var container;
+            var particlesData = [];
+            var positions, colors;
+            var pointCloud;
+            var particlePositions;
+            var linesMesh;
+
+            var maxParticleCount = 1000;
+            var particleCount = 400;
+            if (window.innerWidth < 600) {
+                particleCount = 100;
+            } 
+
+            var r = 900;
+            var rHalf = r / 2;
+
+            var effectController = {
+                showDots: true,
+                showLines: true,
+                minDistance: 200,
+                limitConnections: false,
+                maxConnections: 100,
+                particleCount: 400
+            }
+
+    
+            init();
+            animate();
+
+            var zoom = 1000;
+            function zoom() {
+                for (var i = 0; i < 50; i++) {
+                    setTimeout(function(){
+                        camera.position.z = zoom - 5;
+                        zoom = zoom - 5; 
+                    },1000);
+                }
+            }
+
+            function init() {
+                container = document.getElementById( 'container' );
+
+                renderer = new THREE.WebGLRenderer({antialias: true});
+                renderer.setPixelRatio( window.devicePixelRatio );
+                renderer.setSize( window.innerWidth, window.innerHeight );
+                document.body.appendChild( renderer.domElement );
+    
+                camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 1, 1000 );
+                camera.position.z = 800;
+    
+                scene = new THREE.Scene();
+
+                group = new THREE.Group();
+                scene.add( group );
+
+                var segments = maxParticleCount * maxParticleCount;
+
+                positions = new Float32Array( segments * 3 );
+                colors = new Float32Array( segments * 3);
+            
+                var pMaterial = new THREE.PointCloudMaterial( {
+                    color: 0xFFFFF,
+                    size: 3,
+                    blending: THREE.AdditiveBlending,
+                    transparent: true,
+                    sizeAttenuation: false
+                } );
+
+                particles = new THREE.BufferGeometry();
+                particlePositions = new Float32Array( maxParticleCount * 3 );
+
+                for ( var i = 0; i < maxParticleCount; i++ ) {
+                    var x = Math.random() * r - r / 2;
+                    var y = Math.random() * r - r / 2;
+                    var z = Math.random() * r - r / 2;
+            
+                    particlePositions[i * 3]     = x;
+                    particlePositions[i * 3 + 1] = y;
+                    particlePositions[i * 3 + 2] = z;
+
+                    // add it to the geometry
+                    particlesData.push( {
+                        velocity: new THREE.Vector3( -1 + Math.random() * 2, -1 + Math.random() * 2, -1 + Math.random() * 2),
+                        numConnections: 0
+                    });
+                }
+
+                particles.drawcalls.push( {
+                    start: 0,
+                    count: particleCount,
+                    index: 0
+                });
+
+                particles.addAttribute( 'position', new THREE.DynamicBufferAttribute( particlePositions, 3));
+
+                // create the particle system
+                pointCloud = new THREE.PointCloud( particles, pMaterial);
+                pointCloud.visible = true;
+                group.add(pointCloud);
+        
+                var pGeometry = new THREE.BufferGeometry();
+                pGeometry.addAttribute( 'position', new THREE.DynamicBufferAttribute( positions, 3));
+                pGeometry.addAttribute( 'color', new THREE.DynamicBufferAttribute(colors, 3));
+
+                pGeometry.computeBoundingSphere();
+
+                pGeometry.drawcalls.push( {
+                    start: 0,
+                    count: 0,
+                    index: 0
+                } );
+
+                var pMaterial = new THREE.LineBasicMaterial( {
+                    vertexColors: THREE.VertexColors,
+                    blending: THREE.AdditiveBlending,
+                    transparent: true
+                });
+
+                linesMesh = new THREE.Line( pGeometry, pMaterial, THREE.LinePieces );
+                group.add( linesMesh );
+
+                renderer.setPixelRatio(window.devicePixelRatio);
+                renderer.setSize(window.innerWidth, window.innerHeight);
+
+                renderer.gammaInput = true;
+                renderer.gammaOutput = true;
+                renderer.setClearColor( new THREE.Color(0x000000) );
+
+                container.appendChild(renderer.domElement);
+
+                var geometry = new THREE.BoxGeometry( 70, 70, 70 );
+    
+                var texture = THREE.ImageUtils.loadTexture( 'assets/images/iako.png' );
+                texture.anisotropy = renderer.getMaxAnisotropy();
+    
+                var material = new THREE.MeshBasicMaterial( { map: texture } );
+    
+                mesh = new THREE.Mesh( geometry, material );
+                mesh.position.x = -300;
+                mesh.position.y += 150;
+                scene.add( mesh );
+    
+                // masuo
+                var texture_masuo = THREE.ImageUtils.loadTexture( 'assets/images/new_masuo.png' );
+                texture_masuo.anisotropy = renderer.getMaxAnisotropy();
+    
+                var material_masuo = new THREE.MeshBasicMaterial( { map: texture_masuo } );
+    
+                mesh_masuo = new THREE.Mesh( geometry, material_masuo );
+                mesh_masuo.position.x = 300;
+                mesh_masuo.position.y += 150;
+                scene.add( mesh_masuo ); 
+                objects.push( mesh );
+                objects.push( mesh_masuo );
+    
+    
+                window.addEventListener( 'resize', onWindowResize, false );
+                $('#fullpage').fullpage({
+                    sectionsColor: [],
+                    afterLoad: function(anchorLink, index){
+                        console.log(index);
+                        if(index==1||index==4||index==9||index==13||index==20||index==25||index==29||index==34||index==36||index==38||index==45||index==48||index==53||index==57) {
+                                mesh_masuo.position.y += 15;
+                                setTimeout(function(){
+                                    mesh_masuo.position.y -= 15;
+                                },100);
+                        }
+                        if(index==3||index==6||index==11||index==18||index==24||index==31||index==35||index==42||index==47||index==51||index==54||index==56) {
+                            mesh.position.y += 15;
+                            setTimeout(function(){
+                                mesh.position.y -= 15;
+                            },100);
+                        }
+                    }
+                });
+                $('body').fadeIn("slow");
+            }
+    
+            function onWindowResize() {
+    
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+    
+                renderer.setSize( window.innerWidth, window.innerHeight );
+    
+            }
+    
+            function animate() {
+                var vertexpos = 0;
+                var colorpos = 0;
+                var numConnected = 0;
+
+                for ( var i = 0; i < particleCount; i++ )
+                    particlesData[ i ].numConnections = 0;
+
+                for ( var i = 0; i < particleCount; i++ ) {
+
+                    // get the particle
+                    var particleData = particlesData[i];
+
+                    particlePositions[ i * 3     ] += particleData.velocity.x;
+                    particlePositions[ i * 3 + 1 ] += particleData.velocity.y;
+                    particlePositions[ i * 3 + 2 ] += particleData.velocity.z;
+
+                    if ( particlePositions[ i * 3 + 1 ] < -rHalf || particlePositions[ i * 3 + 1 ] > rHalf )
+                        particleData.velocity.y = -particleData.velocity.y;
+
+                    if ( particlePositions[ i * 3 ] < -rHalf || particlePositions[ i * 3 ] > rHalf )
+                        particleData.velocity.x = -particleData.velocity.x;
+
+                    if ( particlePositions[ i * 3 + 2 ] < -rHalf || particlePositions[ i * 3 + 2 ] > rHalf )
+                        particleData.velocity.z = -particleData.velocity.z;
+
+                    if ( effectController.limitConnections && particleData.numConnections >= effectController.maxConnections )
+                        continue;
+
+                    // Check collision
+                    for ( var j = i + 1; j < particleCount; j++ ) {
+
+                        var particleDataB = particlesData[ j ];
+                        if ( effectController.limitConnections && particleDataB.numConnections >= effectController.maxConnections )
+                            continue;
+
+                        var dx = particlePositions[ i * 3     ] - particlePositions[ j * 3     ];
+                        var dy = particlePositions[ i * 3 + 1 ] - particlePositions[ j * 3 + 1 ];
+                        var dz = particlePositions[ i * 3 + 2 ] - particlePositions[ j * 3 + 2 ];
+                        var dist = Math.sqrt( dx * dx + dy * dy + dz * dz );
+
+                        if ( dist < effectController.minDistance ) {
+
+                            particleData.numConnections++;
+                            particleDataB.numConnections++;
+
+                            var alpha = 1.0 - dist / effectController.minDistance;
+
+                            positions[ vertexpos++ ] = particlePositions[ i * 3     ];
+                            positions[ vertexpos++ ] = particlePositions[ i * 3 + 1 ];
+                            positions[ vertexpos++ ] = particlePositions[ i * 3 + 2 ];
+
+                            positions[ vertexpos++ ] = particlePositions[ j * 3     ];
+                            positions[ vertexpos++ ] = particlePositions[ j * 3 + 1 ];
+                            positions[ vertexpos++ ] = particlePositions[ j * 3 + 2 ];
+
+                            colors[ colorpos++ ] = alpha;
+                            colors[ colorpos++ ] = alpha;
+                            colors[ colorpos++ ] = alpha;
+
+                            colors[ colorpos++ ] = alpha;
+                            colors[ colorpos++ ] = alpha;
+                            colors[ colorpos++ ] = alpha;
+
+                            numConnected++;
+                        }
+                    }
+                }
+
+
+                linesMesh.geometry.drawcalls[ 0 ].count = numConnected * 2;
+                linesMesh.geometry.attributes.position.needsUpdate = true;
+                linesMesh.geometry.attributes.color.needsUpdate = true;
+
+                pointCloud.geometry.attributes.position.needsUpdate = true;
+
+                requestAnimationFrame( animate );
+    
+    
+                mesh.rotation.x += 0.005;
+                mesh.rotation.y += 0.01;
+    
+                mesh_masuo.rotation.x += 0.005;
+                mesh_masuo.rotation.y += 0.01;
+    
+                renderer.render( scene, camera );
+            }
+
+            mesh.callback = function() { 
+                window.open("https://twitter.com/IAMAS_girl");
+            }
+            mesh_masuo.callback = function() { 
+                window.open("https://twitter.com/IAMAS_boy");
+            }
+            var raycaster = new THREE.Raycaster();
+            var mouse = new THREE.Vector2();
+            
+            document.addEventListener( 'mousedown', onDocumentMouseDown, false );
+            function onDocumentMouseDown( event ) {
+            
+                event.preventDefault();
+            
+                mouse.x = ( event.clientX / renderer.domElement.clientWidth ) * 2 - 1;
+                mouse.y = - ( event.clientY / renderer.domElement.clientHeight ) * 2 + 1;
+            
+                raycaster.setFromCamera( mouse, camera );
+            
+                var intersects = raycaster.intersectObjects( objects ); 
+            
+                if ( intersects.length > 0 ) {
+                    intersects[0].object.callback();
+                }
+            
+            }
+
+
+        });
+    </script>
+    <div id="container"></div>
+    <div class="i-head">
+        <a href="/" class="i-logo-less">
+            <img src="/assets/images/logo_2.gif" width="150">
+        </a>
+        <div class="social_btn uk-hidden-small" style="float:right;">
+            <div class="twitter">
+                <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://iamasokuho.gifu.jp" data-text="IAMASokuho" data-via="iamasokuho">Tweet</a>
+                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+            </div>
+            <div class="facebook">
+                <div class="fb-like" data-href="http://iamasokuho.gifu.jp/" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+            </div>
+        </div>
+    </div>
+    <div id="fullpage">
+        <div class="section">
+            <p class="i-p">
+今日はこの施設を紹介するよ！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/15-1.jpg" width=300>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+ここは、イノベーション工房ね！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+そう！<br><br>
+ここイノベーション工房は、<br><br>
+<span class="b">デジタルファブリケーションのための、<br><br>
+最新鋭の工作機械がたくさん備わっている</span>んだ！<br><br>
+早速入ってみよう！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/15-2.jpg" width=300>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+こんにちはー…<br><br>
+あ、高見さん！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/takami.jpg" width=100><br><br>
+あ、イア子ちゃん、マス男くん、こんにちは〜。
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/15-3.jpg" width=300><br><br>
+<span class="b">高見さん</span><br><br>
+IAMASイノベーション工房の管理人。<br><br>
+デジタル工作機械を使いこなすお姉さんだ！<br><br>
+IAMAS卒業生、ぼくらの先輩でもあるぞ！
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+大きな機械がいくつかあるね！<br><br>
+高見さん、ここの機械は誰でも使えるんですか？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/takami.jpg" width=100><br><br>
+あ、ここは<span class="b">IAMAS関係者だけが使える</span>よ！<br><br>
+１年生の前期にある実習を受けた人なら、<br><br>
+誰でも使っていいことになってるよ〜。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+レーザーカッターの実習や、<br><br>
+3D造形の実習を受けたわね！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/15-4.jpg" width=300><br><br>
+<span style="font-size:10px;">
+イノベーション工房にはいつも高見さんがいる。<br>
+プロジェクトがある日などには、研究補助員の方もいるよ！
+</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+ここにはどんな機械があるんですか？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/takami.jpg" width=100><br><br>
+うん、それぞれ紹介しますね〜。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/15-5.jpeg" width=300>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/15-6.jpeg" width=300>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/takami.jpg" width=100><br><br>
+これがレーザーカッターです。<br><br>
+工房の機械では、いちばんよく使われてるかな。<br><br>
+trotecと、UNIVERSAL、<br><br>
+HAJIMEの3台があります。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+あ、これはこないだ使いました！<br><br>
+illustratorでデータをつくったら、<br><br>
+その通りに切ってくれるんですよね！
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/takami.jpg" width=100><br><br>
+そうそう〜。<br><br>
+2年生の中間発表とかでも、使ってる人多かったね。<br><br>
+正しく安全に使えば、<br><br>
+ちょっとした展示物とかつくるのにはとても手軽！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+こっちはなんですか？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/15-7.jpg" width=300>
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/15-8.jpeg" width=300>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/takami.jpg" width=100><br><br>
+それは<span class="b">3Dプリンター</span>です！<br><br>
+Replicator 5th、ARM-10、UP Plus2と、<br><br>
+Cubeが2台、計5台があります。<br><br>
+造形が、慣れるまでなかなか大変なんだよね〜。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+あ、これもこないだやったわね！<br><br>
+Rhinoceros、難しかったなー…<br><br>
+でも実際のものになるのは面白いわよね！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+これはミシン…ですか？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/15-9.jpg" width=300>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/takami.jpg" width=100><br><br>
+そうそう！<span class="b">刺繍ミシン</span>だよ。<br><br>
+PCからデータを送ったら、<br><br>
+そのデータの通り刺繍してくれるミシン！<br><br>
+こんな感じになります。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/15-10.jpeg" width=300>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+（デイジーと、地獄…？）
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/takami.jpg" width=100><br><br>
+…あ、その「地獄」は、<br><br>
+「揖斐川ワンダーピクニック」(※1)<br><br>
+っていうイベントで使ったの！<br><br>
+
+<span style="font-size:10px;">
+※1 揖斐川ワンダーピクニック：5月に岐阜県揖斐川町で行われた、複合型タウンフェスティバル。IAMASも「軽トラまるけ」「地獄絵スタンプラリー」などで協力参加した。<br>
+<a href="http://www.iwp2015.com/">http://www.iwp2015.com/</a>
+</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+すごい！<br><br>
+色ごとに刺繍するのね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/15-11.jpeg" width=300>
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/takami.jpg" width=100><br><br>
+そうそう、まだまだ試してるところだけど、<br><br>
+結構いろいろできそうな感じ！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+レーザーカッターや3Dプリンターもですけど、<br><br>
+<span class="b">データじゃなくて実際のモノを使うって、<br><br>
+なかなか難しい</span>ですね…。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+難しさをなんとか乗り越えて、<br><br>
+<span class="b">実際のモノになるのが楽しかったりする</span>のよ！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+ところで、この大きな小屋？みたいな部屋は…？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/15-12.jpg" width=300>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+中になんか大きな機械がある…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/15-13.jpeg" width=300>
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/takami.jpg" width=100><br><br>
+それはShopbotっていう、<br><br>
+大きな木の板とかを削る機械だよ。<br><br>
+うまくやれば、家具とかも作れるかも。<br><br>
+これも講習を受ければ、みんな使えるよ。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/15-14.jpeg" width=300>
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+あ、こないだCraftのプロジェクト(※1)で使いました！<br><br>
+
+<span style="font-size:10px;">
+※1 Craft, Fabrication and Sustainabilityプロジェクト：デジタルファブリケーションを用いて、持続可能な産業を開発するプロジェクト。Fab機械の使い方を学び、使い勝手をよくするところから始まる。<br>
+<a href="http://www.iamas.ac.jp/projects/8137">http://www.iamas.ac.jp/projects/8137</a>
+</span>
+            </p>
+
+        </div>
+        <div class="section" style="padding-left: 35%;">
+            <p class="i-p">
+<blockquote class="instagram-media" data-instgrm-captioned data-instgrm-version="4" style=" background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:400px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);"><div style="padding:8px;"> <div style=" background:#F8F8F8; line-height:0; margin-top:40px; padding:50% 0; text-align:center; width:100%;"> <div style=" background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAsCAMAAAApWqozAAAAGFBMVEUiIiI9PT0eHh4gIB4hIBkcHBwcHBwcHBydr+JQAAAACHRSTlMABA4YHyQsM5jtaMwAAADfSURBVDjL7ZVBEgMhCAQBAf//42xcNbpAqakcM0ftUmFAAIBE81IqBJdS3lS6zs3bIpB9WED3YYXFPmHRfT8sgyrCP1x8uEUxLMzNWElFOYCV6mHWWwMzdPEKHlhLw7NWJqkHc4uIZphavDzA2JPzUDsBZziNae2S6owH8xPmX8G7zzgKEOPUoYHvGz1TBCxMkd3kwNVbU0gKHkx+iZILf77IofhrY1nYFnB/lQPb79drWOyJVa/DAvg9B/rLB4cC+Nqgdz/TvBbBnr6GBReqn/nRmDgaQEej7WhonozjF+Y2I/fZou/qAAAAAElFTkSuQmCC); display:block; height:44px; margin:0 auto -44px; position:relative; top:-22px; width:44px;"></div></div> <p style=" margin:8px 0 0 0; padding:0 4px;"> <a href="https://instagram.com/p/4lt8EEhhEh/" style=" color:#000; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:normal; line-height:17px; text-decoration:none; word-wrap:break-word;" target="_top">イア子です！今日はイノベーション工房のShopbotをさわってます！すごい！</a></p> <p style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; line-height:17px; margin-bottom:0; margin-top:8px; overflow:hidden; padding:8px 0 7px; text-align:center; text-overflow:ellipsis; white-space:nowrap;">A video posted by イアマ速報 (@iamasokuho) on <time style=" font-family:Arial,sans-serif; font-size:14px; line-height:17px;" datetime="2015-07-01T09:58:24+00:00">Jul 1, 2015 at 2:58am PDT</time></p></div></blockquote>
+<script async defer src="//platform.instagram.com/en_US/embeds.js"></script>
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/takami.jpg" width=100><br><br>
+そうそう、Craftのプロジェクトに参加する人に、<br><br>
+いろいろ使ってもらう感じにしてるんです。<br><br>
+<span class="b">まだまだ私たちも、この機械を使う世界のどの人も、<br><br>
+どういう材料がどう削れるかとか、<br><br>
+分かってないことがいっぱいある</span>から。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+デジタルファブリケーションは、<br><br>
+機械の使い方以上のマニュアルがないから、<br><br>
+<span class="b">使い方から作っていく</span>んだね。<br><br>
+機械ができて、使い道がみんなでつくられていく…<br><br>
+オープンソースだなぁ。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/takami.jpg" width=100><br><br>
+あ、ちなみに奥にある<span class="b">木工室と金工室も、<br><br>
+実習を受ければ使える</span>から、<br><br>
+有効に使ってくださいね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+木工なんかは、<br><br>
+展示用の台とかつくるときにも使うわよね！<br><br>
+学内で作れるのは便利よね。
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+ほんとだね。<br><br>
+高見さん、OPEN HOUSEでは、<br><br>
+イノベーション工房は見学できるんですか？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/takami.jpg" width=100><br><br>
+うん！<br><br>
+OPEN HOUSE当日は、ここイノベーション工房で、<br><br>
+Craftのプロジェクトの成果展示、<br><br>
+<span class="b">「mikketa和紙(※2)」を使ったワークショップ</span>をします！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+
+<img src="/assets/images/15-15.jpg" width=300><br><br>
+<span style="font-size:10px;">
+※2 mikketa：岐阜で約130年の歴史がある会社「三星毛糸株式会社」と、IAMAS卒業生が活躍する会社「株式会社TAB」の共同で、廃材を活用して新たな材料や製品をつくり、販売するプロジェクト。代官山蔦屋書店や湘南T-SITEなどでもワークショップが行われた。
+<br>
+<a href="http://mikketa.jp/">
+http://mikketa.jp/
+</a>
+</span>
+<br><br>
+
+OPEN HOUSEでの展示・ワークショップ詳細はこちら！<br><br>
+<a href="http://cfs.iamas.ac.jp/ja/59">
+http://cfs.iamas.ac.jp/ja/59
+</a>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<span class="b">わ、すごい！かわいい！</span><br><br>
+これはつくってみたいわね…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/takami.jpg" width=100><br><br>
+<span class="b">2日間、3名ずつで締め切り</span>なので、<br><br>
+OPEN HOUSEに来る方で、興味ある方はぜひ、<br><br>
+<span class="b">お早めに申し込んでくださいね！</span><br><br>
+7月9日で、いまは土曜日1人、日曜日2人、<br><br>
+まだ空いてます。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+OPEN HOUSEで初めてIAMASに来て、<br><br>
+イノベーション工房を見たとき、<br><br>
+<span class="b">どんだけ充実してるんだ！ってびっくりしたなあ。</span><br><br>
+せっかくこれだけ良い施設があるんだし、<br><br>
+ぼくらもいろいろ作ってみよう！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+ほんとにそうね！<br><br>
+ホームセンターで材料買ってきましょ！<br><br>
+高見さん、ありがとうございました！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/takami.jpg" width=100><br><br>
+いいえ〜！おつかれさまです！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<span style="font-weight:bold;">イアマ速報 facebookページ</span>はこちら！<br><br>
+<a href="https://www.facebook.com/iamasokuho">
+https://www.facebook.com/iamasokuho<br><br>
+</a>
+いいね！しなさいよ！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<span style="font-weight:bold;">イアマ速報のTwitter</span>はこちらです！<br><br>
+<a href="https://twitter.com/IAMASokuho">
+https://twitter.com/IAMASokuho<br><br>
+</a>
+いろんな情報拾っていきまーす！
+<br><br><br>
+<a href="http://iamasokuho.gifu.jp/day_fifteen.html" style="font-size:12px;">
+<< 前の記事へ
+</a>
+&nbsp;&nbsp;&nbsp;
+<a href="http://iamasokuho.gifu.jp/archive.html" style="font-size:12px;">
+記事一覧へ
+</a>
+
+                <div class="social_btn_bottom">
+                    <div class="twitter">
+                        <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://iamasokuho.gifu.jp/day_fifteen.html">Tweet</a>
+                        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+                    </div>
+                    <div class="facebook">
+                        <div class="fb-like" data-href="http://iamasokuho.gifu.jp/day_fifteen.html" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+                    </div>
+                    <div class="hateb">
+                        <a href="http://b.hatena.ne.jp/entry/iamasokuho.gifu.jp/day_fifteen.html" class="hatena-bookmark-button" data-hatena-bookmark-title="【IAMASすてきな施設めぐり】イノベーション工房
+" data-hatena-bookmark-layout="standard-balloon" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリ>ーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a>
+                    </div>
+                    <script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+                </div>
+            </p>
+        </div>
+    </div>
+</body>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-64484802-1', 'auto');
+  ga('send', 'pageview');
+</script>
+</html>

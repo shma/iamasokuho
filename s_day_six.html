@@ -1,0 +1,667 @@
+<html lang="ja-jp" dir="ltr" xmlns:og="http://ogp.me/ns/#">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="IAMASOKUHO">
+    <meta name="keywords" content="iamasokuho, iama速報, IAMAS, 情報科学芸術大学院大学">
+    <title>【すてきな施設紹介】360度動画で紹介！IAMASこんな感じです！ | IAMASokuho</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/vnd.microsoft.icon">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.11.0/css/uikit.almost-flat.min.css" rel="stylesheet">
+    <link href="/assets/css/jquery.fullPage.css" rel="stylesheet">
+    <link href="/assets/css/style.css" rel="stylesheet">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.11.0/js/uikit.min.js"></script>
+    <script src="/assets/js/three.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+    
+    <script type="text/javascript" src="assets/js/jquery.fullPage.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.typist.js"></script>
+    <style>
+        body {
+          /* 画像ファイルの指定 */
+          background-image: url(/assets/images/sp_back3.gif);
+
+          /* 画像を常に天地左右の中央に配置 */
+          background-position: center center;
+
+          /* 画像をタイル状に繰り返し表示しない */
+          background-repeat: no-repeat;
+
+          /* コンテンツの高さが画像の高さより大きい時、動かないように固定 */
+          background-attachment: fixed;
+
+          /* 表示するコンテナの大きさに基づいて、背景画像を調整 */
+          background-size: cover;
+
+          /* 背景画像が読み込まれる前に表示される背景のカラー */
+          background-color: #464646;
+        }
+    </style>
+</head>
+<body>
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v2.3&appId=884387134914356";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+    <script>
+        $('head').append(
+                '<style type="text/css">body {display:none;}</style>'
+        );
+        $(document).ready(function() {
+    
+            var camera, scene, renderer;
+            var mesh;
+            var mesh_masuo;
+            var objects = [];
+
+            // Particles
+            var group;
+            var container;
+            var particlesData = [];
+            var positions, colors;
+            var pointCloud;
+            var particlePositions;
+            var linesMesh;
+
+            var maxParticleCount = 1000;
+            var particleCount = 400;
+            if (window.innerWidth < 600) {
+                particleCount = 100;
+            } 
+
+            var r = 900;
+            var rHalf = r / 2;
+
+            var effectController = {
+                showDots: true,
+                showLines: true,
+                minDistance: 200,
+                limitConnections: false,
+                maxConnections: 100,
+                particleCount: 400
+            }
+
+    
+            init();
+            function init() {
+                $('body').fadeIn("slow");
+            }
+
+
+            $('#fullpage').fullpage({
+                sectionsColor: ['none', 'none', 'none', 'none', 'none'],
+                verticalCentered: false,
+                paddingTop: '6em',
+                afterLoad: function(anchorLink, index){
+                    if (index == 5 || index == 3) {
+                    }
+
+                    if (index == 2 || index == 4) {
+                    }
+                }
+            });
+        });
+    </script>
+    <div id="container"></div>
+    <div class="i-head">
+        <a href="/" class="i-logo-less">
+            <img src="/assets/images/logo_2.gif" width="150">
+        </a>
+        <div class="social_btn uk-hidden-small" style="float:right;">
+            <div class="twitter">
+                <a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
+                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+            </div>
+            <div class="facebook">
+                <div class="fb-like" data-href="http://iamasokuho.gifu.jp/day_four.html" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+            </div>
+        </div>
+    </div>
+    <div id="fullpage">
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+イア子ちゃん、<br>
+そういえばこんなものを手に入れたよ！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/6-1.jpg" width=200>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+わ、かわいい♡<br>
+マス男くん、これはなに？<span style="font-weight:bold;">鈍器？</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+イア子ちゃん、眼科行ってきたら？<br>
+これは<span style="font-weight:bold;">RICOH THETA</span>っていう、<br>
+<span style="font-weight:bold;">360度撮影できるカメラ</span>だよ！
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+それはすごい！<br>
+これを使って、わたしたちの暮らすIAMASを、<br>
+みんなに紹介しちゃいましょうよ！
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+それはいいね！<br>
+あ、ちょっと待った！
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+どうしたの？パンツでも履き忘れたの？
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+履いてるよ！<br>
+<span style="font-weight:bold;">PC</span>で360度動画を見るには、<br>
+<span style="font-weight:bold;">Google Chromeでの視聴が必須</span>なんだ！<br>
+あと、<span style="font-weight:bold;">iPhone</span>で360度動画を見る人は、<br>
+<span style="font-weight:bold;">YouTubeアプリのインストールが必要</span>なんだ！
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+そうなの？
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+そうなんだよ… <br>
+PCの人は、Google Chromeでの視聴をお願いします！<br>
+ダウンロードはこちらから！<br>
+<a href="https://www.google.co.jp/chrome/browser/desktop/index.html">
+https://www.google.co.jp/chrome/browser/desktop/index.html
+</a>
+<br><br>
+もしiPhoneでYouTubeアプリがない人は、<br>
+ここからダウンロードをお願いします！<br>
+<a href="https://itunes.apple.com/jp/app/youtube/id544007664?mt=8">
+https://itunes.apple.com/jp/app/youtube/id544007664?mt=8<br>
+</a>
+<br>
+Androidはそのままで大丈夫だよ！
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+うちのマス男がお手数おかけします！
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+じゃあ早速、センタービルに行ってみよう！
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+ソフトピアジャパン　センタービル<br>
+<img src="assets/images/6-2.jpg" width=300><br>
+<a href="https://ja.wikipedia.org/wiki/%E3%82%BD%E3%83%95%E3%83%88%E3%83%94%E3%82%A2%E3%82%B8%E3%83%A3%E3%83%91%E3%83%B3" style="font-size:10px;">
+出典：https://ja.wikipedia.org/wiki/%E3%82%BD%E3%83%95%E3%83%88%E3%83%94%E3%82%A2%E3%82%B8%E3%83%A3%E3%83%91%E3%83%B3
+</a>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+センタービルについたわ！
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+それじゃあまずは、
+ぼくらがよく行く4階にいこう！
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p" style="opacity: 1;">
+<iframe width="100%" src="https://www.youtube.com/embed/wwUnyec5FyY" frameborder="0" allowfullscreen></iframe>
+<br>
+<span style="font-size:10px;">
+※iPhoneの人は右上の「YouTube」を押してね！
+</span>
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+え、すごい！<br>
+360度で見れてる！！
+
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+スマホだと、
+<span style="font-weight:bold;">スマホを向けた方向の映像が見れるよ！</span>
+ちなみにこれはセンタービルの4Fだよ！
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+
+<img src="/assets/images/iako.png" width=50><br>
+ホールのドア、開かないわね。
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+そう、よく行くホールに行こうとしたら、
+<span style="font-weight:bold;">カードキー忘れてて開かなかった…</span>
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+ていうか、マス男くん、<span style="font-weight:bold;">なんかかぶってる…？</span>
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+<span style="font-weight:bold;">かぶってない！全然かぶってないよ！！</span>
+カードキー忘れたし、次は3階にいこう！
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+顔、明らかにデカいよね…？
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+よし、3Fに来たぞ！<br>
+ここでもカメラを回して、と…
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p" style="opacity:1">
+<iframe width="100%" src="https://www.youtube.com/embed/A2IHJJ5FnNU" frameborder="0" allowfullscreen></iframe>
+<br>
+<span style="font-size:10px;">
+※iPhoneの人は右上の「YouTube」を押してね！
+</span>
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+！？！？！？
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+<span style="font-weight:bold;">痛ァ…事故った…</span>
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+いま、<span style="font-weight:bold;">中の人が…</span>
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+<span style="font-weight:bold;">いない！いないよ！！</span><br>
+ていうかやばい、血が出てきた…
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p" style="opacity:1;">
+<img src="/assets/images/6-3.gif" width=300><br>
+このぶつけっぷりだもん、血も出るよね…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+そうだ、3Fだし、あそこに行こう！
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/6-4.jpg" width=150><br>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+あ、あそこは！
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+こんにちはー…<br>
+すみません、ちょっとケガしちゃって…
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/usuisan.jpg" width=50><br>
+あらこんにちはー、<br>
+ってあらーどうしたの！<br>
+すごい血でてるじゃない！
+
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+そうだ、ここは<span style-"font-weight:bold;">IAMASの保健室ね！</span><br>
+臼井さんこんにちはー！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/6-5.jpg" width=300><br>
+臼井さん：<br>
+IAMAS保健室でみんなをそっと見守ってくれる、<br>
+みんなのお母さん的存在だ！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/usuisan.jpg" width=50><br>
+あらーイア子ちゃんこんにちは！<br>
+マス男くん、これどうしたの？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+ちょっと撮影してたらぶつけちゃって…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/usuisan.jpg" width=50><br>
+撮影？<br>
+こんなかぶり物してたらぶつけるわよ〜！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+<span style="font-weight:bold;">かぶってないです！！断じて！！</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+そういえばわたし保健室、<br>
+まだお世話になったことなかったわ！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/6-6.jpg" width=300>
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+壁の飾りがかわいいですね♡
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/6-7.jpg" width=300>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/usuisan.jpg" width=50><br>
+消毒して絆創膏貼るわね。<br>
+あ、でももう血は止まってるわね…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+いてて…<br>
+そういえばぼくも、<br>
+花粉症の薬もらいにきた以来だなあ。<br>
+結構みんなくるんですか？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/usuisan.jpg" width=50><br>
+そうね〜、みんな大体向こうの建物にいるから、<br>
+そんなに来ることないけど、<br>
+たまーにケガしちゃう子がいたり、<br>
+あとちょっと休みにきたり、薬もらいにきたり、<br>
+こっち来たついでにお茶飲んでく子もいるわね〜。
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+そうなんですね！<br>
+わたしも今度お茶飲みに来ていいですか？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/usuisan.jpg" width=50><br>
+どうぞどうぞ〜！<br>
+大体いるから、いつでも寄ってね。<br>
+<br>
+はい、マス男くんはこれでいいかしらね。<br>
+安静にして、もしまた血が出てきたら、<br>
+またこっちくるか病院行きなさいね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+はい！ありがとうございます！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+おじゃましましたー！<br>
+ありがとうございました！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/usuisan.jpg" width=50><br>
+は〜い、お大事にね〜！<br>
+またいつでもどうぞ〜。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/6-8.jpg" width=300>
+
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+いててて…<br>
+ケガしたけど、久しぶりに保健室行って、<br>
+臼井さんと話せておもしろかったね！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+そうね！<br>
+わたしも保健室にお茶飲みに行こうかしら。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+あれ、そういえばぼく、<br>
+<span style="font-weight: bold;">なんでこんなケガしたんだっけ…</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+ちょっと！頭打って忘れたの！？<br>
+<span style="font-weight: bold;">動画でIAMAS紹介</span>の記事でしょ！？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+あれ、そうだっけ…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+アプリのダウンロードまでさせといて、<br>
+結局これ<span style="font-weight: bold;">保健室の紹介</span>じゃない！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+まあ、臼井さんに会えたし、<br>
+おでこめっちゃ痛いけど、結果オーライ！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+うーん、それもそうね！<br>
+<span style="font-weight: bold;">これオチつかなそうだけど大丈夫？</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+うーん、爆発でもすれば？<br>
+ということで、<br>
+360度動画でIAMAS紹介は持ち越します！<br>
+<span style="font-weight: bold;">でもまた必ずやります！</span><br>
+<span style="font-weight: bold;">iPhoneの人、YouTubeアプリ消さないでね！！</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+みなさまのご協力あってのイアマ速報です！！<br>
+ということで、<br>
+引き続き、質問をお待ちしております！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+IAMASにいる人に聞きたいこととかがあれば、<br>
+ぼくたちが代わりに聞きにいきまーす！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-ps-i-p">
+イア子とマス男への質問やメッセージはこちらから！<br>
+<a href="http://goo.gl/forms/hlgdXfxMei">
+http://goo.gl/forms/hlgdXfxMei
+</a>
+<br><br>
+<a href="http://iamasokuho.gifu.jp/day_five.html" style="font-size:12px;">
+<< 前の記事へ
+</a>
+
+            <div class="social_btn_bottom social_btn_bottom_sp uk-visible-small">
+                <div class="twitter">
+                    <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://iamasokuho.gifu.jp/day_six.html" data-via="iamasokuho">Tweet</a>
+                    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+                </div>
+                <div class="facebook">
+                    <div class="fb-like" data-href="http://iamasokuho.gifu.jp/day_six.html" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+                </div>
+                <div class="hateb">
+                    <a href="http://b.hatena.ne.jp/entry/iamasokuho.gifu.jp/day_six.html" class="hatena-bookmark-button" data-hatena-bookmark-title="【すてきな施設紹介】360度動画で紹介！IAMASこんな感じです！ | IAMASOKUHO" data-hatena-bookmark-layout="standard-balloon" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリ>ーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a>
+                    <script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+                </div>
+            </div>
+            </p>
+        </div>
+    </div>
+
+</body>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-64484802-1', 'auto');
+  ga('send', 'pageview');
+</script>
+</html>

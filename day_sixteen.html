@@ -1,0 +1,944 @@
+<html lang="ja-jp" dir="ltr" xmlns:og="http://ogp.me/ns/#">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="IAMASOKUHO">
+    <meta name="keywords" content="iamasokuho, iama速報, IAMAS, 情報科学芸術大学院大学">
+    <title>【IAMASの人々】 (99.9%)復活⚾︎天才うまみ成分セミナー</title>
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="/assets/images/logo_top.gif">
+    <link rel="shortcut icon" href="favicon.ico" type="image/vnd.microsoft.icon">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.11.0/css/uikit.almost-flat.min.css" rel="stylesheet">
+    <link href="/assets/css/jquery.fullPage.css" rel="stylesheet">
+    <link href="/assets/css/style.css" rel="stylesheet">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.11.0/js/uikit.min.js"></script>
+    <script src="/assets/js/three.min.js"></script>
+    <script src="/assets/js/iamasokuho.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.fullPage.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.typist.js"></script>
+    <style>
+        body { margin: 0;}
+        canvas { width: 100%; height: 100% }
+    </style>
+</head>
+<body>
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v2.3&appId=884387134914356";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+    <script>
+        if ((navigator.userAgent.indexOf('iPhone') > 0 && navigator.userAgent.indexOf('iPad') == -1) || navigator.userAgent.indexOf('iPod') > 0 || navigator.userAgent.indexOf('Android') > 0) {
+            url = 'http://iamasokuho.gifu.jp/s_day_sixteen.html';
+            location.href = url;
+        }
+
+        $('head').append(
+                '<style type="text/css">body {display:none;}</style>'
+        );
+        $(document).ready(function() {
+            
+    
+            var camera, scene, renderer;
+            var mesh;
+            var mesh_masuo;
+            var objects = [];
+
+            // Particles
+            var group;
+            var container;
+            var particlesData = [];
+            var positions, colors;
+            var pointCloud;
+            var particlePositions;
+            var linesMesh;
+
+            var maxParticleCount = 1000;
+            var particleCount = 400;
+            if (window.innerWidth < 600) {
+                particleCount = 100;
+            } 
+
+            var r = 900;
+            var rHalf = r / 2;
+
+            var effectController = {
+                showDots: true,
+                showLines: true,
+                minDistance: 200,
+                limitConnections: false,
+                maxConnections: 100,
+                particleCount: 400
+            }
+
+    
+            init();
+            animate();
+
+            var zoom = 1000;
+            function zoom() {
+                for (var i = 0; i < 50; i++) {
+                    setTimeout(function(){
+                        camera.position.z = zoom - 5;
+                        zoom = zoom - 5; 
+                    },1000);
+                }
+            }
+
+            function init() {
+                container = document.getElementById( 'container' );
+
+                renderer = new THREE.WebGLRenderer({antialias: true});
+                renderer.setPixelRatio( window.devicePixelRatio );
+                renderer.setSize( window.innerWidth, window.innerHeight );
+                document.body.appendChild( renderer.domElement );
+    
+                camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 1, 1000 );
+                camera.position.z = 800;
+    
+                scene = new THREE.Scene();
+
+                group = new THREE.Group();
+                scene.add( group );
+
+                var segments = maxParticleCount * maxParticleCount;
+
+                positions = new Float32Array( segments * 3 );
+                colors = new Float32Array( segments * 3);
+            
+                var pMaterial = new THREE.PointCloudMaterial( {
+                    color: 0xFFFFF,
+                    size: 3,
+                    blending: THREE.AdditiveBlending,
+                    transparent: true,
+                    sizeAttenuation: false
+                } );
+
+                particles = new THREE.BufferGeometry();
+                particlePositions = new Float32Array( maxParticleCount * 3 );
+
+                for ( var i = 0; i < maxParticleCount; i++ ) {
+                    var x = Math.random() * r - r / 2;
+                    var y = Math.random() * r - r / 2;
+                    var z = Math.random() * r - r / 2;
+            
+                    particlePositions[i * 3]     = x;
+                    particlePositions[i * 3 + 1] = y;
+                    particlePositions[i * 3 + 2] = z;
+
+                    // add it to the geometry
+                    particlesData.push( {
+                        velocity: new THREE.Vector3( -1 + Math.random() * 2, -1 + Math.random() * 2, -1 + Math.random() * 2),
+                        numConnections: 0
+                    });
+                }
+
+                particles.drawcalls.push( {
+                    start: 0,
+                    count: particleCount,
+                    index: 0
+                });
+
+                particles.addAttribute( 'position', new THREE.DynamicBufferAttribute( particlePositions, 3));
+
+                // create the particle system
+                pointCloud = new THREE.PointCloud( particles, pMaterial);
+                pointCloud.visible = true;
+                group.add(pointCloud);
+        
+                var pGeometry = new THREE.BufferGeometry();
+                pGeometry.addAttribute( 'position', new THREE.DynamicBufferAttribute( positions, 3));
+                pGeometry.addAttribute( 'color', new THREE.DynamicBufferAttribute(colors, 3));
+
+                pGeometry.computeBoundingSphere();
+
+                pGeometry.drawcalls.push( {
+                    start: 0,
+                    count: 0,
+                    index: 0
+                } );
+
+                var pMaterial = new THREE.LineBasicMaterial( {
+                    vertexColors: THREE.VertexColors,
+                    blending: THREE.AdditiveBlending,
+                    transparent: true
+                });
+
+                linesMesh = new THREE.Line( pGeometry, pMaterial, THREE.LinePieces );
+                group.add( linesMesh );
+
+                renderer.setPixelRatio(window.devicePixelRatio);
+                renderer.setSize(window.innerWidth, window.innerHeight);
+
+                renderer.gammaInput = true;
+                renderer.gammaOutput = true;
+                renderer.setClearColor( new THREE.Color(0x000000) );
+
+                container.appendChild(renderer.domElement);
+
+                var geometry = new THREE.BoxGeometry( 70, 70, 70 );
+    
+                var texture = THREE.ImageUtils.loadTexture( 'assets/images/iako.png' );
+                texture.anisotropy = renderer.getMaxAnisotropy();
+    
+                var material = new THREE.MeshBasicMaterial( { map: texture } );
+    
+                mesh = new THREE.Mesh( geometry, material );
+                mesh.position.x = -300;
+                mesh.position.y += 150;
+                scene.add( mesh );
+    
+                // masuo
+                var texture_masuo = THREE.ImageUtils.loadTexture( 'assets/images/new_masuo.png' );
+                texture_masuo.anisotropy = renderer.getMaxAnisotropy();
+    
+                var material_masuo = new THREE.MeshBasicMaterial( { map: texture_masuo } );
+    
+                mesh_masuo = new THREE.Mesh( geometry, material_masuo );
+                mesh_masuo.position.x = 300;
+                mesh_masuo.position.y += 150;
+                scene.add( mesh_masuo ); 
+                objects.push( mesh );
+                objects.push( mesh_masuo );
+    
+    
+                window.addEventListener( 'resize', onWindowResize, false );
+                $('#fullpage').fullpage({
+                    sectionsColor: [],
+                    afterLoad: function(anchorLink, index){
+                        console.log(index);
+                        if(index==1||index==3||index==5||index==7||index==11||index==14||index==17||index==21||index==25||index==30||index==32||index==35||index==37||index==42||index==46||index==49||index==55||index==58||index==63||index==65||index==70||index==71||index==73||index==78||index==81) {
+                                mesh_masuo.position.y += 15;
+                                setTimeout(function(){
+                                    mesh_masuo.position.y -= 15;
+                                },100);
+                        }
+                        if(index==2||index==4||index==6||index==13||index==15||index==19||index==24||index==29||index==34||index==39||index==41||index==45||index==48||index==52||index==57||index==61||index==64||index==69||index==72||index==74||index==77||index==80) {
+                            mesh.position.y += 15;
+                            setTimeout(function(){
+                                mesh.position.y -= 15;
+                            },100);
+                        }
+                    }
+                });
+                $('body').fadeIn("slow");
+            }
+    
+            function onWindowResize() {
+    
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+    
+                renderer.setSize( window.innerWidth, window.innerHeight );
+    
+            }
+    
+            function animate() {
+                var vertexpos = 0;
+                var colorpos = 0;
+                var numConnected = 0;
+
+                for ( var i = 0; i < particleCount; i++ )
+                    particlesData[ i ].numConnections = 0;
+
+                for ( var i = 0; i < particleCount; i++ ) {
+
+                    // get the particle
+                    var particleData = particlesData[i];
+
+                    particlePositions[ i * 3     ] += particleData.velocity.x;
+                    particlePositions[ i * 3 + 1 ] += particleData.velocity.y;
+                    particlePositions[ i * 3 + 2 ] += particleData.velocity.z;
+
+                    if ( particlePositions[ i * 3 + 1 ] < -rHalf || particlePositions[ i * 3 + 1 ] > rHalf )
+                        particleData.velocity.y = -particleData.velocity.y;
+
+                    if ( particlePositions[ i * 3 ] < -rHalf || particlePositions[ i * 3 ] > rHalf )
+                        particleData.velocity.x = -particleData.velocity.x;
+
+                    if ( particlePositions[ i * 3 + 2 ] < -rHalf || particlePositions[ i * 3 + 2 ] > rHalf )
+                        particleData.velocity.z = -particleData.velocity.z;
+
+                    if ( effectController.limitConnections && particleData.numConnections >= effectController.maxConnections )
+                        continue;
+
+                    // Check collision
+                    for ( var j = i + 1; j < particleCount; j++ ) {
+
+                        var particleDataB = particlesData[ j ];
+                        if ( effectController.limitConnections && particleDataB.numConnections >= effectController.maxConnections )
+                            continue;
+
+                        var dx = particlePositions[ i * 3     ] - particlePositions[ j * 3     ];
+                        var dy = particlePositions[ i * 3 + 1 ] - particlePositions[ j * 3 + 1 ];
+                        var dz = particlePositions[ i * 3 + 2 ] - particlePositions[ j * 3 + 2 ];
+                        var dist = Math.sqrt( dx * dx + dy * dy + dz * dz );
+
+                        if ( dist < effectController.minDistance ) {
+
+                            particleData.numConnections++;
+                            particleDataB.numConnections++;
+
+                            var alpha = 1.0 - dist / effectController.minDistance;
+
+                            positions[ vertexpos++ ] = particlePositions[ i * 3     ];
+                            positions[ vertexpos++ ] = particlePositions[ i * 3 + 1 ];
+                            positions[ vertexpos++ ] = particlePositions[ i * 3 + 2 ];
+
+                            positions[ vertexpos++ ] = particlePositions[ j * 3     ];
+                            positions[ vertexpos++ ] = particlePositions[ j * 3 + 1 ];
+                            positions[ vertexpos++ ] = particlePositions[ j * 3 + 2 ];
+
+                            colors[ colorpos++ ] = alpha;
+                            colors[ colorpos++ ] = alpha;
+                            colors[ colorpos++ ] = alpha;
+
+                            colors[ colorpos++ ] = alpha;
+                            colors[ colorpos++ ] = alpha;
+                            colors[ colorpos++ ] = alpha;
+
+                            numConnected++;
+                        }
+                    }
+                }
+
+
+                linesMesh.geometry.drawcalls[ 0 ].count = numConnected * 2;
+                linesMesh.geometry.attributes.position.needsUpdate = true;
+                linesMesh.geometry.attributes.color.needsUpdate = true;
+
+                pointCloud.geometry.attributes.position.needsUpdate = true;
+
+                requestAnimationFrame( animate );
+    
+    
+                mesh.rotation.x += 0.005;
+                mesh.rotation.y += 0.01;
+    
+                mesh_masuo.rotation.x += 0.005;
+                mesh_masuo.rotation.y += 0.01;
+    
+                renderer.render( scene, camera );
+            }
+
+            mesh.callback = function() { 
+                window.open("https://twitter.com/IAMAS_girl");
+            }
+            mesh_masuo.callback = function() { 
+                window.open("https://twitter.com/IAMAS_boy");
+            }
+            var raycaster = new THREE.Raycaster();
+            var mouse = new THREE.Vector2();
+            
+            document.addEventListener( 'mousedown', onDocumentMouseDown, false );
+            function onDocumentMouseDown( event ) {
+            
+                event.preventDefault();
+            
+                mouse.x = ( event.clientX / renderer.domElement.clientWidth ) * 2 - 1;
+                mouse.y = - ( event.clientY / renderer.domElement.clientHeight ) * 2 + 1;
+            
+                raycaster.setFromCamera( mouse, camera );
+            
+                var intersects = raycaster.intersectObjects( objects ); 
+            
+                if ( intersects.length > 0 ) {
+                    intersects[0].object.callback();
+                }
+            
+            }
+
+
+        });
+    </script>
+    <div id="container"></div>
+    <div class="i-head">
+        <a href="/" class="i-logo-less">
+            <img src="/assets/images/logo_2.gif" width="150">
+        </a>
+        <div class="social_btn uk-hidden-small" style="float:right;">
+            <div class="twitter">
+                <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://iamasokuho.gifu.jp" data-text="IAMASokuho" data-via="iamasokuho">Tweet</a>
+                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+            </div>
+            <div class="facebook">
+                <div class="fb-like" data-href="http://iamasokuho.gifu.jp/" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+            </div>
+        </div>
+    </div>
+    <div id="fullpage">
+        <div class="section">
+            <p class="i-p">
+今日は、<br><br>
+M1の音楽ユニットにインタビューするよ！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+音楽ユニット？なんかかっこいい！<br><br>
+どんな人たちなのかしら！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+その名も<br><br>
+<span class="b">「(99.9%)復活⚾︎天才うまみ成分セミナー」</span><br><br>
+だよ！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+なんかめちゃくちゃ名前ね…<br><br>
+どんな感じなのかしら。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+今日はこの部屋で待ち合わせなんだけど…<br><br>
+まだ来ないなあ。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+あ、誰か来たわ…
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p">
+あ、こんにち…わ…？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/16-1.jpg" width=300>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/16-2.jpg" width=300>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/16-3.jpg" width=300>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<span class="b">「(99.9%)復活⚾︎天才うまみ成分セミナー」</span><br><br>
+の方でよろしいですか…？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/seminar.jpg" width=100><br><br>
+はい。
+
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p">
+（ねえ、これちょっとやばいよ…）
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+（いや、一旦話だけ聞こう？）
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+（いや、ちょっとキツいっしょ…）<br><br>
+（だってこれだよ？）
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/16-3.jpg" width=300>
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+（とりあえず話を聞こう…）<br><br>
+あの…メンバーは、あなた1人なんですか…？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/16-4.jpg" width=300><br><br>
+いえ、5人です。
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p">
+他のメンバーの方は…？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/seminar.jpg" width=100><br><br>
+今日はちょっと、<br><br>
+各自の活動で来られないようで、<br><br>
+私だけで応対させて頂きます。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+そうですか…<br><br>
+あの、失礼ですが、<br><br>
+お名前お伺いしてもよろしいですか？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/seminar.jpg" width=100><br><br>
+キャサリン・ゼタ＝ジョーンズです。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/16-5.jpg" width=300><br><br>
+<span class="b">キャサリン・ゼタ＝ジョーンズ</span><br><br>
+<span style="font-size:10px;">
+イギリスの女優。「シカゴ」でアカデミー賞助演女優賞受賞。<br>
+<a href="https://ja.wikipedia.org/wiki/%E3%82%AD%E3%83%A3%E3%82%B5%E3%83%AA%E3%83%B3%E3%83%BB%E3%82%BC%E3%82%BF%EF%BC%9D%E3%82%B8%E3%83%A7%E3%83%BC%E3%83%B3%E3%82%BA">
+https://ja.wikipedia.org/wiki/%E3%82%AD%E3%83%A3%E3%82%B5%E3%83%AA%E3%83%B3%E3%83%BB%E3%82%BC%E3%82%BF%EF%BC%9D%E3%82%B8%E3%83%A7%E3%83%BC%E3%83%B3%E3%82%BA
+</a>
+</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+（このビジュアルで）<br><br>
+（キャサリン・ゼタ＝ジョーンズは）<br><br>
+（やばい）<br><br>
+（帰りたい）
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p">
+（もうちょっと話聞こう）<br><br>
+他の4人のメンバーは、<br><br>
+どんな方がいるんですか…？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/seminar.jpg" width=100><br><br>
+そうですね、私も名前はわからないのですが、<br><br>
+メインボーカル、サブパーソナリティ、<br><br>
+演奏者が3人いるようです。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/16-6.jpg" width=300><br><br>
+メインボーカル
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/16-7.jpg" width=300><br><br>
+サブパーソナリティ
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+（パーソナリティ…？）
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+あなたはどの楽器を演奏するんですか？
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/16-8.jpg" width=300><br><br>
+いえ、私は演奏しません。
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+え？でも演奏する人が3人…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/seminar.jpg" width=100><br><br>
+演奏者は3人います。<br><br>
+私は全体の<span class="b">”守護霊”のような存在</span>として、<br><br>
+彼らの後ろにいます。<br><br>
+だから人数に数えません。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+（全然なに言ってるかわからない）
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+なるほど…皆さんは、<br><br>
+どういうタイミングで集まるんですか？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/seminar.jpg" width=100><br><br>
+<span class="b">「あっ」と思ったら、ですね。</span>
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p">
+「あっ」とは…？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/seminar.jpg" width=100><br><br>
+ひとり、<br><br>
+敏感にアンテナを立てるメンバーがいて、<br><br>
+彼が「あっ」となったとき、<br><br>
+直ちにメンバーが招集されますね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+あの…<br><br>
+そのお面は、なにを…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/seminar.jpg" width=100><br><br>
+顔です。<br><br>
+<span class="b">断じて、お面では、ありません。</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+（ひっ…）
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+皆さんの活動の目的、というのは、<br><br>
+一体なんなのでしょう？
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/seminar.jpg" width=100><br><br>
+そうですね、<br><br>
+あまり詳しくは話せないのですが、<br><br>
+<span class="b">我々の目標とする形は、<br><br>
+ティム・ウェイクフィールド、ですね。</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/16-9.jpg" width=300><br><br>
+ティム・ウェイクフィールド<br><br>
+<span style="font-size:10px;">
+元メジャーリーガー。ナックルボールを武器に200勝を挙げる。<br>
+<a href="https://ja.wikipedia.org/wiki/%E3%83%86%E3%82%A3%E3%83%A0%E3%83%BB%E3%82%A6%E3%82%A7%E3%82%A4%E3%82%AF%E3%83%95%E3%82%A3%E3%83%BC%E3%83%AB%E3%83%89">
+https://ja.wikipedia.org/wiki/%E3%83%86%E3%82%A3%E3%83%A0%E3%83%BB%E3%82%A6%E3%82%A7%E3%82%A4%E3%82%AF%E3%83%95%E3%82%A3%E3%83%BC%E3%83%AB%E3%83%89
+</a>
+</span>
+
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+（なぜ野球選手…）
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+なぜ、ティム・ウェイクフィールドさんを、<br><br>
+目指そうと思われたのですか？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/seminar.jpg" width=100><br><br>
+そうですね、細かく言うなら、<br><br>
+<span class="b"> 
+彼のナックルボールの技術、そして、<br><br>
+キャッチャーが取れないボールを投げる精神力。<br><br>
+それらはあらゆる生物を凌駕する</span>ものがあり、<br><br>
+その点を追い求めたい気持ちはありますね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+（全然わからない…）
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p">
+<span class="b">「(99.9%)復活⚾︎天才うまみ成分セミナー」</span><br><br>
+というユニット名には、<br><br>
+なにか意味が込められているのですか？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/seminar.jpg" width=100><br><br>
+それもあまり詳しくは言えないのですが、<br><br>
+やはり、ティムが関わっていますね…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/16-9.jpg" width=300><br><br>
+ティム
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+あっ、もしかして…
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/16-11.jpg" width=300><br><br>
+野球ボールが…？
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/seminar.jpg" width=100><br><br>
+それは、ご想像にお任せします。
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p">
+なるほど…<br><br>
+IAMASに来ようと思っている人に対して、<br><br>
+メッセージをお願いします。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/16-12.jpg" width=300><br><br>
+そうですね。<br><br>
+我々も<span class="b">新メンバーを募集している</span>ので、<br><br>
+意欲的な方に来てもらえると、<br><br>
+嬉しいですよね。
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+メンバー募集してるんだ…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+ちなみに、<br><br>
+どんなメンバーを募集しているんですか？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/seminar.jpg" width=100><br><br>
+そうですね…<br><br>
+<span class="b">ファン・ブロンクホルスト</span>みたいな、<br><br>
+メンバーが欲しいですね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/16-13.jpg" width=300><br><br>
+<span class="b">ジョバンニ・ファン・ブロンクホルスト</span><br><br>
+<span style="font-size:10px;">
+元サッカーオランダ代表主将、現フェイエノールト監督。2010年南アフリカW杯準決勝ウルグアイ戦で決めた41mのロングミドルは記憶に新しい。<br>
+<a href="https://ja.wikipedia.org/wiki/%E3%82%B8%E3%83%A7%E3%83%90%E3%83%B3%E3%83%8B%E3%83%BB%E3%83%95%E3%82%A1%E3%83%B3%E3%83%BB%E3%83%96%E3%83%AD%E3%83%B3%E3%82%AF%E3%83%9B%E3%83%AB%E3%82%B9%E3%83%88">
+https://ja.wikipedia.org/wiki/%E3%82%B8%E3%83%A7%E3%83%90%E3%83%B3%E3%83%8B%E3%83%BB%E3%83%95%E3%82%A1%E3%83%B3%E3%83%BB%E3%83%96%E3%83%AD%E3%83%B3%E3%82%AF%E3%83%9B%E3%83%AB%E3%82%B9%E3%83%88
+</a>
+</span>
+
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p">
+（ここにきてサッカー…）
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/seminar.jpg" width=100><br><br>
+普段はキャプテンとして後ろで支えつつ、<br><br>
+ときに自分で上がってミドルも決められる、<br><br>
+そしてチームの空気もよくする、<br><br>
+ゆくゆくは監督にも就任できる、<br><br>
+そんなプレーヤーが理想ですね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+なるほど…わかります。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+（ぜったい分かってないでしょ…）
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+インタビューは以上になります。<br><br>
+今日はありがとうございました！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/seminar.jpg" width=100><br><br>
+ありがとうございました。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/16-14.jpg" width=300>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/16-15.jpg" width=300>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+あれ…？なんか眠くなって…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+これは…催眠ガス…？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+うーん…<br><br>
+あれ？ここは、ぼくの席？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+むにゃむにゃ…<br><br>
+あれ、席に戻ってる…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+なんだ、夢だったのか…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+なんか変な夢を見たわね…<br><br>
+そうよね、あんな顔の人いるわけないも
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/16-16.jpg" width=300><br><br>
+の…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/16-17.png" width=300><br><br>
+IAMASは、スポーツ好きも大歓迎です！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+ということで引き続き、<br><br>
+質問のほうもお待ちしております！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+IAMASにいる人に聞きたいこととかがあれば、<br><br>
+ぼくたちが代わりに聞きにいきまーす！
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p">
+<span style="font-weight:bold;">イアマ速報 facebookページ</span>はこちら！<br><br>
+<a href="https://www.facebook.com/iamasokuho">
+https://www.facebook.com/iamasokuho<br><br>
+</a>
+いいね！しなさいよ！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<span style="font-weight:bold;">イアマ速報のTwitter</span>はこちらです！<br><br>
+<a href="https://twitter.com/IAMASokuho">
+https://twitter.com/IAMASokuho<br><br>
+</a>
+いろんな情報拾っていきまーす！
+<br><br><br>
+<a href="http://iamasokuho.gifu.jp/day_sixteen.html" style="font-size:12px;">
+<< 前の記事へ
+</a>
+&nbsp;&nbsp;&nbsp;
+<a href="http://iamasokuho.gifu.jp/archive.html" style="font-size:12px;">
+記事一覧へ
+</a>
+
+                <div class="social_btn_bottom">
+                    <div class="twitter">
+                        <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://iamasokuho.gifu.jp/day_sixteen.html">Tweet</a>
+                        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+                    </div>
+                    <div class="facebook">
+                        <div class="fb-like" data-href="http://iamasokuho.gifu.jp/day_sixteen.html" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+                    </div>
+                    <div class="hateb">
+                        <a href="http://b.hatena.ne.jp/entry/iamasokuho.gifu.jp/day_sixteen.html" class="hatena-bookmark-button" data-hatena-bookmark-title="【IAMASの人々】 (99.9%)復活⚾︎天才うまみ成分セミナー" data-hatena-bookmark-layout="standard-balloon" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリ>ーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a>
+                    </div>
+                    <script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+                </div>
+            </p>
+        </div>
+    </div>
+</body>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-64484802-1', 'auto');
+  ga('send', 'pageview');
+</script>
+</html>

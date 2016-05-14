@@ -1,0 +1,698 @@
+<html lang="ja-jp" dir="ltr" xmlns:og="http://ogp.me/ns/#">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="IAMASOKUHO">
+    <meta name="keywords" content="iamasokuho, iama速報, IAMAS, 情報科学芸術大学院大学">
+    <title>【IAMAS正直Q&A】入試ってどんな感じなの？</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/vnd.microsoft.icon">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.11.0/css/uikit.almost-flat.min.css" rel="stylesheet">
+    <link href="/assets/css/jquery.fullPage.css" rel="stylesheet">
+    <link href="/assets/css/style.css" rel="stylesheet">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.11.0/js/uikit.min.js"></script>
+    <script src="/assets/js/three.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+    
+    <script type="text/javascript" src="assets/js/jquery.fullPage.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.typist.js"></script>
+    <style>
+        body {
+          /* 画像ファイルの指定 */
+          background-image: url(/assets/images/sp_back3.gif);
+
+          /* 画像を常に天地左右の中央に配置 */
+          background-position: center center;
+
+          /* 画像をタイル状に繰り返し表示しない */
+          background-repeat: no-repeat;
+
+          /* コンテンツの高さが画像の高さより大きい時、動かないように固定 */
+          background-attachment: fixed;
+
+          /* 表示するコンテナの大きさに基づいて、背景画像を調整 */
+          background-size: cover;
+
+          /* 背景画像が読み込まれる前に表示される背景のカラー */
+          background-color: #464646;
+        }
+    </style>
+</head>
+<body>
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v2.3&appId=884387134914356";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+    <script>
+        $('head').append(
+                '<style type="text/css">body {display:none;}</style>'
+        );
+        $(document).ready(function() {
+    
+            var camera, scene, renderer;
+            var mesh;
+            var mesh_masuo;
+            var objects = [];
+
+            // Particles
+            var group;
+            var container;
+            var particlesData = [];
+            var positions, colors;
+            var pointCloud;
+            var particlePositions;
+            var linesMesh;
+
+            var maxParticleCount = 1000;
+            var particleCount = 400;
+            if (window.innerWidth < 600) {
+                particleCount = 100;
+            } 
+
+            var r = 900;
+            var rHalf = r / 2;
+
+            var effectController = {
+                showDots: true,
+                showLines: true,
+                minDistance: 200,
+                limitConnections: false,
+                maxConnections: 100,
+                particleCount: 400
+            }
+
+    
+            init();
+            function init() {
+                $('body').fadeIn("slow");
+            }
+
+
+            $('#fullpage').fullpage({
+                sectionsColor: [],
+                verticalCentered: false,
+                paddingTop: '6em',
+                afterLoad: function(anchorLink, index){
+                    if (index == 5 || index == 3) {
+                    }
+
+                    if (index == 2 || index == 4) {
+                    }
+                }
+            });
+        });
+    </script>
+    <div id="container"></div>
+    <div class="i-head">
+        <a href="/" class="i-logo-less">
+            <img src="/assets/images/logo_2.gif" width="150">
+        </a>
+        <div class="social_btn uk-hidden-small" style="float:right;">
+            <div class="twitter">
+                <a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
+                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+            </div>
+            <div class="facebook">
+                <div class="fb-like" data-href="http://iamasokuho.gifu.jp/day_four.html" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+            </div>
+        </div>
+    </div>
+    <div id="fullpage">
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+きょうはこの質問にお答えするよ！
+            </p>
+
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+ライゾマティクスかチームラボに入りたいさん（21歳・男性）<br>
+IAMASにはどんな機材があるんですか？<br>
+借りたりできるんですか？
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+IAMASに入りたい人って、<br>
+そういうこと言う人一定するいるわよね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+ぼくだってライゾマ入りたいよ！
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+とりあえず機材の紹介しましょ！<br>
+３階のシステム委員会に行きましょう！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+〜ワークショップ24 3F〜
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+こんにちは〜。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/19-14.jpg" width=50><br>
+やあ。
+
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+あ、大石さん！こんにちは！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/19-8.jpg" width=300><br>
+<span class="b">大石さん</span><br>
+
+IAMASシステム委員会職員。<br>
+ノイズ音楽に取り組むIAMAS卒業生でもある。<br>
+機材とIngressの使い方を教えてくれる、<br>
+Ingressお兄さん（青）だ！<br>
+ちなみに大垣はだいたい真っ青だぞ！
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/19-20.jpg" width=300><br>
+ここにはIAMASの機材のほとんどが、<br>
+保管されて、一元管理されているよ。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+そういえば私も、<br>
+奥まで入って見たことはないわね…
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+大石さん、<br>
+見せてもらってもいいですか？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/19-14.jpg" width=50><br>
+いいよ〜。<br>
+今回は特別ね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/19-6.jpg" width=300>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/19-17.jpg" width=300>
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/19-1.jpg" width=300>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/19-14.jpg" width=50><br>
+ここにあるもののほとんどは、<br>
+<span class="b">基本的に先生のサインをもらえば、<br>
+借りることができるよ。</span><br>
+ものによって貸出期間が短いものや、<br>
+詳しい知識がないとダメなものもあるけど。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+ところ狭しと並んでるわね…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+大石さん、<br>
+よく借りられる機材ってどういうものなんですか？
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/19-14.jpg" width=50><br>
+そうだなあ…<br>
+一番多いのは<span class="b">デジタル一眼カメラ、ビデオカメラ、<br>
+レンズ、GoPro、三脚あたりのカメラ類</span>かな。<br>
+あとはモニター、プロジェクター、ケーブル、<br>
+イベント用のスピーカーとかミキサーとかかな。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+カメラは映像を扱う人たちがよく使ってるわよね！<br>
+わたしも入学してすぐのモチーフワークとか、<br>
+映像のプロジェクトで借りたなぁ。
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+一台何十万もする機材を貸してもらえるのは、<br>
+本当にありがたいよね。<br>
+なおさら丁寧に扱わないとだけど…。
+            </p>
+
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/19-3.jpg" width=300><br>
+あと木工とかするとき用に、<br>
+インパクトドライバーとかも貸し出しできるよ。
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+こういうの、使うタイミングはけっこうあるのに、<br>
+本気で工作する人以外はあんまり持ってないから、<br>
+貸してもらえるのはすごく助かるわね…！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/19-14.jpg" width=50><br>
+<span class="b">あとは入学してすぐみんなに1台ずつ貸与された、<br>
+MacBook Proの15インチとiPad、Adobeソフト</span>も、<br>
+システム経由で貸し出してるね。<br>
+気づいてる人少ないかもしれないけど、<br>
+<span class="b">実はストレージ750GBに拡張してるよ。</span>
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+そうだ！<br>
+普段使ってるPCもシステムから借りましたね…。<br>
+<span class="b">あれだけのスペックのPCとかソフトを、<br>
+無料で貸し出してもらえる</span>のも、<br>
+本当にすごい環境だと思ったな…。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/19-16.jpg" width=300><br>
+あとプリンターのインクとか紙とかも、<br>
+システムで管理してるから、<br>
+切れたら取りにきてね。
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+そのへんの機材も、<br>
+システムで管理してるのね！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/19-11.jpg" width=300><br>
+PS3もある！<br>
+PSとかPS2のソフトも使える初期のものだね。
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/19-4.jpg" width=300><br>
+<span class="b">ダンスダンスレボリューション専用コントローラ…</span><br>
+15年くらいぶりに見たわね…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/19-21.jpg" width=300><br>
+<span class="b">スモークマシン</span>なんてあるんだ…
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/19-5.jpg" width=300><br>
+レゴブロックも借りられるのね！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+変わった機材とかって、なにかありますか？
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/19-9.jpg" width=300><br>
+うーん、これとかかなあ。<br>
+<span class="b">水中スピーカー。</span>
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+なんに使うんだろう…
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/19-14.jpg" width=50><br>
+ぼくもわかんないな（笑）
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+高級な機材はどんなものが？
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/19-14.jpg" width=50><br>
+すごい高いスピーカーとかミキサーとかは、<br>
+サウンドスタジオに置いてあるけど、<br>
+ここにしまってあるものだとこれかなあ…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/19-10.jpg" width=300>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+なにこれ…モアイかしら…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/19-14.jpg" width=50><br>
+これは<span class="b">ダミーヘッド</span>だね。<br>
+両耳の部分にマイクがついてて、<br>
+人間が聞くのと同じように録音ができる。<br>
+<span class="b">1つで100万くらいするね。</span>
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+100万…！<br>
+使ってみたいけど、遊びに使うのは怖いな…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/19-14.jpg" width=50><br>
+そうだね、あんまり使う人もいないなあ。<br>
+あとはプロ仕様のビデオカメラとかもあるけど、<br>
+それは撮影の知識がある人に貸し出してるね。<br>
+<span class="b">大きな機材はセンタービルに保管してある</span>けど、<br>
+そっちも見に行く？
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+あ、見に行きたいです！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/19-14.jpg" width=50><br>
+おっけー、じゃあ移動しよう！
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+〜センタービル 倉庫〜
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/19-13.jpg" width=300>
+
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+わ、大きな機材とか、<br>
+古めの機材がいろいろあるな…。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/19-7.jpg" width=300><br>
+こっちの倉庫のものでよく使われるのは、<br>
+こういう<span class="b">スピーカー類</span>かな。<br>
+割と年季入ってるものもあるけど、<br>
+学内イベントとかなら十分だから、<br>
+よく使うね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/19-19.jpg" width=300><br>
+ウーファーもいっぱいあるわね。
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/19-15.jpg" width=300><br>
+ビデオデッキとかブラウン管モニターとか、<br>
+<span class="b">古いからこそ使う人が現れてきたもの</span>もあるから、<br>
+そういうものも貸し出せたりするよ。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/19-18.jpg" width=300><br>
+あ、それは、<br>
+<span class="b">モーションキャプチャとかに使うセンサー</span>だね。<br>
+結構古いやつだけど、もしかしたら、
+ここにある機材で一番高いかもね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/19-12.jpg" width=300><br>
+なんのコントローラだろう…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/19-2.jpg" width=300><br>
+<span class="b">高所作業用のはしごとか、<br>
+機材設置用のトラスとか</span>もあるよ。
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+
+<img src="/assets/images/iako.png" width=50><br>
+ここにある備品は、<br>
+先生方が購入することを決めるんですか？
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/19-14.jpg" width=50><br>
+そうだね、プロジェクトで必要とかで、<br>
+先生方から要望がくることがあるかな。<br>
+もちろん学生からの要望もあるし、<br>
+「これが足りない！」と思って、<br>
+システムから提案することもあるね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+ここにない機材は、お願いすれば、<br>
+新たに入れてもらったりできるんですか？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/19-14.jpg" width=50><br>
+そうだね、もちろんモノや値段によるけど、<br>
+<span class="b">システムで購入できることもある</span>よ。<br>
+岐阜県の備品扱いになるから、<br>
+手続きとかちょっと時間かかるけどね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+そうなんですね…<br>
+改めてみると、<span class="b">本当に機材が充実</span>してるわね！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+そうだね…
+ぼくもそんなに機材を借りるわけじゃないけど、
+せっかくだし活用しないと損だ！と思ったよ。
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/19-14.jpg" width=50><br>
+大事に使ってもらえれば、<br>
+どれだけ使ってもかまわないから、<br>
+うまく活用してくださいね〜。<br>
+リクエストも聞けることもあるかも。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+勉強になりました！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+大石さん、ありがとうございました！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/19-14.jpg" width=50><br>
+いいえ〜。がんばってね〜。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+ということで引き続き、<br>
+質問のほうもお待ちしております！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+IAMASにいる人に聞きたいこととかがあれば、<br>
+ぼくたちが代わりに聞きにいきまーす！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p">
+イア子とマス男への質問やメッセージはこちらから！<br>
+<a href="http://goo.gl/forms/hlgdXfxMei">
+http://goo.gl/forms/hlgdXfxMei
+</a>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+<span style="font-weight:bold;">イアマ速報 facebookページ</span>はこちら！<br>
+<a href="https://www.facebook.com/iamasokuho">
+https://www.facebook.com/iamasokuho<br>
+</a>
+いいね！しなさいよ！
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+<span style="font-weight:bold;">イアマ速報のTwitter</span>はこちらです！<br>
+<a href="https://twitter.com/IAMASokuho">
+https://twitter.com/IAMASokuho<br>
+</a>
+いろんな情報拾っていきまーす！<br>
+
+<br>
+
+<a href="http://iamasokuho.gifu.jp/day_eightteen.html" style="font-size:12px;">
+<< 前の記事へ
+</a>
+&nbsp;&nbsp;&nbsp;
+<a href="http://iamasokuho.gifu.jp/archive.html" style="font-size:12px;">
+記事一覧へ
+</a>
+
+            <div class="social_btn_bottom social_btn_bottom_sp uk-visible-small">
+                <div class="twitter">
+                    <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://iamasokuho.gifu.jp/day_nineteen.html" data-via="iamasokuho">Tweet</a>
+                    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+                </div>
+                <div class="facebook">
+                    <div class="fb-like" data-href="http://iamasokuho.gifu.jp/day_nineteen.html" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+                </div>
+                <div class="hateb">
+                    <a href="http://b.hatena.ne.jp/entry/iamasokuho.gifu.jp/day_nineteen.html" class="hatena-bookmark-button" data-hatena-bookmark-title="【IAMAS正直Q&A】入試ってどんな感じなの？| IAMASOKUHO" data-hatena-bookmark-layout="standard-balloon" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリ>ーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a>
+                    <script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+                </div>
+            </div>
+            </p>
+        </div>
+    </div>
+
+</body>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-64484802-1', 'auto');
+  ga('send', 'pageview');
+</script>
+</html>

@@ -1,0 +1,643 @@
+<html lang="ja-jp" dir="ltr" xmlns:og="http://ogp.me/ns/#">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="IAMASOKUHO">
+    <meta name="keywords" content="iamasokuho, iama速報, IAMAS, 情報科学芸術大学院大学">
+    <title>【IAMASの人々】ゆるキャラコミュニケーションを学ぶ！ジョ・ジェヨンさん | IAMASokuho</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/vnd.microsoft.icon">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.11.0/css/uikit.almost-flat.min.css" rel="stylesheet">
+    <link href="/assets/css/jquery.fullPage.css" rel="stylesheet">
+    <link href="/assets/css/style.css" rel="stylesheet">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.11.0/js/uikit.min.js"></script>
+    <script src="/assets/js/three.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+    
+    <script type="text/javascript" src="assets/js/jquery.fullPage.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.typist.js"></script>
+    <style>
+        body {
+          /* 画像ファイルの指定 */
+          background-image: url(/assets/images/sp_back3.gif);
+
+          /* 画像を常に天地左右の中央に配置 */
+          background-position: center center;
+
+          /* 画像をタイル状に繰り返し表示しない */
+          background-repeat: no-repeat;
+
+          /* コンテンツの高さが画像の高さより大きい時、動かないように固定 */
+          background-attachment: fixed;
+
+          /* 表示するコンテナの大きさに基づいて、背景画像を調整 */
+          background-size: cover;
+
+          /* 背景画像が読み込まれる前に表示される背景のカラー */
+          background-color: #464646;
+        }
+    </style>
+</head>
+<body>
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v2.3&appId=884387134914356";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+    <script>
+        $('head').append(
+                '<style type="text/css">body {display:none;}</style>'
+        );
+        $(document).ready(function() {
+    
+            var camera, scene, renderer;
+            var mesh;
+            var mesh_masuo;
+            var objects = [];
+
+            // Particles
+            var group;
+            var container;
+            var particlesData = [];
+            var positions, colors;
+            var pointCloud;
+            var particlePositions;
+            var linesMesh;
+
+            var maxParticleCount = 1000;
+            var particleCount = 400;
+            if (window.innerWidth < 600) {
+                particleCount = 100;
+            } 
+
+            var r = 900;
+            var rHalf = r / 2;
+
+            var effectController = {
+                showDots: true,
+                showLines: true,
+                minDistance: 200,
+                limitConnections: false,
+                maxConnections: 100,
+                particleCount: 400
+            }
+
+    
+            init();
+            function init() {
+                $('body').fadeIn("slow");
+            }
+
+
+            $('#fullpage').fullpage({
+                sectionsColor: ['none', 'none', 'none', 'none', 'none'],
+                verticalCentered: false,
+                paddingTop: '6em',
+                afterLoad: function(anchorLink, index){
+                    if (index == 5 || index == 3) {
+                    }
+
+                    if (index == 2 || index == 4) {
+                    }
+                }
+            });
+        });
+    </script>
+    <div id="container"></div>
+    <div class="i-head">
+        <a href="/" class="i-logo-less">
+            <img src="/assets/images/logo_2.gif" width="150">
+        </a>
+        <div class="social_btn uk-hidden-small" style="float:right;">
+            <div class="twitter">
+                <a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
+                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+            </div>
+            <div class="facebook">
+                <div class="fb-like" data-href="http://iamasokuho.gifu.jp/day_four.html" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+            </div>
+        </div>
+    </div>
+    <div id="fullpage">
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+そろそろM1の人も紹介したいね！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+そうね…誰かいるかしら。<br>
+あ、ジェヨンさん！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/11-1.jpg" width=300>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+ジェヨンさん、ちょっとお話きかせてください！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/jaeyoung.jpg" width=50><br>
+あ、いいですよ。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/11-2.jpg" width=300><br>
+<span style="font-weight:bold">ジョ・ジェヨン　Jae Young Cho</span><br>
+<span style="font-size:10px">
+イギリス・ロンドン出身。2歳から韓国・ソウルで暮らす。<br>
+韓国の大学で歴史を学び、デザインの学校を経て、<br>
+韓国の大手保険会社でデザイナーとして勤務。<br>
+今年の春からIAMASへ。現在IAMAS修士1年。<br>
+好きな動物はカエル、カメ、カバ、サイ。
+</span>
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+
+そういえばジェヨンさんって、<br>
+なんでIAMASに来たんですか？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/jaeyoung.jpg" width=50><br>
+そうですね、<br>
+2009年にデザインの学校に入ったんですけど、<br>
+その時の先生が、日本のデザインに詳しくて。<br>
+あと、その学校にいた人がIAMASに入ったりして。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+前にも韓国から来てた人がいたんですね！<br>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/jaeyoung.jpg" width=50><br>
+そうですね。ずっと日本に行きたくて、<br>
+<span style="font-weight:bold;">多摩美の情報デザインと悩んでた</span>んですけど、<br>
+その人に相談したら、<br>
+<span style="font-weight:bold;">「IAMASのほうが自由でいいよ」</span>って言ってたので。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+そうなんですね。<br>
+韓国には、情報とデザイン、<br>
+みたいなことを学べる学校ってなかったんですか？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/jaeyoung.jpg" width=50><br>
+韓国にも情報とデザインの学校はありますが、<br>
+<span style="font-weight:bold">日本の映画とかアニメが好きだった</span>ので、<br>
+日本語をずっと勉強していました。<br>
+韓国で勉強したり働いたりしてきましたが、<br>
+留学ができる最後のチャンスだと思いまして。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/11-3.jpg" width=300><br>
+<span style="font-size:10px;">
+<span style="font-weight:bold;">ジェヨンさんは園子温が好き。</span><br>
+「愛のむきだし」は韓国の映画館で見たそう。<br>
+やっぱり長すぎて休憩時間があったみたい。
+</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+じゃあ日本語を長年勉強してきたんですね！<br>
+どうりで日本語がとても上手だと思った…<br>
+デザインにはいつ頃から興味があったんですか？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/jaeyoung.jpg" width=50><br>
+大学生のとき、映画サークルに入っていたんですが、<br>
+そのときにポスター制作をしたりしてました。<br>
+その頃からデザインには関心がありました。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+それでデザインの学校に入って、<br>
+デザイナーになったんですね。<br>
+どういうことをしたくて、IAMASに来たんですか？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/jaeyoung.jpg" width=50><br>
+デザインの学校では、<span style="font-weight:bold;">コミュニケーションデザイン、<br>
+コミュニケーションのためのグラフィックデザイン、</span><br>
+みたいなことをしてたんですけど、<br>
+<span style="font-weight:bold;">日本のゆるキャラ</span>に興味があって。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+ゆるキャラ？<br>
+くまモンとかひこにゃんとかですよね！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/jaeyoung.jpg" width=50><br>
+そうです。<br>
+<span style="font-weight:bold;">キャラクターを通してコミュニケーションをする、<br>
+っていう方法が、<br>
+日本では特にうまくいっている</span>と思います。<br>
+韓国にはあまり、そういうものはないですね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/11-4.jpg" width=300><br>
+<span style="font-size:10px;"><br>
+ジェヨンさんの本棚。<br>
+韓国語のRhinocerosやProcessingの本、日本のキャラクターデザインの本、<br>
+個人の制作用の作業アイテム、ミニぬいぐるみなど。<br>
+ProcessingやopenFrameworksをやってる人は、韓国にも多いみたい。
+</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+ゆるキャラについて学びたい、って感じですか？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/jaeyoung.jpg" width=50><br>
+そうですね、もちろんそれだけじゃなく、<br>
+<span style="font-weight:bold;">デジタルファブリケーションを使って、<br>
+キャラクターを画面のなかだけじゃなく、<br>
+実際のカタチにする、</span><br>
+ってこともやっていきたいです。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+3Dプリンターとかありますもんね！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/jaeyoung.jpg" width=50><br>
+この間、3D造形の講義で、<br>
+こういうのを作ったんですけど、<br>
+もっといろいろやってみたいです。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/11-5.jpg" width=200>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+え、すごい！<br>
+めっちゃかわいい！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+<img src="/assets/images/11−6.png" width=200><br>
+マス男くんの作ったのに比べたら、大違いね…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+3Dプリンターの性能の違いだよ！！<br>
+でも性能よくても、<br>
+ジェヨンさんのみたいなのはつくれないなあ…
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+<span style="font-weight:bold;">IAMASに来てよかったなーと思ったこと</span>は、<br>
+なにかありますか？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/jaeyoung.jpg" width=50><br>
+そうですね、前はソウルに住んでいたので、<br>
+<span style="font-weight:bold;">大垣はすごく暮らしやすい</span>ですね。<br>
+夕日が見えたり星が見えたり、<br>
+自然と一緒に暮らしてる感じがいいですね。<br>
+もっと田舎にいくと、ヘビやサルも見ます。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+あー、それはぼくも東京に住んでたので、<br>
+すごくわかります。<br>
+ほんとにいいですよね…。<br>
+<span style="font-weight:bold;">山が見えるだけでも、なんか安心する</span>もん。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/jaeyoung.jpg" width=50><br>
+あとは、モチーフワーク(※1)でクワクボ先生(※2)が、<br>
+<span style="font-weight:bold;">「必ずしも全員の意見を聞く必要はない」</span><br>
+と言っていたのが、とても印象的でした。<br>
+私がデザインをするときも、<br>
+同じようなことを考えていたので。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/11-8.jpg" width=200><br>
+<a href="http://www.iamas.ac.jp/14297">モチーフワーク（グループ）</a><br>
+<span style="font-size:10px;">
+※1 モチーフワーク：IAMASに入学してすぐ、新入生が行う導入科目。今年のグループでのモチーフワークのテーマは「自分（たち）のキャンパスライフを充実させるデザイン」のプロトタイプ制作。<br>
+<a href="http://www.iamas.ac.jp/14297">http://www.iamas.ac.jp/14297</a><br>
+
+※2 クワクボリョウタ：IAMAS教員。メディアアーティスト。「デバイス・アート」とも呼ばれる独自のスタイルで作品制作を行う、日本を代表するメディアアーティストの１人。IAMASの1期卒業生でもある。<br>
+<a href="http://www.iamas.ac.jp/people/86">http://www.iamas.ac.jp/people/86</a>
+</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+あ、それは私も印象的だったなぁ…<br>
+<span style="font-weight:bold;">「自分のコンパスを持つ」</span>っていう言葉。<br>
+特にいろんな人がいろんな考えを持つIAMASでは、<br>
+とても大事な考え方なのかもね…。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+ジェヨンさんは、<br>
+<a href="http://www.iamas.ac.jp/openhouse/">7月25日・26日のIAMAS OPEN HOUSE</a>では、<br>
+何かする予定ですか？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/jaeyoung.jpg" width=50><br>
+いま、<span style="font-weight:bold;">デザイン班</span>として、<br>
+<span style="font-weight:bold;">オープンハウスのパンフレットをつくってます。</span><br>
+私のつくったマークやデザインも、<br>
+たくさん使われる予定です。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/11-9.jpg" width=300>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+わ、かわいい〜！<br>
+できあがりが楽しみですね！
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/jaeyoung.jpg" width=50><br>
+楽しみにしていてください。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+あ、ジェヨンさん、<span style="font-weight:bold;">さいごに1つ、<br>
+お願いしたいことがある</span>んですけど…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/jaeyoung.jpg" width=50><br>
+？<br>
+なんですか？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+あの、<span style="font-weight:bold;">ぼくのアイコンを、<br>
+デザインしてもらえませんか…？</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+<span style="font-weight:bold;">
+！！！<br>
+その手ありかよ！！
+</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/jaeyoung.jpg" width=50><br>
+<span style="font-weight:bold;">
+あ、いいですよ。
+</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+やったー！！！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+ええー！！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/jaeyoung.jpg" width=50><br>
+ちょっと待っててください。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+〜1時間後〜
+            </p>
+
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/jaeyoung.jpg" width=50><br>
+こんな感じで、どうですか？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+New マス男
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+<span style="font-weight:bold;">え、すごい！めっちゃ良いーー！！</span><br>
+来週から10秒アイコン卒業だー！！<br>
+ありがとうございます！！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+マジか、ちょっとうらやましい…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+ジェヨンさん、<br>
+インタビューからアイコンまで、<br>
+ありがとうございました！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+ありがとうございましたー！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+いやー、IAMASはほんとにいろんな人がいるね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+そうね〜。<br>
+日本人だけでもいろんな人がいるけど、<br>
+<span style="font-weight:bold;">国籍関係なくいろんな人がいると、<br>
+もっとおもしろくなるわよね！</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+外国人の人にもたくさん入ってきてほしいなー。<br>
+ぼくらも英語の勉強しなきゃだね。
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p s-i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+ということで、<br>
+引き続き、質問をお待ちしております！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+IAMASにいる人に聞きたいこととかがあれば、<br>
+ぼくたちが代わりに聞きにいきまーす！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p s-i-p">
+イア子とマス男への質問やメッセージはこちらから！<br>
+<a href="http://goo.gl/forms/hlgdXfxMei">
+http://goo.gl/forms/hlgdXfxMei
+</a>
+            </p>
+        </div>
+        <div class="section">
+<img src="/assets/images/iako.png" width=50><br>
+            <p class="i-p s-i-p s-i-p">
+<span style="font-weight:bold;">イアマ速報 facebookページ</span>はこちら！<br>
+<a href="https://www.facebook.com/iamasokuho">
+https://www.facebook.com/iamasokuho<br>
+</a>
+いいね！しなさいよ！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+<span style="font-weight:bold;">イアマ速報のTwitter</span>はこちらです！<br>
+<a href="https://twitter.com/IAMASokuho">
+https://twitter.com/IAMASokuho<br>
+</a>
+いろんな情報拾っていきまーす！<br>
+
+<br>
+<a href="http://iamasokuho.gifu.jp/day_ten.html" style="font-size:12px;">
+<< 前の記事へ
+</a>
+
+            <div class="social_btn_bottom social_btn_bottom_sp uk-visible-small">
+                <div class="twitter">
+                    <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://iamasokuho.gifu.jp/day_eleven.html" data-via="iamasokuho">Tweet</a>
+                    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+                </div>
+                <div class="facebook">
+                    <div class="fb-like" data-href="http://iamasokuho.gifu.jp/day_eleven.html" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+                </div>
+                <div class="hateb">
+                    <a href="http://b.hatena.ne.jp/entry/iamasokuho.gifu.jp/day_eleven.html" class="hatena-bookmark-button" data-hatena-bookmark-title="【IAMASの人々】ゆるキャラコミュニケーションを学ぶ！ジョ・ジェヨンさん | IAMASOKUHO" data-hatena-bookmark-layout="standard-balloon" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリ>ーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a>
+                    <script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+                </div>
+            </div>
+            </p>
+        </div>
+    </div>
+
+</body>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-64484802-1', 'auto');
+  ga('send', 'pageview');
+</script>
+</html>

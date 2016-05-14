@@ -1,0 +1,914 @@
+<html lang="ja-jp" dir="ltr" xmlns:og="http://ogp.me/ns/#">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="IAMASOKUHO">
+    <meta name="keywords" content="iamasokuho, iama速報, IAMAS, 情報科学芸術大学院大学">
+    <title>【IAMASすてきな施設めぐり】IAMASシステム委員会</title>
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="/assets/images/logo_top.gif">
+    <link rel="shortcut icon" href="favicon.ico" type="image/vnd.microsoft.icon">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.11.0/css/uikit.almost-flat.min.css" rel="stylesheet">
+    <link href="/assets/css/jquery.fullPage.css" rel="stylesheet">
+    <link href="/assets/css/style.css" rel="stylesheet">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.11.0/js/uikit.min.js"></script>
+    <script src="/assets/js/three.min.js"></script>
+    <script src="/assets/js/iamasokuho.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.fullPage.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.typist.js"></script>
+    <style>
+        body { margin: 0;}
+        canvas { width: 100%; height: 100% }
+    </style>
+</head>
+<body>
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v2.3&appId=884387134914356";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+    <script>
+        if ((navigator.userAgent.indexOf('iPhone') > 0 && navigator.userAgent.indexOf('iPad') == -1) || navigator.userAgent.indexOf('iPod') > 0 || navigator.userAgent.indexOf('Android') > 0) {
+            url = 'http://iamasokuho.gifu.jp/s_day_nineteen.html';
+            location.href = url;
+        }
+
+        $('head').append(
+                '<style type="text/css">body {display:none;}</style>'
+        );
+        $(document).ready(function() {
+            
+    
+            var camera, scene, renderer;
+            var mesh;
+            var mesh_masuo;
+            var objects = [];
+
+            // Particles
+            var group;
+            var container;
+            var particlesData = [];
+            var positions, colors;
+            var pointCloud;
+            var particlePositions;
+            var linesMesh;
+
+            var maxParticleCount = 1000;
+            var particleCount = 400;
+            if (window.innerWidth < 600) {
+                particleCount = 100;
+            } 
+
+            var r = 900;
+            var rHalf = r / 2;
+
+            var effectController = {
+                showDots: true,
+                showLines: true,
+                minDistance: 200,
+                limitConnections: false,
+                maxConnections: 100,
+                particleCount: 400
+            }
+
+    
+            init();
+            animate();
+
+            var zoom = 1000;
+            function zoom() {
+                for (var i = 0; i < 50; i++) {
+                    setTimeout(function(){
+                        camera.position.z = zoom - 5;
+                        zoom = zoom - 5; 
+                    },1000);
+                }
+            }
+
+            function init() {
+                container = document.getElementById( 'container' );
+
+                renderer = new THREE.WebGLRenderer({antialias: true});
+                renderer.setPixelRatio( window.devicePixelRatio );
+                renderer.setSize( window.innerWidth, window.innerHeight );
+                document.body.appendChild( renderer.domElement );
+    
+                camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 1, 1000 );
+                camera.position.z = 800;
+    
+                scene = new THREE.Scene();
+
+                group = new THREE.Group();
+                scene.add( group );
+
+                var segments = maxParticleCount * maxParticleCount;
+
+                positions = new Float32Array( segments * 3 );
+                colors = new Float32Array( segments * 3);
+            
+                var pMaterial = new THREE.PointCloudMaterial( {
+                    color: 0xFFFFF,
+                    size: 3,
+                    blending: THREE.AdditiveBlending,
+                    transparent: true,
+                    sizeAttenuation: false
+                } );
+
+                particles = new THREE.BufferGeometry();
+                particlePositions = new Float32Array( maxParticleCount * 3 );
+
+                for ( var i = 0; i < maxParticleCount; i++ ) {
+                    var x = Math.random() * r - r / 2;
+                    var y = Math.random() * r - r / 2;
+                    var z = Math.random() * r - r / 2;
+            
+                    particlePositions[i * 3]     = x;
+                    particlePositions[i * 3 + 1] = y;
+                    particlePositions[i * 3 + 2] = z;
+
+                    // add it to the geometry
+                    particlesData.push( {
+                        velocity: new THREE.Vector3( -1 + Math.random() * 2, -1 + Math.random() * 2, -1 + Math.random() * 2),
+                        numConnections: 0
+                    });
+                }
+
+                particles.drawcalls.push( {
+                    start: 0,
+                    count: particleCount,
+                    index: 0
+                });
+
+                particles.addAttribute( 'position', new THREE.DynamicBufferAttribute( particlePositions, 3));
+
+                // create the particle system
+                pointCloud = new THREE.PointCloud( particles, pMaterial);
+                pointCloud.visible = true;
+                group.add(pointCloud);
+        
+                var pGeometry = new THREE.BufferGeometry();
+                pGeometry.addAttribute( 'position', new THREE.DynamicBufferAttribute( positions, 3));
+                pGeometry.addAttribute( 'color', new THREE.DynamicBufferAttribute(colors, 3));
+
+                pGeometry.computeBoundingSphere();
+
+                pGeometry.drawcalls.push( {
+                    start: 0,
+                    count: 0,
+                    index: 0
+                } );
+
+                var pMaterial = new THREE.LineBasicMaterial( {
+                    vertexColors: THREE.VertexColors,
+                    blending: THREE.AdditiveBlending,
+                    transparent: true
+                });
+
+                linesMesh = new THREE.Line( pGeometry, pMaterial, THREE.LinePieces );
+                group.add( linesMesh );
+
+                renderer.setPixelRatio(window.devicePixelRatio);
+                renderer.setSize(window.innerWidth, window.innerHeight);
+
+                renderer.gammaInput = true;
+                renderer.gammaOutput = true;
+                renderer.setClearColor( new THREE.Color(0x000000) );
+
+                container.appendChild(renderer.domElement);
+
+                var geometry = new THREE.BoxGeometry( 70, 70, 70 );
+    
+                var texture = THREE.ImageUtils.loadTexture( 'assets/images/iako.png' );
+                texture.anisotropy = renderer.getMaxAnisotropy();
+    
+                var material = new THREE.MeshBasicMaterial( { map: texture } );
+    
+                mesh = new THREE.Mesh( geometry, material );
+                mesh.position.x = -300;
+                mesh.position.y += 150;
+                scene.add( mesh );
+    
+                // masuo
+                var texture_masuo = THREE.ImageUtils.loadTexture( 'assets/images/new_masuo.png' );
+                texture_masuo.anisotropy = renderer.getMaxAnisotropy();
+    
+                var material_masuo = new THREE.MeshBasicMaterial( { map: texture_masuo } );
+    
+                mesh_masuo = new THREE.Mesh( geometry, material_masuo );
+                mesh_masuo.position.x = 300;
+                mesh_masuo.position.y += 150;
+                scene.add( mesh_masuo ); 
+                objects.push( mesh );
+                objects.push( mesh_masuo );
+    
+    
+                window.addEventListener( 'resize', onWindowResize, false );
+                $('#fullpage').fullpage({
+                    sectionsColor: [],
+                    afterLoad: function(anchorLink, index){
+                        console.log(index);
+                        if(index==1||index==4||index==7||index==13||index==20||index==23||index==27||index==33||index==36||index==43||index==49||index==54||index==58||index==61||index==64||index==67||index==70) {
+                                mesh_masuo.position.y += 15;
+                                setTimeout(function(){
+                                    mesh_masuo.position.y -= 15;
+                                },100);
+                        }
+                        if(index==3||index==5||index==9||index==12||index==19||index==22||index==25||index==29||index==34||index==38||index==41||index==45||index==51||index==56||index==60||index==63||index==66||index==69) {
+                            mesh.position.y += 15;
+                            setTimeout(function(){
+                                mesh.position.y -= 15;
+                            },100);
+                        }
+                    }
+                });
+                $('body').fadeIn("slow");
+            }
+    
+            function onWindowResize() {
+    
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+    
+                renderer.setSize( window.innerWidth, window.innerHeight );
+    
+            }
+    
+            function animate() {
+                var vertexpos = 0;
+                var colorpos = 0;
+                var numConnected = 0;
+
+                for ( var i = 0; i < particleCount; i++ )
+                    particlesData[ i ].numConnections = 0;
+
+                for ( var i = 0; i < particleCount; i++ ) {
+
+                    // get the particle
+                    var particleData = particlesData[i];
+
+                    particlePositions[ i * 3     ] += particleData.velocity.x;
+                    particlePositions[ i * 3 + 1 ] += particleData.velocity.y;
+                    particlePositions[ i * 3 + 2 ] += particleData.velocity.z;
+
+                    if ( particlePositions[ i * 3 + 1 ] < -rHalf || particlePositions[ i * 3 + 1 ] > rHalf )
+                        particleData.velocity.y = -particleData.velocity.y;
+
+                    if ( particlePositions[ i * 3 ] < -rHalf || particlePositions[ i * 3 ] > rHalf )
+                        particleData.velocity.x = -particleData.velocity.x;
+
+                    if ( particlePositions[ i * 3 + 2 ] < -rHalf || particlePositions[ i * 3 + 2 ] > rHalf )
+                        particleData.velocity.z = -particleData.velocity.z;
+
+                    if ( effectController.limitConnections && particleData.numConnections >= effectController.maxConnections )
+                        continue;
+
+                    // Check collision
+                    for ( var j = i + 1; j < particleCount; j++ ) {
+
+                        var particleDataB = particlesData[ j ];
+                        if ( effectController.limitConnections && particleDataB.numConnections >= effectController.maxConnections )
+                            continue;
+
+                        var dx = particlePositions[ i * 3     ] - particlePositions[ j * 3     ];
+                        var dy = particlePositions[ i * 3 + 1 ] - particlePositions[ j * 3 + 1 ];
+                        var dz = particlePositions[ i * 3 + 2 ] - particlePositions[ j * 3 + 2 ];
+                        var dist = Math.sqrt( dx * dx + dy * dy + dz * dz );
+
+                        if ( dist < effectController.minDistance ) {
+
+                            particleData.numConnections++;
+                            particleDataB.numConnections++;
+
+                            var alpha = 1.0 - dist / effectController.minDistance;
+
+                            positions[ vertexpos++ ] = particlePositions[ i * 3     ];
+                            positions[ vertexpos++ ] = particlePositions[ i * 3 + 1 ];
+                            positions[ vertexpos++ ] = particlePositions[ i * 3 + 2 ];
+
+                            positions[ vertexpos++ ] = particlePositions[ j * 3     ];
+                            positions[ vertexpos++ ] = particlePositions[ j * 3 + 1 ];
+                            positions[ vertexpos++ ] = particlePositions[ j * 3 + 2 ];
+
+                            colors[ colorpos++ ] = alpha;
+                            colors[ colorpos++ ] = alpha;
+                            colors[ colorpos++ ] = alpha;
+
+                            colors[ colorpos++ ] = alpha;
+                            colors[ colorpos++ ] = alpha;
+                            colors[ colorpos++ ] = alpha;
+
+                            numConnected++;
+                        }
+                    }
+                }
+
+
+                linesMesh.geometry.drawcalls[ 0 ].count = numConnected * 2;
+                linesMesh.geometry.attributes.position.needsUpdate = true;
+                linesMesh.geometry.attributes.color.needsUpdate = true;
+
+                pointCloud.geometry.attributes.position.needsUpdate = true;
+
+                requestAnimationFrame( animate );
+    
+    
+                mesh.rotation.x += 0.005;
+                mesh.rotation.y += 0.01;
+    
+                mesh_masuo.rotation.x += 0.005;
+                mesh_masuo.rotation.y += 0.01;
+    
+                renderer.render( scene, camera );
+            }
+
+            mesh.callback = function() { 
+                window.open("https://twitter.com/IAMAS_girl");
+            }
+            mesh_masuo.callback = function() { 
+                window.open("https://twitter.com/IAMAS_boy");
+            }
+            var raycaster = new THREE.Raycaster();
+            var mouse = new THREE.Vector2();
+            
+            document.addEventListener( 'mousedown', onDocumentMouseDown, false );
+            function onDocumentMouseDown( event ) {
+            
+                event.preventDefault();
+            
+                mouse.x = ( event.clientX / renderer.domElement.clientWidth ) * 2 - 1;
+                mouse.y = - ( event.clientY / renderer.domElement.clientHeight ) * 2 + 1;
+            
+                raycaster.setFromCamera( mouse, camera );
+            
+                var intersects = raycaster.intersectObjects( objects ); 
+            
+                if ( intersects.length > 0 ) {
+                    intersects[0].object.callback();
+                }
+            
+            }
+
+
+        });
+    </script>
+    <div id="container"></div>
+    <div class="i-head">
+        <a href="/" class="i-logo-less">
+            <img src="/assets/images/logo_2.gif" width="150">
+        </a>
+        <div class="social_btn uk-hidden-small" style="float:right;">
+            <div class="twitter">
+                <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://iamasokuho.gifu.jp" data-text="IAMASokuho" data-via="iamasokuho">Tweet</a>
+                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+            </div>
+            <div class="facebook">
+                <div class="fb-like" data-href="http://iamasokuho.gifu.jp/" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+            </div>
+        </div>
+    </div>
+    <div id="fullpage">
+        <div class="section">
+            <p class="i-p">
+きょうはこの質問にお答えするよ！
+            </p>
+
+        </div>
+        <div class="section">
+            <p class="i-p">
+ライゾマティクスかチームラボに入りたいさん（21歳・男性）<br><br>
+IAMASにはどんな機材があるんですか？<br><br>
+借りたりできるんですか？
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+IAMASに入りたい人って、<br><br>
+そういうこと言う人一定するいるわよね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+ぼくだってライゾマ入りたいよ！
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p">
+とりあえず機材の紹介しましょ！<br><br>
+３階のシステム委員会に行きましょう！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+〜ワークショップ24 3F〜
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+こんにちは〜。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/19-14.jpg" width=100><br><br>
+やあ。
+
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p">
+あ、大石さん！こんにちは！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/19-8.jpg" width=300><br><br>
+<span class="b">大石さん</span><br><br>
+
+IAMASシステム委員会職員。<br><br>
+ノイズ音楽に取り組むIAMAS卒業生でもある。<br><br>
+機材とIngressの使い方を教えてくれる、<br><br>
+Ingressお兄さん（青）だ！<br><br>
+ちなみに大垣はだいたい真っ青だぞ！
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/19-20.jpg" width=300><br><br>
+ここにはIAMASの機材のほとんどが、<br><br>
+保管されて、一元管理されているよ。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+そういえば私も、<br><br>
+奥まで入って見たことはないわね…
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p">
+大石さん、<br><br>
+見せてもらってもいいですか？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/19-14.jpg" width=100><br><br>
+いいよ〜。<br><br>
+今回は特別ね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/19-6.jpg" width=300>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/19-17.jpg" width=300>
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/19-1.jpg" width=300>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/19-14.jpg" width=100><br><br>
+ここにあるもののほとんどは、<br><br>
+<span class="b">基本的に先生のサインをもらえば、<br><br>
+借りることができるよ。</span><br><br>
+ものによって貸出期間が短いものや、<br><br>
+詳しい知識がないとダメなものもあるけど。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+ところ狭しと並んでるわね…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+大石さん、<br><br>
+よく借りられる機材ってどういうものなんですか？
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/19-14.jpg" width=100><br><br>
+そうだなあ…<br><br>
+一番多いのは<span class="b">デジタル一眼カメラ、ビデオカメラ、<br><br>
+レンズ、GoPro、三脚あたりのカメラ類</span>かな。<br><br>
+あとはモニター、プロジェクター、ケーブル、<br><br>
+イベント用のスピーカーとかミキサーとかかな。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+カメラは映像を扱う人たちがよく使ってるわよね！<br><br>
+わたしも入学してすぐのモチーフワークとか、<br><br>
+映像のプロジェクトで借りたなぁ。
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+一台何十万もする機材を貸してもらえるのは、<br><br>
+本当にありがたいよね。<br><br>
+なおさら丁寧に扱わないとだけど…。
+            </p>
+
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/19-3.jpg" width=300><br><br>
+あと木工とかするとき用に、<br><br>
+インパクトドライバーとかも貸し出しできるよ。
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p">
+こういうの、使うタイミングはけっこうあるのに、<br><br>
+本気で工作する人以外はあんまり持ってないから、<br><br>
+貸してもらえるのはすごく助かるわね…！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/19-14.jpg" width=100><br><br>
+<span class="b">あとは入学してすぐみんなに1台ずつ貸与された、<br><br>
+MacBook Proの15インチとiPad、Adobeソフト</span>も、<br><br>
+システム経由で貸し出してるね。<br><br>
+気づいてる人少ないかもしれないけど、<br><br>
+<span class="b">実はストレージ750GBに拡張してるよ。</span>
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+そうだ！<br><br>
+普段使ってるPCもシステムから借りましたね…。<br><br>
+<span class="b">あれだけのスペックのPCとかソフトを、<br><br>
+無料で貸し出してもらえる</span>のも、<br><br>
+本当にすごい環境だと思ったな…。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/19-16.jpg" width=300><br><br>
+あとプリンターのインクとか紙とかも、<br><br>
+システムで管理してるから、<br><br>
+切れたら取りにきてね。
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p">
+そのへんの機材も、<br><br>
+システムで管理してるのね！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/19-11.jpg" width=300><br><br>
+PS3もある！<br><br>
+PSとかPS2のソフトも使える初期のものだね。
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/19-4.jpg" width=300><br><br>
+<span class="b">ダンスダンスレボリューション専用コントローラ…</span><br><br>
+15年くらいぶりに見たわね…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/19-21.jpg" width=300><br><br>
+<span class="b">スモークマシン</span>なんてあるんだ…
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/19-5.jpg" width=300><br><br>
+レゴブロックも借りられるのね！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+変わった機材とかって、なにかありますか？
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/19-9.jpg" width=300><br><br>
+うーん、これとかかなあ。<br><br>
+<span class="b">水中スピーカー。</span>
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+なんに使うんだろう…
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/19-14.jpg" width=100><br><br>
+ぼくもわかんないな（笑）
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+高級な機材はどんなものが？
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/19-14.jpg" width=100><br><br>
+すごい高いスピーカーとかミキサーとかは、<br><br>
+サウンドスタジオに置いてあるけど、<br><br>
+ここにしまってあるものだとこれかなあ…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/19-10.jpg" width=300>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+なにこれ…モアイかしら…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/19-14.jpg" width=100><br><br>
+これは<span class="b">ダミーヘッド</span>だね。<br><br>
+両耳の部分にマイクがついてて、<br><br>
+人間が聞くのと同じように録音ができる。<br><br>
+<span class="b">1つで100万くらいするね。</span>
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+100万…！<br><br>
+使ってみたいけど、遊びに使うのは怖いな…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/19-14.jpg" width=100><br><br>
+そうだね、あんまり使う人もいないなあ。<br><br>
+あとはプロ仕様のビデオカメラとかもあるけど、<br><br>
+それは撮影の知識がある人に貸し出してるね。<br><br>
+<span class="b">大きな機材はセンタービルに保管してある</span>けど、<br><br>
+そっちも見に行く？
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p">
+あ、見に行きたいです！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/19-14.jpg" width=100><br><br>
+おっけー、じゃあ移動しよう！
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+〜センタービル 倉庫〜
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/19-13.jpg" width=300>
+
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p">
+わ、大きな機材とか、<br><br>
+古めの機材がいろいろあるな…。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/19-7.jpg" width=300><br><br>
+こっちの倉庫のものでよく使われるのは、<br><br>
+こういう<span class="b">スピーカー類</span>かな。<br><br>
+割と年季入ってるものもあるけど、<br><br>
+学内イベントとかなら十分だから、<br><br>
+よく使うね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/19-19.jpg" width=300><br><br>
+ウーファーもいっぱいあるわね。
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/19-15.jpg" width=300><br><br>
+ビデオデッキとかブラウン管モニターとか、<br><br>
+<span class="b">古いからこそ使う人が現れてきたもの</span>もあるから、<br><br>
+そういうものも貸し出せたりするよ。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/19-18.jpg" width=300><br><br>
+あ、それは、<br><br>
+<span class="b">モーションキャプチャとかに使うセンサー</span>だね。<br><br>
+結構古いやつだけど、もしかしたら、
+ここにある機材で一番高いかもね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/19-12.jpg" width=300><br><br>
+なんのコントローラだろう…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/19-2.jpg" width=300><br><br>
+<span class="b">高所作業用のはしごとか、<br><br>
+機材設置用のトラスとか</span>もあるよ。
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+ここにある備品は、<br><br>
+先生方が購入することを決めるんですか？
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/19-14.jpg" width=100><br><br>
+そうだね、プロジェクトで必要とかで、<br><br>
+先生方から要望がくることがあるかな。<br><br>
+もちろん学生からの要望もあるし、<br><br>
+「これが足りない！」と思って、<br><br>
+システムから提案することもあるね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+ここにない機材は、お願いすれば、<br><br>
+新たに入れてもらったりできるんですか？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/19-14.jpg" width=100><br><br>
+そうだね、もちろんモノや値段によるけど、<br><br>
+<span class="b">システムで購入できることもある</span>よ。<br><br>
+岐阜県の備品扱いになるから、<br><br>
+手続きとかちょっと時間かかるけどね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+そうなんですね…<br><br>
+改めてみると、<span class="b">本当に機材が充実</span>してるわね！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+そうだね…
+ぼくもそんなに機材を借りるわけじゃないけど、
+せっかくだし活用しないと損だ！と思ったよ。
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/19-14.jpg" width=100><br><br>
+大事に使ってもらえれば、<br><br>
+どれだけ使ってもかまわないから、<br><br>
+うまく活用してくださいね〜。<br><br>
+リクエストも聞けることもあるかも。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+勉強になりました！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+大石さん、ありがとうございました！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<img src="/assets/images/19-14.jpg" width=100><br><br>
+いいえ〜。がんばってね〜。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+ということで引き続き、<br><br>
+質問のほうもお待ちしております！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+IAMASにいる人に聞きたいこととかがあれば、<br><br>
+ぼくたちが代わりに聞きにいきまーす！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+イア子とマス男への質問やメッセージはこちらから！<br><br>
+<a href="http://goo.gl/forms/hlgdXfxMei">
+http://goo.gl/forms/hlgdXfxMei
+</a>
+            </p>
+        </div>
+
+
+        <div class="section">
+            <p class="i-p">
+<span style="font-weight:bold;">イアマ速報 facebookページ</span>はこちら！<br><br>
+<a href="https://www.facebook.com/iamasokuho">
+https://www.facebook.com/iamasokuho<br><br>
+</a>
+いいね！しなさいよ！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p">
+<span style="font-weight:bold;">イアマ速報のTwitter</span>はこちらです！<br><br>
+<a href="https://twitter.com/IAMASokuho">
+https://twitter.com/IAMASokuho<br><br>
+</a>
+いろんな情報拾っていきまーす！
+<br><br><br>
+<a href="http://iamasokuho.gifu.jp/day_eighteen.html" style="font-size:12px;">
+<< 前の記事へ
+</a>
+&nbsp;&nbsp;&nbsp;
+<a href="http://iamasokuho.gifu.jp/archive.html" style="font-size:12px;">
+記事一覧へ
+</a>
+
+                <div class="social_btn_bottom">
+                    <div class="twitter">
+                        <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://iamasokuho.gifu.jp/day_nineteen.html">Tweet</a>
+                        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+                    </div>
+                    <div class="facebook">
+                        <div class="fb-like" data-href="http://iamasokuho.gifu.jp/day_nineteen.html" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+                    </div>
+                    <div class="hateb">
+                        <a href="http://b.hatena.ne.jp/entry/iamasokuho.gifu.jp/day_nineteen.html" class="hatena-bookmark-button" data-hatena-bookmark-title="【IAMASすてきな施設めぐり】IAMASシステム委員会" data-hatena-bookmark-layout="standard-balloon" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリ>ーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a>
+                    </div>
+                    <script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+                </div>
+            </p>
+        </div>
+    </div>
+</body>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-64484802-1', 'auto');
+  ga('send', 'pageview');
+</script>
+</html>

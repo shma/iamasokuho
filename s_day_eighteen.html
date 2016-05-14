@@ -1,0 +1,524 @@
+<html lang="ja-jp" dir="ltr" xmlns:og="http://ogp.me/ns/#">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="IAMASOKUHO">
+    <meta name="keywords" content="iamasokuho, iama速報, IAMAS, 情報科学芸術大学院大学">
+    <title>【IAMAS正直Q&A】入試ってどんな感じなの？</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/vnd.microsoft.icon">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.11.0/css/uikit.almost-flat.min.css" rel="stylesheet">
+    <link href="/assets/css/jquery.fullPage.css" rel="stylesheet">
+    <link href="/assets/css/style.css" rel="stylesheet">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.11.0/js/uikit.min.js"></script>
+    <script src="/assets/js/three.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+    
+    <script type="text/javascript" src="assets/js/jquery.fullPage.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.typist.js"></script>
+    <style>
+        body {
+          /* 画像ファイルの指定 */
+          background-image: url(/assets/images/sp_back3.gif);
+
+          /* 画像を常に天地左右の中央に配置 */
+          background-position: center center;
+
+          /* 画像をタイル状に繰り返し表示しない */
+          background-repeat: no-repeat;
+
+          /* コンテンツの高さが画像の高さより大きい時、動かないように固定 */
+          background-attachment: fixed;
+
+          /* 表示するコンテナの大きさに基づいて、背景画像を調整 */
+          background-size: cover;
+
+          /* 背景画像が読み込まれる前に表示される背景のカラー */
+          background-color: #464646;
+        }
+    </style>
+</head>
+<body>
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v2.3&appId=884387134914356";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+    <script>
+        $('head').append(
+                '<style type="text/css">body {display:none;}</style>'
+        );
+        $(document).ready(function() {
+    
+            var camera, scene, renderer;
+            var mesh;
+            var mesh_masuo;
+            var objects = [];
+
+            // Particles
+            var group;
+            var container;
+            var particlesData = [];
+            var positions, colors;
+            var pointCloud;
+            var particlePositions;
+            var linesMesh;
+
+            var maxParticleCount = 1000;
+            var particleCount = 400;
+            if (window.innerWidth < 600) {
+                particleCount = 100;
+            } 
+
+            var r = 900;
+            var rHalf = r / 2;
+
+            var effectController = {
+                showDots: true,
+                showLines: true,
+                minDistance: 200,
+                limitConnections: false,
+                maxConnections: 100,
+                particleCount: 400
+            }
+
+    
+            init();
+            function init() {
+                $('body').fadeIn("slow");
+            }
+
+
+            $('#fullpage').fullpage({
+                sectionsColor: [],
+                verticalCentered: false,
+                paddingTop: '6em',
+                afterLoad: function(anchorLink, index){
+                    if (index == 5 || index == 3) {
+                    }
+
+                    if (index == 2 || index == 4) {
+                    }
+                }
+            });
+        });
+    </script>
+    <div id="container"></div>
+    <div class="i-head">
+        <a href="/" class="i-logo-less">
+            <img src="/assets/images/logo_2.gif" width="150">
+        </a>
+        <div class="social_btn uk-hidden-small" style="float:right;">
+            <div class="twitter">
+                <a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
+                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+            </div>
+            <div class="facebook">
+                <div class="fb-like" data-href="http://iamasokuho.gifu.jp/day_four.html" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+            </div>
+        </div>
+    </div>
+    <div id="fullpage">
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+今日も質問が来ているよ！
+
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p s-i-p">
+イアマスネーム：<br>
+ディープドリーム（隠語でない）さん（22歳・男性）<br>
+
+IAMASの入試ってどんな感じなんですか？<br>
+あんま想像つかなくて困ってます！<br>
+教えてください！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+隠語のDeepdreamってどんな夢なのかしらね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+相当ディープなラーニングなんだろうな…<br>
+それはそうとして、入試だ！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+<span class="b">入試は募集要項が、IAMAS公式サイトから、<br>
+過去問とともにダウンロードできるわ！</span><br>
+<a href="http://www.iamas.ac.jp/admission#admissions">
+http://www.iamas.ac.jp/admission#admissions
+</a>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+ここに掲載する情報は、<br>
+<span class="b">2015年度入学者までの情報を元にしているので、<br>
+今後変更される可能性は十分にあります！</span><br>
+そして噂話が多いので、<span class="b">一切真偽は保証しません！</span><br>
+参考レベルでご覧ください！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+◇入試の期間について
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+<span class="b">推薦入試と、2回の一般入試</span>があって、<br>
+今年の推薦入試はもう終わってしまったけど、<br>
+一般入試は要項が掲載されているね！
+
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+<span class="b">わたしは前期の入試</span>だったわ。<br>
+先生に薦められてOPENHOUSEに来て、<br>
+そのまま受けた感じかな。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+ぼくは前期の時点では、<br>
+受けようと思ってなかったけれど、<br>
+仕事の都合などもあって、<br>
+<span class="b">後期の入試を受けて合格</span>したよ。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+<span class="b">後期のほうが、少しだけ倍率が高い、</span><br>
+という噂もあるわね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+あー、それは聞いたことあるな。<br>
+でも<span class="b">前期で落ちても、後期で受かる、</span><br>
+ってこともあるみたいだね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+早くから受けるつもりなら、<br>
+<span class="b">前期から受けるに越したことはない</span>わね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+◇入試の内容について（筆記）
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+入試は、書類を提出した後は、<br>
+<span class="b">推薦入試は面接のみ、<br>
+一般入試は筆記と面接、</span><br>
+になっているね。
+
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+<span class="b">筆記の過去問は、上記のIAMAS公式サイトから、<br>
+要項と一緒にダウンロードできるわ！</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+過去問を見てもらえばわかると思うけど、<br>
+<span class="b">内容は毎回かなり異なる</span>よね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+そうね。毎回問題を作る先生が変わる、<br>
+という噂もあるわね。<br>
+<span class="b">でも2つの大問があって、<br>
+大問【１】が芸術寄り、大問【２】が工学寄り、<br>
+という傾向は見える</span>わね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+ああ、それはあるかも！<br>
+ぼくも入試はたまたま趣味で読んだ本が、<br>
+大問【２】にドンピシャで、<br>
+うまくいった感じだったなあ。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+◇入試の内容について（面接）
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+要項にもあるけど、<span class="b">出願時点で、<br>
+自分の活動内容を提出する形式と、<br>
+ポートフォリオを提出する形式、<br>
+好きな方を選べるのよね！</span><br>
+この提出物を元に面接で話すのよね。
+            </p>
+
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+そうそう！これが一番情報がなくて、<br>
+一番知りたいことかもしれないね…<br>
+ぼくもこれはすごく苦労したなあ。<br>
+でも結局、<span class="b">提出した資料を説明しながら、<br>
+自己PRする、</span>っていう普通の面接だよね。
+
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+そうそう。これも要項にあるけど、<br>
+<span class="b">５分でプレゼンして、１０分質疑応答、</span><br>
+だったわね。<br>
+<span class="b">面接の先生が結構多くて、</span><br>
+質疑応答、怖かったなあ…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+いま考えると、<br>
+あのとき面接してくださった先生は、<br>
+<span class="b">ぼくたち個々人のやりたいことに、<br>
+どこかで関連している先生</span>ばかりだったね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+あ、たしかにそうだったわ…<br>
+結構専門的なことを、<br>
+詳しい先生に突っ込まれたりもしたわね。<br>
+すごく当たり前かもしれないけど。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+準備できることとしたら、<br>
+強いて言えば、<span class="b">自分自身の経験／作品を、<br>
+そして自分の思いを、改めて見つめ直して、<br>
+誰にでも説明できるようにする、</span><br>
+ってくらいかなあ。あたりまえだよね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+◇ベストを尽くす
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+そうねえ…<br>
+逆に自分の考えが、<br>
+人にちゃんと説明できるなら、<br>
+<span class="b">あとは当日ベストをつくす、くらいね。<br>
+それがすごく難しいんだけど…。</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+これも要項に載ってるけど、<br>
+<span class="b">面接では英語の質問があって、</span><br>
+人によって質問は全然違うみたいだけど、<br>
+<span class="b">ぼくは中学英語レベルの問いかけを、<br>
+緊張しすぎて全然答えられなかったなあ…。</span>
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+<span class="b">わたしは結構難しい問いかけだったわ…</span><br>
+昔ちょっと英語やってたから、<br>
+あんまり分からないながらなんとか答えたら、<br>
+どんどん難しい会話になっちゃって、<br>
+全然答えられなかった…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+あと社会人の人は、<br>
+試験日が土曜日とはいえ、<br>
+<span class="b">「入試を受けに大垣に来る」ってことが、<br>
+なかなか難しかったりするから、</span><br>
+その調整もなんとか頑張る必要があるね…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+やっぱ仕事しながらだと大変なのね…。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+そうだね…ぼくは忙しい時期だったから、<br>
+金曜日なんとか仕事を他の人にお願いして、<br>
+終電で大垣まできて、夜中にホテルついて、<br>
+<span class="b">それから面接用のプレゼン資料を、<br>
+朝方まで作る有様</span>だったよ。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+よくそれで受かったわね…。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+<span class="b">ホント、社会人のみなさまは、<br>
+IAMASへの道が本当に険しいと思うけど、</span><br>
+ピンときてるなら多分間違ってないので、<br>
+なんとかしてIAMASへの道を、<br>
+こじ開けてきてください！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+もしここに載ってないことが知りたかったら、<br>
+<span class="b">OPENHOUSEでわたしたちに聞いて下さい！</span><br>
+
+ということで結論！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p b">
+結論：<br>
+IAMAS入試は、普段から勉強を重ねて、<br>
+自分をちゃんと説明できるようにして、<br>
+当日実力を実力通り発揮できれば、<br>
+たぶん誰かがちゃんと見ていてくれます。
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p s-i-p s-i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+ということで引き続き、<br>
+質問のほうもお待ちしております！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p s-i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+IAMASにいる人に聞きたいこととかがあれば、<br>
+ぼくたちが代わりに聞きにいきまーす！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p s-i-p s-i-p">
+イア子とマス男への質問やメッセージはこちらから！<br>
+<a href="http://goo.gl/forms/hlgdXfxMei">
+http://goo.gl/forms/hlgdXfxMei
+</a>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p s-i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+<span style="font-weight:bold;">イアマ速報 facebookページ</span>はこちら！<br>
+<a href="https://www.facebook.com/iamasokuho">
+https://www.facebook.com/iamasokuho<br>
+</a>
+いいね！しなさいよ！
+            </p>
+        </div>
+
+        <div class="section">
+            <p class="i-p s-i-p s-i-p s-i-p">
+<img src="/assets/images/new_masuo.png" width=50><br>
+<span style="font-weight:bold;">イアマ速報のTwitter</span>はこちらです！<br>
+<a href="https://twitter.com/IAMASokuho">
+https://twitter.com/IAMASokuho<br>
+</a>
+いろんな情報拾っていきまーす！<br>
+
+<br>
+
+<a href="http://iamasokuho.gifu.jp/day_sixteen.html" style="font-size:12px;">
+<< 前の記事へ
+</a>
+&nbsp;&nbsp;&nbsp;
+<a href="http://iamasokuho.gifu.jp/archive.html" style="font-size:12px;">
+記事一覧へ
+</a>
+
+            <div class="social_btn_bottom social_btn_bottom_sp uk-visible-small">
+                <div class="twitter">
+                    <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://iamasokuho.gifu.jp/day_eighteen.html" data-via="iamasokuho">Tweet</a>
+                    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+                </div>
+                <div class="facebook">
+                    <div class="fb-like" data-href="http://iamasokuho.gifu.jp/day_eighteen.html" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+                </div>
+                <div class="hateb">
+                    <a href="http://b.hatena.ne.jp/entry/iamasokuho.gifu.jp/day_eighteen.html" class="hatena-bookmark-button" data-hatena-bookmark-title="【IAMAS正直Q&A】入試ってどんな感じなの？| IAMASOKUHO" data-hatena-bookmark-layout="standard-balloon" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリ>ーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a>
+                    <script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+                </div>
+            </div>
+            </p>
+        </div>
+    </div>
+
+</body>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-64484802-1', 'auto');
+  ga('send', 'pageview');
+</script>
+</html>

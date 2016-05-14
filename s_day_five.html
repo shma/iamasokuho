@@ -1,0 +1,775 @@
+<html lang="ja-jp" dir="ltr" xmlns:og="http://ogp.me/ns/#">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="IAMASOKUHO">
+    <meta name="keywords" content="iamasokuho, iama速報, IAMAS, 情報科学芸術大学院大学">
+    <title>【IAMASの人々】新たな音楽の形式をつくる！大久保雅基さん | IAMASokuho</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/vnd.microsoft.icon">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/uikit/2.11.0/css/uikit.almost-flat.min.css" rel="stylesheet">
+    <link href="/assets/css/jquery.fullPage.css" rel="stylesheet">
+    <link href="/assets/css/style.css" rel="stylesheet">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/uikit/2.11.0/js/uikit.min.js"></script>
+    <script src="/assets/js/three.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+    
+    <script type="text/javascript" src="assets/js/jquery.fullPage.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.typist.js"></script>
+    <style>
+        body {
+          /* 画像ファイルの指定 */
+          background-image: url(/assets/images/sp_back3.gif);
+
+          /* 画像を常に天地左右の中央に配置 */
+          background-position: center center;
+
+          /* 画像をタイル状に繰り返し表示しない */
+          background-repeat: no-repeat;
+
+          /* コンテンツの高さが画像の高さより大きい時、動かないように固定 */
+          background-attachment: fixed;
+
+          /* 表示するコンテナの大きさに基づいて、背景画像を調整 */
+          background-size: cover;
+
+          /* 背景画像が読み込まれる前に表示される背景のカラー */
+          background-color: #464646;
+        }
+    </style>
+</head>
+<body>
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v2.3&appId=884387134914356";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+    <script>
+        $('head').append(
+                '<style type="text/css">body {display:none;}</style>'
+        );
+        $(document).ready(function() {
+    
+            var camera, scene, renderer;
+            var mesh;
+            var mesh_masuo;
+            var objects = [];
+
+            // Particles
+            var group;
+            var container;
+            var particlesData = [];
+            var positions, colors;
+            var pointCloud;
+            var particlePositions;
+            var linesMesh;
+
+            var maxParticleCount = 1000;
+            var particleCount = 400;
+            if (window.innerWidth < 600) {
+                particleCount = 100;
+            } 
+
+            var r = 900;
+            var rHalf = r / 2;
+
+            var effectController = {
+                showDots: true,
+                showLines: true,
+                minDistance: 200,
+                limitConnections: false,
+                maxConnections: 100,
+                particleCount: 400
+            }
+
+    
+            init();
+            function init() {
+                $('body').fadeIn("slow");
+            }
+
+
+            $('#fullpage').fullpage({
+                sectionsColor: ['none', 'none', 'none', 'none', 'none'],
+                verticalCentered: false,
+                paddingTop: '6em',
+                afterLoad: function(anchorLink, index){
+                    if (index == 5 || index == 3) {
+                    }
+
+                    if (index == 2 || index == 4) {
+                    }
+                }
+            });
+        });
+    </script>
+    <div id="container"></div>
+    <div class="i-head">
+        <a href="/" class="i-logo-less">
+            <img src="/assets/images/logo_2.gif" width="150">
+        </a>
+        <div class="social_btn uk-hidden-small" style="float:right;">
+            <div class="twitter">
+                <a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
+                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+            </div>
+            <div class="facebook">
+                <div class="fb-like" data-href="http://iamasokuho.gifu.jp/day_five.html" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+            </div>
+        </div>
+    </div>
+    <div id="fullpage">
+        <div class="section" id="section1">
+            <p class="i-p i-s-p">
+<blockquote class="twitter-tweet" lang="ja"><p lang="ja" dir="ltr"><a href="https://twitter.com/IAMAS_girl">@IAMAS_girl</a> イア子ちゃん、最近分量多くて実装つらい</p>&mdash; マス男 (@IAMAS_boy) <a href="https://twitter.com/IAMAS_boy/status/615377064267399168">2015, 6月 29</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </p>
+        </div>
+        <div class="section" id="section2">
+            <p class="i-p i-s-p">
+<blockquote class="twitter-tweet" lang="ja"><p lang="ja" dir="ltr"><a href="https://twitter.com/IAMAS_boy">@iamas_boy</a> 今日はインタビューだからさらに多いわよ</p>&mdash; イア子 (@IAMAS_girl) <a href="https://twitter.com/IAMAS_girl/status/615377378655600641">2015, 6月 29</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+            </p>
+        </div>
+        <div class="section" id="section3">
+            <p class="i-p i-s-p">
+<blockquote class="twitter-tweet" lang="ja"><p lang="ja" dir="ltr"><a href="https://twitter.com/IAMAS_girl">@iamas_girl</a> 死ねる…</p>&mdash; マス男 (@IAMAS_boy) <a href="https://twitter.com/IAMAS_boy/status/615379514713968640">2015, 6月 29</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+            </p>
+        </div>
+        <div class="section" id="section7">
+            <p class="i-p i-s-p">
+<img src="/assets/images/masuo.png" width=50><br>
+イア子ちゃん、<br>
+IAMAS入る前のIAMASのイメージってさあ、
+            </p>
+        </div>
+        <div class="section" id="section8">
+            <p class="i-p i-s-p">
+<img src="/assets/images/iako.png" width=50><br>
+謎、だったわね。
+            </p>
+        </div>
+        <div class="section" id="section9">
+            <p class="i-p i-s-p">
+<img src="/assets/images/masuo.png" width=50><br>
+そうなんだよ…<br>
+全然どんな人が居るのか、<br>
+実態が見えてこなかったよね。
+            </p>
+        </div>
+        <div class="section" id="section11">
+            <p class="i-p i-s-p">
+<img src="/assets/images/iako.png" width=50><br>
+そうなのよね。<br>
+でも<span style="font-weight:bold;">来たら来たで変わった人しかいないから、</span><br>
+かえってよく分からなくなったところもあるわね。
+            </p>
+        </div>
+        <div class="section" id="section12">
+            <p class="i-p i-s-p">
+<img src="/assets/images/masuo.png" width=50><br>
+今回ばかりは同意だよイア子ちゃん…<br>
+どうしたら解決できるかなあ。
+            </p>
+        </div>
+        <div class="section" id="section13">
+            <p class="i-p i-s-p">
+<img src="/assets/images/iako.png" width=50><br>
+そうだ、M1の友達とか、M2の先輩とか、<br>
+先生とかにインタビューしてみたらどうかしら！
+            </p>
+        </div>
+        <div class="section" id="section14">
+            <p class="i-p i-s-p">
+<img src="/assets/images/masuo.png" width=50><br>
+それはいいな！<br>
+先輩にインタビューしてみよう！
+            </p>
+        </div>
+        <div class="section" id="section16">
+            <p class="i-p i-s-p">
+<img src="/assets/images/iako.png" width=50><br>
+そうね！<br>
+じゃあM2のスペースにおじゃましましょ！
+            </p>
+        </div>
+        <div class="section" id="section17">
+            <p class="i-p i-s-p">
+<img src="/assets/images/m2.jpg" width=300><br>
+どの先輩がいいかしら…<br>
+どの先輩も面白くて悩むわね！
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p i-s-p">
+<img src="/assets/images/masuo.png" width=50><br>
+ホントそうだよなあ…<br>
+あ、もきゅさんがいる！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p i-s-p">
+<img src="/assets/images/iako.png" width=50><br>
+もきゅさん、こんにちは！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p i-s-p">
+<img src="/assets/images/mokyu1.jpg" width=300><br>
+お、<br>
+イア子さん、マス男くん、こんにちは。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p i-s-p">
+<img src="/assets/images/masuo.png" width=50><br>
+もきゅさん、お話きかせてください！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p i-s-p">
+<img src="/assets/images/mokyu_thum2.png" width=50><br>
+あ、いいですよ。
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p i-s-p">
+<img src="/assets/images/iako.png" width=50><br>
+やったー！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p i-s-p">
+<img src="/assets/images/mokyu2.jpg" width=300><br>
+<span style="font-weight: bold;">大久保雅基　おおくぼ・もとき</span><br>
+1988年生まれ。宮城県仙台市出身。通称もきゅ。<br>
+情報科学芸術大学院大学（IAMAS）修士2年。<br>
+作曲を中心に活動中。<br>
+好きな動物はマヌルネコ。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p i-s-p">
+<img src="/assets/images/iako.png" width=50><br>
+もきゅさんって音楽やってるんですよね！<br>
+どんなことやってるんですか？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p i-s-p">
+<img src="/assets/images/mokyu3.jpg" width=300><br>
+これまでずっと電子音楽をやってきたんですけど、<br>
+最近「生の音」の強さに気づいて、<br>
+<span style="font-weight:bold;">生の音を使ってどんな音楽ができるか、</span><br>
+ってことをやってます。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p i-s-p">
+<img src="/assets/images/masuo.png" width=50><br>
+なるほど…<br>
+音楽はいつぐらいからやってるんですか？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p i-s-p">
+<img src="/assets/images/mokyu_thum2.png" width=50><br>
+小学生ぐらいのときからビーマニ（※1）をやっていて、<br>
+なんかトランスとかかっこいいなーって思ってて。<br>
+それでトランスのCDとか買ったりして、<br>
+これいいなーって思って聴いてたりしてましたね。<br>
+
+<span style="font-size:10px;">
+※1 ビーマニ＝beatmania、1997年から稼働しているコナミの音楽ゲーム。音楽に合わせてキーボードとターンテーブルをタイミングよく操作する。
+</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p i-s-p">
+<img src="/assets/images/iako.png" width=50><br>
+ビーマニとかダンレボとか、やったなあ…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p i-s-p">
+<img src="/assets/images/masuo.png" width=50><br>
+ぼくのまわりにも、<br>
+そういう影響受けて音楽やってる人いますね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p i-s-p">
+<img src="/assets/images/mokyu4.jpg" width=300><br>
+兄がPCで音楽作ったりしてたんで、<br>
+ぼくもちょっといじってみたりして。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p i-s-p">
+<img src="/assets/images/mokyu_thum2.png" width=50><br>
+それでぼくもヨドバシでCubasis VST（※2）<br>
+っていう安い音楽ソフト買ってきて、<br>
+海外のソフトシンセ（※3）買って、<br>
+<span style="font-weight:bold;">それで中３くらいからトランスの楽曲とか作ってて。</span><br>
+<span style="font-size:10px;">
+※2 Cubasis VST：定番DAWソフトCubaseのエントリー版。現在はiPadでCubasisが使用できる。<br>
+※3 ソフトシンセ：実際のキーボードではなく画面上で操作するシンセサイザー。
+</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p i-s-p">
+<img src="/assets/images/mokyu_thum2.png" width=50><br>
+英語読めないし初めてのシンセだから、<br>
+全部適当にツマミいじって、<br>
+感覚でやってたんですけど（笑）
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p i-s-p">
+<img src="/assets/images/masuo.png" width=50><br>
+中学生からダンスミュージック作ってるって、<br>
+すごいですね…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p i-s-p">
+<img src="/assets/images/mokyu_thum2.png" width=50><br>
+それで中学高校と、<br>
+DTM（※4）でトランスとかハードダンスとか、<br>
+テクノとかをつくってたんですけど、<br>
+高校２年３年くらいに民族音楽にハマって、<br>
+地元の民族音楽グループに参加したりもしてました。<br>
+
+<span style="font-size:10px;">
+※4 DTM：DeskTop Musicの略。PCソフトや電子楽器で音楽を作ること。またはそのシステム。
+</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p i-s-p">
+<img src="/assets/images/iako.png" width=50><br>
+それで、音大に入ったんですよね？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p i-s-p">
+<img src="/assets/images/mokyu5.jpg" width=300 ><br>
+そうそう。<br>
+いろんな音楽を勉強できる大学で、<br>
+クラシックから電子音楽、ポップスとかジャズとか、<br>
+音響とかPAとかもひと通り勉強しました。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p i-s-p">
+<img src="/assets/images/mokyu6.jpg" width=300 ><br>
+その中で、「現代音楽」っていうところでも、<br>
+コンピュータ音楽っていうのがあるって知って。<br>
+DTMでやってたようなことをやってるぞ、<br>
+っていうのを知って。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p i-s-p">
+<img src="/assets/images/mokyu7.jpg" width=300 ><br>
+DTMやってたときもそうなんですけど、<br>
+どんどんマニアックな、<br>
+アンダーグラウンドな方に入っちゃうタイプで。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p i-s-p">
+<img src="/assets/images/mokyu8.png" width=300 ><br>
+自分でいろんな音楽を作れるようになりたい、<br>
+って思いがあって、より創作的な、<br>
+現代音楽のほうへ向かってったんですよね。
+
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p i-s-p">
+<img src="/assets/images/masuo.png" width=50><br>
+大学の卒制はどんな音楽を作ったんですか？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p i-s-p">
+<img src="/assets/images/mokyu_thum2.png" width=50><br>
+「ミュジック・アクースマティック」っていう、<br>
+<span style="font-weight:bold;">日常の音をサンプリングして作曲する、</span><br>
+っていうジャンルの音楽なんですけど。<br>
+お菓子にまつわる音を録音して、音楽にしましたね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p i-s-p">
+<img src="/assets/images/mokyu_thum2.png" width=50><br>
+<iframe width="80%" height="200" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/10121005&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe>
+<br>
+音の処理とか表現が良い、<br>
+電子音が生き生きとしている、って評価してもらえて、<br>
+成績優秀で卒業できました。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p i-s-p">
+<img src="/assets/images/iako.png" width=50><br>
+袋を開ける音とか、シャカシャカする音とか、<br>
+食べる音とかが聴こえるわね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p i-s-p">
+<img src="/assets/images/masuo.png" width=50><br>
+右とか左とか、遠近感とか、<br>
+なかなかすごい音楽になってる…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p i-s-p">
+<img src="/assets/images/mokyu9.jpg" width=300 ><br>
+それで卒業してからしばらく、<br>
+アクースマティックを創りながら仕事してたんですけど。<br>
+
+電子音楽をやってきてから、アクースマティックみたいな、<br>
+生の音を使う音楽をやってみると、<br>
+<span style="font-weight:bold;">生の音って強いな、音色が多様だな、</span>って思ったんです。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p i-s-p">
+<img src="/assets/images/mokyu10.jpg" width=300 ><br>
+電子音楽をやってたからこそ、<br>
+生の音の強さに気づけた、と思って。それで、<br>
+電子音楽的なアプローチで、現実世界で音楽を作れないか？<br>
+スピーカーの中でアナライズして聞く音楽ではなくて、<br>
+現実に起こってることで音楽を奏でられないか？と思って。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p i-s-p">
+<img src="/assets/images/mokyu_big.png" width=300 ><br>
+そういうことできる大学院を探したら、<br>
+IAMASか、東京芸大の先端表現か、っていう感じで。<br>
+迷ったんですけど、<br>
+IAMASにいる人とかIAMASがやってることとか、<br>
+面白そうだなあ、と思って、IAMASを受けました。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p i-s-p">
+<img src="/assets/images/iako.png" width=50><br>
+まさに、アートとテクノロジーの境界ですね…
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p i-s-p">
+<img src="/assets/images/masuo.png" width=50><br>
+もきゅさんって、<br>
+M1のときにいくつか入選されたりしてますよね！<br>
+すごいなあ。<br>
+<br>
+
+<span style="font-size:10px">
+RAW | ACOUSMATIC FOR THE PEOPLE III<br>
+2014 Malmö, Sweden<br>
+<br>
+横浜スマートイルミネーションアワード<br>
+Yokohama Smart Illumination Award<br>
+2014 Yokohama, Japan<br>
+<br>
+Muestra Internacional de Música Electroacústica MUSLAB<br>
+2014 Ciudad de México, México<br>
+<br>
+千代田芸術祭 音部門 LIFE LIKE LIVE<br>
+LIFE LIKE LIVE | Chiyoda Art Festival, Sound category<br>
+2014 Tokyo, Japan
+</span>
+           </p>
+        </div>
+        <div class="section">
+            <p class="i-p i-s-p">
+<img src="/assets/images/mokyu_thum2.png" width=50><br>
+うん、働いてた時には、<br>
+あんまり自分の作品が作れなかったので、<br>
+1年生のときにはとにかく出せそうなものに、<br>
+いろいろ出してみましたね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p i-s-p">
+<img src="/assets/images/iako.png" width=50><br>
+実際、IAMASに入ってみて、良かったと思いますか？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p i-s-p">
+<img src="/assets/images/mokyu12.jpg" width=300 ><br>
+ああ、それは良かったと思ってます。<br>
+<span style="font-weight:bold;">確実に価値観が広がった</span>と思いますね。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p i-s-p">
+<img src="/assets/images/mokyu_thum2.png" width=50><br>
+先生も学生も、他分野で活躍している方々と生活して、<br>
+<span style="font-weight:bold;">別視点の考え方が身体にしみたうえで制作をする</span>ことは、<br>
+とても大きなアドバンテージだと思います。<br>
+音大だけで活動してきた作曲家とは、<br>
+視点がだいぶ違うと思ってます。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p i-s-p">
+<img src="/assets/images/masuo.png" width=50><br>
+それは、先生方のアドバイスもあったりですか？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p i-s-p">
+<img src="/assets/images/mokyu_thum2.png" width=50><br>
+そうですね。<br>
+そこはやっぱり三輪さん(※5)の作曲に対する考え方が、<br>
+自分と近いことがあったりもして。<br>
+<span style="font-weight:bold;">「曲の中の、その音にどういう意味があるのか」</span><br>
+ってしっかり考える部分とか。<br>
+
+<span style="font-size:10px;">
+※5 三輪眞弘：作曲家。情報科学芸術大学院大学（IAMAS）研究科長。2007年、世界最大のデジタルアートの祭典「アルス・エレクトロニカ」のデジタル・ミュージック部門にて、自身の提唱する「逆シミュレーション音楽」でゴールデン・ニカ賞（グランプリ）を受賞。<br>
+<a href="http://www.iamas.ac.jp/people#post-58" style="font-size: 10px;">
+http://www.iamas.ac.jp/people#post-58
+</a>
+</span>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p i-s-p">
+<img src="/assets/images/iako.png" width=50><br>
+卒業してからどうするか、<br>
+っていうところは、何かありますか？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p i-s-p">
+<img src="/assets/images/mokyu13.jpg" width=300 ><br>
+できれば今やっていることを続けていきたいし、<br>
+とすればアーティストでやっていきたいんですけど、<br>
+道は厳しい…！特に作曲家なんて、なかなかね…。<br>
+大学の先生になりたいな、と思っています。<br>
+どういう方法でも、研究を続けていきたい。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p i-s-p">
+<img src="/assets/images/masuo.png" width=50><br>
+将来どういうことをしたい、っていうのはありますか？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p i-s-p">
+<img src="/assets/images/mokyu14.jpg" width=300 ><br>
+そうですね…今やってることっていうのは、広く言えば、<br>
+「音楽」自体をつくっている、ということなんですけど。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p i-s-p">
+<img src="/assets/images/mokyu_thum2.png" width=50><br>
+たとえば、テクノとかロックとか、それぞれの音楽に、<br>
+こういう音が使われて、こういう楽器の構成、曲の構成、<br>
+音の歪ませ方などがあって、形式にはめていく…<br>
+っていうのがあるんですけど、<br>
+そういった「音楽の形式」をつくることをやっています。<br>
+従来、音楽のなかで扱われなかったサウンドを持ってきて、<br>
+形式自体を作り出す、というような。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p i-s-p">
+<img src="/assets/images/iako.png" width=50><br>
+もきゅさんがつくるのは、どんな音楽の形式なんですか？
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p i-s-p">
+<img src="/assets/images/mokyu15.jpg" width=300 ><br>
+主には、テクノロジーの進歩によってに生まれた、<br>
+新しいリズムとか、新しい音楽形式を基板とした音楽、<br>
+という感じですかね…平たく説明しづらいんですけど。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p i-s-p">
+<img src="/assets/images/mokyu_thum2.png" width=50><br>
+たとえば一般的なDTMだったら、<br>
+用意されてるピアノロールとか、シンセサイザーとか、<br>
+そういうのをシーケンスで配置してやっていくんですけど、<br>
+<span style="font-weight:10px;">そのソフトを使う時点で、<br>
+作る音楽がある程度決まっちゃうんですよね。
+</span><br>
+従来の音楽を作りやすくするための仕組みだから、<br>
+従来の音楽の中でしか作れない。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p i-s-p">
+<img src="/assets/images/mokyu16.jpg" width=300 ><br>
+たとえば音の波形を、ランダムな場所でループさせると、<br>
+ちょっと変なグルーヴが生まれるんですよね。<br>
+そしてループの場所や回数を決めるルールを作って、<br>
+再生すると今までにないグルーヴが生まれると思ってて。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p i-s-p">
+<img src="/assets/images/mokyu_thum2.png" width=50><br>
+で、そうして音楽を作っていく。<br>
+そういうふうに新しい「音楽の形式」をつくる、<br>
+ってことをやっていきたいと思ってます。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p i-s-p">
+<img src="/assets/images/masuo.png" width=50><br>
+では最後に、IAMASに興味がある人、<br>
+OPEN HOUSE行きたいなーと思ってる人に向けて、<br>
+メッセージをお願いします！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p i-s-p">
+<img src="/assets/images/mokyu17.jpg" width=300 ><br>
+これはぼく自身が体験したことでもあるんですけど、<br>
+<span style="font-weight:bold;">それぞれの分野に長けた人がたくさんいて、</span><br>
+たぶんIAMAS以外じゃ身につけられないような、<br>
+<span style-"font-weight:bold">とても広い視点が持てる</span>と思います。<br>
+<br>
+自分がやっていることの意味を、<br>
+再確認できる場所だと思ってます。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p i-s-p">
+<img src="/assets/images/iako.png" width=50><br>
+直近でも活動の予定があるんですよね！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/mokyu18.jpg" width=300 ><br><br>
+そうですね。7月、8月、9月に予定があります。
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+日程：7月31日<br><br>
+場所：岐阜県大垣市「スイトピアセンター・コスモドーム」<br><br>
+イベント：プラネタライブ「ゆらぎ、ささやき」<br><br>
+概要：映像作家のScott Allenと共に電子音響音楽と自作投映装置のパフォーマンスライブを行います。<br><br>
+<a href="http://www2.og-bunka.or.jp/event/data_487.html" style="font-size:10px;">
+http://www2.og-bunka.or.jp/event/data_487.html
+</a>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+日程：8月14日〜18日<br><br>
+場所：カナダ・バンクーバー<br><br>
+イベント：International Symposium on Electric Arts(ISEA)<br><br>
+概要：MP3圧縮をテーマにした作品が展示されます
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+日程：9月11日〜13日<br><br>
+場所：岐阜県岐阜市「サラマンカホール」<br><br>
+イベント：サラマンカホール電子音響音楽祭<br><br>
+概要：サラマンカホールのパイプオルガンで、アルゴリズム作曲による人力電子音楽を上演します。<br><br>
+<a href="http://www.iamas.ac.jp/eams2015/" style="font-size:10px;">
+http://www.iamas.ac.jp/eams2015/
+</a>
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+めちゃ忙しいですね…！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/mokyu_thum2.png" width=50><br>
+もう2人とも気づいてると思うけど、<br><br>
+IAMASって、忙しいよね（笑）
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/ahiru_left.jpg" width=50><br>
+お忙しいとこありがとうございました！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/ahiru_right.jpg" width=50><br>
+いい記事になりそうだし、ぼくらも勉強になりました！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/iako.png" width=50><br>
+引き続き、質問をお待ちしております！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+<img src="/assets/images/masuo.png" width=50><br>
+IAMASにいる人に聞きたいこととかがあれば、<br>
+ぼくたちが代わりに聞きにいきまーす！
+            </p>
+        </div>
+        <div class="section">
+            <p class="i-p s-i-p">
+イア子とマス男への質問やメッセージはこちらから！<br>
+<a href="http://goo.gl/forms/hlgdXfxMei">
+http://goo.gl/forms/hlgdXfxMei
+</a>
+            <div class="social_btn_bottom social_btn_bottom_sp uk-visible-small">
+                <div class="twitter">
+                    <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://iamasokuho.gifu.jp/day_five.html" data-via="iamasokuho">Tweet</a>
+                    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+                </div>
+                <div class="facebook">
+                    <div class="fb-like" data-href="http://iamasokuho.gifu.jp/day_five.html" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+                </div>
+                <div class="hateb">
+                    <a href="http://b.hatena.ne.jp/entry/iamasokuho.gifu.jp/day_four.html" class="hatena-bookmark-button" data-hatena-bookmark-title="【IAMASの人々】新たな音楽の形式をつくる！大久保雅基さん | IAMASOKUHO" data-hatena-bookmark-layout="standard-balloon" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリ>ーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a>
+                    <script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+                </div>
+            </div>
+            </p>
+        </div>
+    </div>
+
+</body>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-64484802-1', 'auto');
+  ga('send', 'pageview');
+</script>
+</html>
